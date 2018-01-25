@@ -69,7 +69,7 @@ library("MSnbase")
 
 ### Programme
 
-- Introduction to R and RStudio
+- Introduction to R and RStudio and Bioconductor
 - R documentation and vignettes
 - Variables, vectors and dataframes
 - Manipulating data
