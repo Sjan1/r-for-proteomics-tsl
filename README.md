@@ -66,4 +66,3 @@ To test the installation, load `MSnbase`:
 ```r
 library("MSnbase")
 ```
-
