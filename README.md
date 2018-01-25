@@ -66,3 +66,13 @@ To test the installation, load `MSnbase`:
 ```r
 library("MSnbase")
 ```
+
+### Programme
+
+- Introduction to R and RStudio
+- R documentation and vignettes
+- Variables, vectors and dataframes
+- Manipulating data
+- Plotting
+- Saving and loading data (binary and csv)
+- Installing packages
