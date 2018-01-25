@@ -59,12 +59,11 @@ source("http://www.bioconductor.org/biocLite.R")
 biocLite(c("MSnbase", "msmsTest", "rpx", "pRoloc", "pRolocdata", "msdata"))
 ```
 
+![Bioc installation in RStudio](./figs/rstudio-bioc-install.png)
+
 To test the installation, load `MSnbase`:
 
 ```r
 library("MSnbase")
 ```
 
-
-
- 
