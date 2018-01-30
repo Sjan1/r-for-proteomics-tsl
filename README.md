@@ -56,7 +56,7 @@ packages:
 
 ```r
 source("http://www.bioconductor.org/biocLite.R")
-biocLite(c("MSnbase", "msmsTest", "rpx", "pRoloc", "pRolocdata", "msdata"))
+biocLite(c("MSnbase", "msmsTests", "rpx", "pRoloc", "pRolocdata", "msdata"))
 ```
 
 ![Bioc installation in RStudio](./figs/rstudio-bioc-install.png)
