@@ -76,3 +76,5 @@ library("MSnbase")
 - Plotting
 - Saving and loading data (binary and csv)
 - Installing packages
+
+The content of that session is available in the `rfp1` Rproject/dir.

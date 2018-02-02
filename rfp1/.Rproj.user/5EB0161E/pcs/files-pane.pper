@@ -1,0 +1,9 @@
+{
+    "path" : "~/tmp/rfp1/data",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
