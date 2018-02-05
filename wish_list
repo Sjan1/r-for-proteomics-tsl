@@ -1,0 +1,44 @@
+# RfP training
+
+### Top priorities 
+As soon as we learn how to parse the search results, combine it with some study factors from experiment documentation and read the raw data, we should focus on these following goals:
+
+1. #### **QC workflow - spectral counting (SPC)**
+	- **Data:** HeLa standard runs from January 2018
+	- Parse (Mascot) search engine output and visualize 
+	- Start independent work-flow using either Mascot or MSGF+ search engines. The latter should be able to achieve higher throughput.
+	- Package for spectral counting calculating e.g. emPAI
+	- Visualize SPC, UPC, PC in as a time course
+	- Add factors from the instrument history file
+	- Visualize score distributions for the time points
+	- XIC of selected peptides, MS2 of selected peptides
+	- Reproducibility of selected peptides 
+	- RT stability
+	- Correlation of the last run to a short/long-term average (last week, recent best performance, best performance ever)
+	- Chromatographic peak widths (FWHM)
+	- **To discuss:** How realistic are the latter two points without PRM data? I guess we need to run Skyline to process PRM runs? Could we calculate LF precursor area?
+	
+2. #### **Immnoaffinity enrichment - SPC**
+	- Differential changes in SPC in multiple categories
+	- Is there a way to normalize samples? (very challenging)
+	- **Data:** Importin dataset for two sample types
+	- **Data:** PDLP1 for several sample types
+	- **Data:** Erin/Yasin data for many categories many runs on Fusion
+	- **Data:** Alternatively Will's data would also be possible to share. 
+	- **To discuss:** To process the latter two datasets in our current Mascot-Scaffold work-flow takes about a week due to long processing time and many interruptions. Any improvement that would increase throughput welcome.
+
+3. #### **PTM identification - SPC**
+	- We use error tolerant search to hunt for PTMs. Can we identify modified peptides in search output, print the spectra with search engine annotation and compare	spectral count in sample categories to identify how are peptides differentially changing? Currently I use Scaffold exported csv then pivot table in Excel then I go to Scaffold for the spectra, copy paste to a document.
+	- **Data:** HeLa run in error tolerant mode
+	- **Data:** Possibly Hailong
+	
+4. #### **More search engines**
+	- When we have a work-flow automated, could we add another search engine(s) to maximize the result?
+	
+5. #### **HPC computing**
+	- Do we need it?
+	- Do we want to compare with our current work-flows?
+	- We have slow throughput with challenging datasets, such as Erin/Yasin example or many error tolerant searches.
+
+6. #### **How to collect experimental meta information most efficiently?**
+	- **To discuss:** There is an underlying data management question, important in all work-flows that that we are going to generate. Marielle can populate a paired list of input files with Mascot search results. This should be linked with some study factors that are provided with every experiment elsewhere. How should be the files containing annotations formatted? We should also collect search metadata and how many searches we have carried out with one sample. The data management can get quite complicated easily. What would be the lightest set-up?
