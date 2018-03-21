@@ -1,4 +1,4 @@
-## R and Bioconductor for proteomics at the Sainsbury Laboratory 
+## R and Bioconductor for proteomics at the Sainsbury Laboratory
 
 
 
@@ -34,19 +34,19 @@ already have R installed, make you have R 3.4.3. To check the version:
 
 ```r
 > version
-               _                                          
-platform       x86_64-pc-linux-gnu                        
-arch           x86_64                                     
-os             linux-gnu                                  
-system         x86_64, linux-gnu                          
-status         Patched                                    
-major          3                                          
-minor          4.3                                        
-year           2017                                       
-month          12                                         
-day            12                                         
-svn rev        73903                                      
-language       R                                          
+			   _
+platform       x86_64-pc-linux-gnu
+arch           x86_64
+os             linux-gnu
+system         x86_64, linux-gnu
+status         Patched
+major          3
+minor          4.3
+year           2017
+month          12
+day            12
+svn rev        73903
+language       R
 version.string R version 3.4.3 Patched (2017-12-12 r73903)
 nickname       Kite-Eating Tree
 ```
@@ -78,3 +78,26 @@ library("MSnbase")
 - Installing packages
 
 The content of that session is available in the `rfp1` Rproject/dir.
+
+## Session 3: R/Bioconductor tools for MS-based proteomics (21-03-2018)
+
+Summary from last time:
+
+- Using R and RStudio.
+- Data structures: vectors, dataframes and MSnSets.
+- Subsetting using `[` and `$`.
+- Data input: `read.csv` and `readMSnSet2`.
+- Data output: `save` and `load`.
+
+We didn't get time to see plotting and package installation.
+
+Material for session 3 will focus on consolidating our understanding
+and usage of dedicated R/Bioconductor packages for MS and proteomics.
+
+#### Points to discuss/consider
+
+- For identification, use mzid files, that can be opened with
+  `mzR::openIDfile` or `MSnbase:::readMzIdData`. To visualise data
+  over time, annotate (with filename and date) and combine there.
+- Raw data, with `readMSData(, mode = "onDisk")`.
+- Differential expression of count data with `msmsTests`.
