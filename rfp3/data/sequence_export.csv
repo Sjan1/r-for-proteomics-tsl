@@ -1,0 +1,199 @@
+File Name,Date,method,Notes
+HeLa_171105_Sgr_1,171105,43ii_abrf-like_Top20_CID-HCD,"Test RT stability, Thermo column, Thermo nanoTrap"
+HeLa_171105_Sgr_2,171105,43ii_abrf-like_Top20_CID-HCD,"Test RT stability, Thermo column, Thermo nanoTrap"
+HeLa_171105_Sgr_3,171105,43ii_abrf-like_Top20_CID-HCD,"Test RT stability, Thermo column, Thermo nanoTrap"
+HeLa_171105_Sgr_4,171105,43ii_abrf-like_Top20_CID-HCD,"Test RT stability, Thermo column, Thermo nanoTrap"
+HeLa_171105_Sgr_5,171105,43ii_abrf-like_Top20_CID-HCD,"Test RT stability, Thermo column, Thermo nanoTrap"
+HeLa_171108_Sgr_r1,171108,43ii_abrf-like_Top20_CID-HCD,"...Waters column, Themo trap"
+HeLa_171108_Sgr_r2,171108,43ii_abrf-like_Top20_CID-HCD,...repeat with new tip and sleeve
+HeLa_171108_Sgr_r3,171108,43ii_abrf-like_Top20_CID-HCD,...repeat with new tip and sleeve
+HeLa_171108_Sgr_r4,171108,43ii_abrf-like_Top20_CID-HCD,...tonight (Frank)
+HeLa_171108_Sgr_r5,171108,43ii_abrf-like_Top20_CID-HCD,...tonight (Frank)
+HeLa_171108_Sgr_r6,171108,43ii_abrf-like_Top20_CID-HCD,...tonight (Frank)
+HeLa_171108_Sgr_r6,171108,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171108_Sgr_r7,171108,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Lgr_r1,171110,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171110_Sgr_r2,171110,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171110_Slgr_r3,171110,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171110_Lgr_r4,171110,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Sgr_r5,171110,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Slgr_r6,171110,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Lgr_r7,171110,43iii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Sgr_r8,171110,43iii_abrf-like_Top20_CID-HCD,...
+HeLa_171110_Slgr_r9,171110,43iii_abrf-like_Top20_CID-HCD,...
+HeLa_171113_Sgr_r1,171113,43ii_abrf-like_Top20_CID-HCD,...before cal
+HeLa_171114_Sgr_r1,171114,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sgr_r2,171114,43ii_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r3,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r4,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r5,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r6,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r5fm,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r6fm,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171114_Sg2_r7,171114,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r1_Lgr,171127,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171127_r2_Sgr,171127,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r3_Sgr300,171127,43v_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r4_Lgr,171127,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171127_r5_Sgr,171127,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r6_Sgr300,171127,43v_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r7_Lgr,171127,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...
+HeLa_171127_r8_Sgr,171127,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171127_r9_Sgr300,171127,43v_abrf-like_Top20_CID-HCD,...
+HeLa_171201_r1_Lgr,171201,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171204_Sgr200,171204,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171218_Sgr200,171218,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171218_Sgr201,171218,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171218_Sgr202,171218,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_171218_Sgr203,171218,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180103_Sgr200_r1,180103,43iv_abrf-like_Top20_CID-HCD,3th Jan 2017 
+HeLa_180103_Sgr200_r2,180103,43iv_abrf-like_Top20_CID-HCD,3th Jan 2017 
+HeLa_180103_Sgr200_r3,180103,43iv_abrf-like_Top20_CID-HCD,3th Jan 2017 
+HeLa_180103_Sgr200_r4,180103,43iv_abrf-like_Top20_CID-HCD,3th Jan 2017 
+HeLa_180104_Sgr200_r1,180104,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180104_Sgr200_r2,180104,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180105_Sgr200_r1,180105,43iv_abrf-like_Top20_CID-HCD,...pump service - check valves and seals on left nano pump replaced
+HeLa_180105_Sgr200_r2,180105,43iv_abrf-like_Top20_CID-HCD,...pump service - check valves and seals on left nano pump replaced
+HeLa_180105_Sgr200_r3,180105,43iv_abrf-like_Top20_CID-HCD,...pump service - check valves and seals on left nano pump replaced
+HeLa_180105_Sgr200_r4,180105,43iv_abrf-like_Top20_CID-HCD,...pump service - check valves and seals on left nano pump replaced
+HeLa_180105_Sgr200_r5,180105,43iv_abrf-like_Top20_CID-HCD,...pump service - check valves and seals on left nano pump replaced
+HeLa_180105_Sgr200_r6,180105,43iv_abrf-like_Top20_CID-HCD,"...Peaks broad, eluting late, column outlet inside SS union broken."
+HeLa_180108_Sgr200_r1,180108,43iv_abrf-like_Top20_CID-HCD,"...polished column outlet, still bad. Leak in the union?"
+HeLa_180110_Sgr200_r1,180110,43iv_abrf-like_Top20_CID-HCD,"valve cleaned, old seal installed, valve bolts symmetrically tightened, Old Trap#23 with Col#13"
+HeLa_180110_Sgr200_r2,180110,43iv_abrf-like_Top20_CID-HCD,NEW Trap#26 with Col#13
+HeLa_180110_Sgr200_r3,180110,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180110_Sgr200_r4,180110,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180111_Sgr200_r1,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r2,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r3,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r4,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r5,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r6,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r7,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180111_Sgr200_r8,180111,43iv_abrf-like_Top20_CID-HCD,"solvents topped approx 1:1 with fresh slovents, t26c13"
+HeLa_180112_Sgr200_r1,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180112_Sgr200_r2,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180112_Sgr200_r3,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180112_Sgr200_r4,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180112_Sgr200_r5,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180112_Sgr200_r6,180112,43iv_abrf-like_Top20_CID-HCD,"new emitter, SS union cleand thoroughly, t26c13"
+HeLa_180115_oldmet_r1,180115,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...older method
+HeLa_180115_oldmet_r2,180115,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...older method
+HeLa_180115_M43-ff_r1,180115,43vii_abrf-like_Top20_CID-HCD_test,...new met fast flow
+HeLa_180115_M43-ff_r2,180115,43vii_abrf-like_Top20_CID-HCD_test,...new met fast flow
+HeLa_180115_M43-steep_r1,180115,43viii_abrf-like_Top20_CID-HCD_test,...new met slow flow steeper grad
+HeLa_180115_M43-steep_r2,180115,43viii_abrf-like_Top20_CID-HCD_test,...new met slow flow steeper grad
+HeLa_180115_m43_r1,180115,43iv_abrf-like_Top20_CID-HCD,...new met slow standatd
+HeLa_180115_m43_r2,180115,43iv_abrf-like_Top20_CID-HCD,...new met slow standatd
+HeLa_180116_m36_r1,180116,36_Waters_Top20_CID-HCD_AGC1e4-35ms_5B,...new trap solvent
+HeLa_180116_m43_r2,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed
+HeLa_180116_m43_r3,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed
+HeLa_180116_m43_r4,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r5,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r6,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r7,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r8,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r9,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r10,180116,43iv_abrf-like_Top20_CID-HCD,...new trap solvent - degassed - emitter
+HeLa_180116_m43_r11,180116,43iv_abrf-like_Top20_CID-HCD,"...=> almost there, only peakshape could be better"
+HeLa_180118_m43_r1,180118,43iv_abrf-like_Top20_CID-HCD,...new 10-port valve stator and seal
+HeLa_180118_m43_r2,180118,43iv_abrf-like_Top20_CID-HCD,...new 10-port valve stator and seal
+HeLa_180118_m43_r3,180118,43iv_abrf-like_Top20_CID-HCD,...new 10-port valve stator and seal
+HeLa_180118_m43_r4,180118,43iv_abrf-like_Top20_CID-HCD,...new 10-port valve stator and seal
+HeLa_180118_m43_r5,180118,43iv_abrf-like_Top20_CID-HCD,...new 10-port valve stator and seal => air bubbles
+HeLa_180119_m43_r1,180119,43iv_abrf-like_Top20_CID-HCD,B degassed really well
+HeLa_180119_m43_r2,180119,43iv_abrf-like_Top20_CID-HCD,B degassed really well
+HeLa_180119_m43_r3,180119,43iv_abrf-like_Top20_CID-HCD,B degassed really well
+HeLa_180119_m43_r4,180119,43iv_abrf-like_Top20_CID-HCD,...new tip
+HeLa_180119_m43_r5,180119,43iv_abrf-like_Top20_CID-HCD,...new tip
+HeLa_180119_m43_r6,180119,43iv_abrf-like_Top20_CID-HCD,...new tip
+HeLa_180119_m43_r7,180119,43iv_abrf-like_Top20_CID-HCD,...new tip
+HeLa_180119_m43_r8,180119,43iv_abrf-like_Top20_CID-HCD,...new tip + some blanks => bubbles gone
+HeLa_180122_m43_r1,180122,43iv_abrf-like_Top20_CID-HCD,new column installed for peak width still not good
+HeLa_180122_m43_r2,180122,43iv_abrf-like_Top20_CID-HCD,new column installed for peak width still not good
+HeLa_180122_m43_cal_r3,180122,43iv_abrf-like_Top20_CID-HCD,recalibrated
+HeLa_180122_m43_cal_r4,180122,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180122_m43_cal_r5,180122,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180122_m43_cal_r6,180122,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180122_m43_cal_r7,180122,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180122_m43_cal_r8,180122,43iv_abrf-like_Top20_CID-HCD,
+HeLa_180123_m43_r1,180123,43iv_abrf-like_Top20_CID-HCD,calibration
+HeLa_180123_m43_r2,180123,43iv_abrf-like_Top20_CID-HCD,calibration
+HeLa_180123_m43_r3,180123,43iv_abrf-like_Top20_CID-HCD,calibration is off by 5ppm - again
+HeLa_180124_m43_r1,180124,43iv_abrf-like_Top20_CID-HCD,"restored masted cal, all recalibrated"
+HeLa_180124_m43_r2,180124,43iv_abrf-like_Top20_CID-HCD,"restored masted cal, all recalibrated"
+HeLa_180124_25c15_r3,180124,43iv_abrf-like_Top20_CID-HCD,new trap
+HeLa_180124_25c15_r4,180124,43iv_abrf-like_Top20_CID-HCD,new trap
+HeLa_180124_25c15_r5,180124,43iv_abrf-like_Top20_CID-HCD,new trap
+HeLa_180125_25c15W_r1,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180125_25c15W_r2,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180125_25c15W_r3,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180125_25c15W_r4,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180125_25c15W_r5,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180125_25c15W_r6,180125,43iv_abrf-like_Top20_CID-HCD,Waters union in liquid junction
+HeLa_180127_25c15W_r1,180127,43iv_abrf-like_Top20_CID-HCD,after a couple of dirty samples
+HeLa_180127_25c15W_r2,180127,43iv_abrf-like_Top20_CID-HCD,after a couple of dirty samples
+HeLa_180129_25c15W_r1,180129,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180129_25c15W_r2,180129,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180129_25c15W_r3,180129,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180205_25c15W_r1,180205,43iv_abrf-like_Top20_CID-HCD,calibration
+HeLa_180205_25c15W_r2,180205,43iv_abrf-like_Top20_CID-HCD,calibration
+HeLa_180205_25c15W_r3,180205,43iv_abrf-like_Top20_CID-HCD,calibration
+HeLa_180209_25c15W_r1,180209,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180209_25c15W_r2,180209,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180220_25c15W_r1,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r2sid35,180220,46_abrf-like_Top20_CID-HCD-SID35, calibration
+HeLa_180220_25c15W_r3,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r4sid35,180220,46_abrf-like_Top20_CID-HCD-SID35, calibration
+HeLa_180220_25c15W_r5,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r6sid35,180220,46_abrf-like_Top20_CID-HCD-SID35, calibration
+HeLa_180220_25c15W_r7,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r8sid50,180220,46_abrf-like_Top20_CID-HCD-SID50, calibration
+HeLa_180220_25c15W_r9,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r10sid50,180220,46_abrf-like_Top20_CID-HCD-SID50, calibration
+HeLa_180220_25c15W_r11,180220,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r12sid50,180220,46_abrf-like_Top20_CID-HCD-SID50, calibration
+HeLa_180301_25c15W_r1,180301,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180220_25c15W_r2,180220,43iv_abrf-like_Top20_CID-HCD,"BAD file NAME, should be 180301 instead"
+HeLa_180306_t26c15W_r1,180306,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180306_t26c15W_r2,180306,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180306_t26c15W_r3,180306,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180306_t26c15W_r4,180306,43iv_abrf-like_Top20_CID-HCD, calibration
+HeLa_180315_t26c15W_r1,180315,43iv_abrf-like_Top20_CID-HCD," new tip, calibrated two days ago"
+HeLa_180306_t26c15W_r2,180306,43iv_abrf-like_Top20_CID-HCD,"new tip, calibrated two days ago"
+HeLa_180320_r1,180320,43iv_abrf-like_Top20_CID-HCD,"... new tip, calibrated two days ago"
+HeLa_180320_r2,180320,43iv_abrf-like_Top20_CID-HCD,"... new tip, calibrated two days ago"
+HeLa_180320_r3,180320,43iv_abrf-like_Top20_CID-HCD,"... new tip, calibrated two days ago"
+HeLa_180321_r1,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r2,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r3,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r4,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r5,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r6,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r7,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r8,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r9,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180321_r10,180321,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180322_r1,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r2,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r3,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r4,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r5,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r6,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180322_r7,180322,43iv_abrf-like_Top20_CID-HCD,after 2-Propanol wash
+HeLa_180323_r1,180323,43iv_abrf-like_Top20_CID-HCD,union reffited
+HeLa_180323_r2,180323,43iv_abrf-like_Top20_CID-HCD,union reffited
+HeLa_180323_r3,180323,43iv_abrf-like_Top20_CID-HCD,after bad QIB
+HeLa_180327_r1,180327,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180327_r2,180327,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180329_r1,180329,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180331_r1,180331,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180403_r1,180403,43iv_abrf-like_Top20_CID-HCD,…
+HeLa_180403_r2,180403,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180403_r3,180403,43iv_abrf-like_Top20_CID-HCD,...
+HeLa_180409_r1,180409,43iv_abrf-like_Top20_CID-HCD,calibration - all
+HeLa_180409_r2,180409,43iv_abrf-like_Top20_CID-HCD,calibration - all
+HeLa_180409_r3,180409,43iv_abrf-like_Top20_CID-HCD,calibration - all
+HeLa_180409_r1-mastercal_restored,180409,43iv_abrf-like_Top20_CID-HCD,"master cal restored from January back up, not calibrated yet."
+HeLa_180409_r2-recalibrated,180409,43iv_abrf-like_Top20_CID-HCD,"master cal restored from January back up, not calibrated yet."
+HeLa_180409_r3,180409,43iv_abrf-like_Top20_CID-HCD,"master cal restored from January back up, not calibrated yet."
