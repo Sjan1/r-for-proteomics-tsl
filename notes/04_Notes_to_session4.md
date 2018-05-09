@@ -78,7 +78,7 @@ File name in the first column, any number of associated factors (including notes
 4. Compare the results of two search engines. To develop confidence in PSMs when using MS.GF+ we are not used to, the best is to compare with Mascot first. It could give us a few extra PSMs and increase confidence. In the long run, running a second search engine on HPC might be of interest.
 5. I should show you Scaffold and what it provides. I mentioned well annotated spectra already, but there is still more: E.g protein similarity plot, quantitative functions that we should also compare with our R-calculated result.
 
-##Priorities for the next session (discussed on 8th May, Norwich)
+## Priorities for the next session (discussed on 8th May, Norwich)
 1. Generate MSGFPlus searches for data in all the tasks. (before the next meeting)
 2. Use sample-experiment input table in QC and PDLP1 Tasks.
 3. Use the packages for spectral counting to quantify differences between the samples. (QC - time course, PDLP1 - four categories)
