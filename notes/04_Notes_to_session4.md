@@ -27,11 +27,11 @@ This could, for the sake of OP project, help us finish six months period. (If we
 
 
 ## Datasets to work with
-We have three datasets to play with (I believe it is enough, but let me know is you think otherwise):
+We have three datasets to play with.
 
-- TASK1: Quality control (QC); HeLa QC runs; time course visualization
-- TASK2: Spectral counting (SPC): PDLP1 dataset, Differential abundance analysis
-- TASK3: Label based quantitative proteomics (TMT): Gerhard's data; differential abundance analysis
+- **TASK1: Quality control (QC)**; HeLa QC runs. Time course visualization with various number of replicates at each time point.
+- **TASK2: Spectral counting (SPC)**: PDLP1 dataset. Differential abundance analysis of more than two groups of samples. In this case two sample types (C,P) and two treatments (H,I). Also a few samples here were prepared with two different enzymes (trypsin, LysN). *Quite a number of our  experimental designs have multiple factors: e.g. causing cell death - HR, weak HR, no HR, GFP, with quite many samples in every category.* 
+- **TASK3: Label based quantitative proteomics (TMT)**: Gerhard's data. Differential abundance analysis using TMT labels; MS3 based method.
 
 
 
