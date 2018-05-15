@@ -74,7 +74,7 @@ File name in the first column, any number of associated factors (including notes
 ### V. TMT pipeline - we should start working on it as soon as a progress is made on TASK1&2. 
 	
 ## Other points discussed in April
-1. Plot theoretical fragment masses with search intervals over MS2 spectra. That would require a shiny spectrum zooming functionality.
+1. Plot theoretical fragment masses with search intervals over MS2 spectra. That would require a shiny spectrum zooming functionality. It is a little surprising that raw data (spectra) and identification data (fragmentation table) are well connected.
 2. Charge deconvoluted MS2 spectra plots (with annotation) are a convenient tool for manual spectrum validation.
 3. We found 1Da error in precursor masses in MS.GF+ result. That can only mean that Asp/Glu deamidation took place or precursor masses were no recognized correctly. Mascot has a function to corrects the latter and deamidation could be added as a variable modification in new search. This would be interesting to compare, I guess when all the other things are done. Do I remember well that in another Laurent's data file this problem was not observed?
 4. Compare the results of two search engines. To develop confidence in PSMs when using MS.GF+ we are not used to, the best is to compare with Mascot first. It could give us a few extra PSMs and increase confidence. In the long run, running a second search engine on HPC might be of interest.
