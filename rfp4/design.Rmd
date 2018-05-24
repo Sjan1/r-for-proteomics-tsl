@@ -1,0 +1,42 @@
+---
+title: "Experimental design"
+author: "Laurent Gatto"
+date: "24 May 2018"
+output: html_document
+---
+
+```{r env, message=FALSE, warning=FALSE}
+source("S00-env.R")
+tab <- read_csv("data/SampleExperimentTable.csv")
+names(tab)[1:2] <- c("file", "raw")
+```
+
+```{r}
+library("DT")
+datatable(tab)
+```
+
+## Files
+
+## Id files
+
+```{r idfiles}
+basename(id_files <- dir("MSGF", full.names = TRUE))
+```
+
+## Raw files
+
+```{r rawfiles}
+basename(raw_files <- dir("raw", full.names = TRUE))
+```
+
+## Design
+
+```{r tab1, echo=FALSE}
+knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"))
+```
+
+```{r}
+ggplot(tab, aes(x = treatment)) + geom_bar()
+```
+
