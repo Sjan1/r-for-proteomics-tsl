@@ -7,7 +7,7 @@ tab
 id.dir <- "MSGF/"
 id.ext <- ".mzid"
 raw.dir <- "raw/"
-raw.ext <- "mzML"
+raw.ext <- ".mzML"
 
 ## Create paths to files
 msgf_files <- paste0(id.dir, tab$file, id.ext)
@@ -21,9 +21,15 @@ raw_files <- dir("raw", full.names = TRUE)
 table(tab$biorep, tab$category)
 
 
-## All fractions form one sample to run MSnID
+## All fractions form one sample to run MSnID  
 grep("lp-.+t_1_1_", tab$file, value = TRUE)
 
 tab %>% filter(biorep == 1 & techrep == 1) %>% 
   filter(category == "CI" & cleavage == "tryp")
 
+## Note[js]: How to run on all fractions
+## for all biosamples 
+## for all sample
+## for all treatments
+## for all cleavages
+## at once?

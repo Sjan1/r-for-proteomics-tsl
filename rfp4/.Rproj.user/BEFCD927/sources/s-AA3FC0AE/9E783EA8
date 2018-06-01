@@ -7,11 +7,13 @@
     "folds" : "",
     "hash" : "1240757514",
     "id" : "9E783EA8",
-    "lastKnownWriteTime" : 1527239391,
-    "last_content_update" : 1527239391,
+    "lastKnownWriteTime" : 1527859537,
+    "last_content_update" : 1527859537096,
     "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp4/S02-id.R",
     "project_path" : "S02-id.R",
     "properties" : {
+        "cursorPosition" : "25,0",
+        "scrollLine" : "14"
     },
     "relative_order" : 4,
     "source_on_save" : false,
