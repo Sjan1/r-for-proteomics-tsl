@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527239842199.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1240757514",
+    "id" : "9E783EA8",
+    "lastKnownWriteTime" : 1527239391,
+    "last_content_update" : 1527239391,
+    "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp4/S02-id.R",
+    "project_path" : "S02-id.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

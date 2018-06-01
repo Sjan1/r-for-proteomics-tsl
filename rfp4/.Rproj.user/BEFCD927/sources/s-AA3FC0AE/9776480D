@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527239786000.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "9776480D",
+    "lastKnownWriteTime" : 1527239391,
+    "last_content_update" : 1527257934812,
+    "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp4/S01-pdata.R",
+    "project_path" : "S01-pdata.R",
+    "properties" : {
+        "cursorPosition" : "28,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

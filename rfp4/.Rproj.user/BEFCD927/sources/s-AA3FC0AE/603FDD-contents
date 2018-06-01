@@ -32,20 +32,10 @@ basename(raw_files <- dir("raw", full.names = TRUE))
 
 ## Design
 
-```{r tab1, echo=TRUE}
-
-## How many replicates in each biorep (bioreps are just numbered dates)?
-## Are there any NAs?
-## Comparing bioreps against all the factors -  category, sample, treatment, cleavage.
-table(tab$biorep, tab$date, useNA = "ifany")
-
-## why the rownames are missing when kable is used?
+```{r tab1, echo=FALSE}
 knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"))
-knitr::kable(table(tab$biorep, tab$sample, useNA = "ifany"))
-knitr::kable(table(tab$biorep, tab$cleavage, useNA = "ifany"))
-
-## Where are the NAs ?
 datatable(tab[!complete.cases(tab),])
+
 ```
 
 ```{r}

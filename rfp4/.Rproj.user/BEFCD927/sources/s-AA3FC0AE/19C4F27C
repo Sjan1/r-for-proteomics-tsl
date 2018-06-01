@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527590628379.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2210943425",
+    "id" : "19C4F27C",
+    "lastKnownWriteTime" : 1527852176,
+    "last_content_update" : 1527852176010,
+    "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp4/design.Rmd",
+    "project_path" : "design.Rmd",
+    "properties" : {
+        "cursorPosition" : "41,50",
+        "scrollLine" : "34"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
