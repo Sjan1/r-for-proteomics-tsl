@@ -1,4 +1,5 @@
 library("MSnID")
+library("MSnbase")
 
 ## To read the vignette:openVignette("MSnID")
 
