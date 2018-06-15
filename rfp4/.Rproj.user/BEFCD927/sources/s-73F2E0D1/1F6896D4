@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1528210277879.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1F6896D4",
+    "lastKnownWriteTime" : 1527257314,
+    "last_content_update" : 1527257314,
+    "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp4/S03-readMSnSet.R",
+    "project_path" : "S03-readMSnSet.R",
+    "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

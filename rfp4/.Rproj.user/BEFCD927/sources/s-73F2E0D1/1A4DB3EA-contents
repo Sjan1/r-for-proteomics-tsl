@@ -1,0 +1,6 @@
+fn <- tab %>% group_by(biorep,sample,treatment,cleavage) %>%
+  summarise(file = paste0(file, collapse="+"))
+
+fn0 <- tab %>% group_by(biorep,sample,treatment,cleavage) %>%
+summarise(Unq_smpl =n_distinct(file))
+fn0

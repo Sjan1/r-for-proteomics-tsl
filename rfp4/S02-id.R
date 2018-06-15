@@ -47,6 +47,7 @@ ggplot(as.data.frame(ppm), aes(x=ppm)) +
   geom_histogram(binwidth=100)
 
 msnid$msmsScore <- -log10(msnid$`MS-GF:SpecEValue`)
+msnid$absParentMassErrorPPM <- abs(mass_measurement_error(msnid))
 
 ## create filter
 filtObj <- MSnIDFilter(msnid)
@@ -63,15 +64,29 @@ show(filtObj.grid)
 
 msnid0 <- msnid
 msnid <- apply_filter(msnid, filtObj.grid)
+msnid
 
 ## make spectral counts table
 
 ## 1 id file per sample
-msnset <- as(msnid, "MSnSet")
 
-prots <- combineFeatures(msnset, 
-                         fcol = "accession",
+msnset <- as(msnid, "MSnSet")
+#prots <- combineFeatures(msnset,
+#                         fcol = "accession",
+#                         fun = "sum")
+prots <- combineFeatures(msnset,
+                         groupBy = fData(msnset)$accession,
                          fun = "sum")
+class(fData(msnset))
+fData(msnset)$accession
+class(fData(msnset)$accession)
+
+#following line does not work
+table(fData(msnset)$accession$Value)
+
+#to show the object's content
+str(fData(msnset)$accession)
+
 
 ## different fractions, same lane (all same sample)
 td <- as(msnid, "data.table")
@@ -81,7 +96,7 @@ sel <- !duplicated(td$pepSeq)
 count <- table(td$pepSeq)
 x <- td[sel, ]
 x$count <- as.vector(count[x$pepSeq])
-## View(x)
+View(x)
 
 i <- which(names(x) == "count")
 e <- readMSnSet2(x, i)

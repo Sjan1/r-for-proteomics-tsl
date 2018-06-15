@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1529012052675.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "700547767",
+    "id" : "790E5B5",
+    "lastKnownWriteTime" : 1521627361,
+    "last_content_update" : 1529012404254,
+    "path" : "C:/R/RfP/rfp1/S03-msmsset.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "13,29",
+        "scrollLine" : "4"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
