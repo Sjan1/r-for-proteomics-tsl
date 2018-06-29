@@ -38,19 +38,25 @@ Example:
 - remove some feature variables before combining into proteins (for example remove peptide scores)
 
 
-
-
-
 2)  Another In Fix in spectral counting table in S02...
 
 ```
 table(fData(msnset$accession$Value)
 ```
 
-This happens because PSMs/peptides match to multiple proteins, which
-are recorded as a list in the feature variable.
+This happens because PSMs/peptides match to multiple proteins,
+which are recorded as a list in the feature variable.
 
+```{r}
+load("data/td.rda")
+```
 
+`td` comes from rfp4 `S03`:
+
+```
+td <- as(msnid, "data.table")
+msnset <- as(msnid, "MSnSet")
+```
 
 3)  In general we need to sometime combine some samples. All should
 start by applying filters on the Sample-Experiment-Table (SEx table).
@@ -76,9 +82,29 @@ information already.
 meta-information to MSnSet. And then, at last, we should be able to
 start plotting, right? Directly from MSnSet? How?
 
+```
+sampleNames(msnset)
+tab[1:3, 1]
+
+pd <- data.frame(tab[1:3, ])
+rownames(pd) <- sampleNames(msnset)
+pData(msnset) <- pd
+```
+
 5)  Mascot MzIdentML Export issue – will it be fixed? A direct
 comparison with MSGF+ would be very useful.
 
-6) `msmsTests` for spectral counting
+Yes, this is fixed, but still meed to be pushed to github.
+
+Also spectra annotations
+- in MSnbase, match observed and theoretical peaks
+- read it from Mascot; do we have an mzid file with these? See issue
+  173 in mzR.
+
+6) Statstical analyses
+- `msmsTests` for spectral counting - See `S01-msmsTests.R`.
+- `DEP` for reporter ions
+
+- `ProSTAR`
 
 7)  Future meetings and collaboration
