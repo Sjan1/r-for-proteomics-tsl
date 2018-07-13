@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1530539367153.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D64F58B1",
+    "lastKnownWriteTime" : 1530539448,
+    "last_content_update" : 1530540331034,
+    "path" : "C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp1/S03-msnset.R",
+    "project_path" : "S03-msnset.R",
+    "properties" : {
+        "cursorPosition" : "27,0",
+        "scrollLine" : "8"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

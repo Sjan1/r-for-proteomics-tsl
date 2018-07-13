@@ -1,0 +1,110 @@
+1)  Fix the scripts from the last session, S03...
+
+```
+sampleNames(eprots) <- sample1
+```
+
+This needed to combine properly. For instance, set all acquisitions to the 
+same sample name if they are different fractions from the same sample.
+
+```
+sampleNames(eprots1) <- sample1
+sampleNames(eprots2) <- sample1
+combine(eprots1, eprots2) ## will rbind (along the rows)
+```
+
+Sample names and feature names are important because they define how
+the data can be combined. See the section in this vignette
+https://lgatto.github.io/MSnbase/articles/MSnbase-demo.html.
+
+```{r}
+library("MSnbase")
+data(msnset)
+fvarLabels(msnset)
+
+## rename all feature variables
+mA <- updateFvarLabels(msnset, "A")
+fvarLabels(mA)
+
+## remove 1 feature variable
+fData(mA)$ms.level.A <- NULL
+fvarLabels(mA)
+```
+
+Example:
+
+- keep all the feature data at the peptide level, needed for filtering
+- check if feature names need to be renamed before combining acquisitions
+- remove some feature variables before combining into proteins (for example remove peptide scores)
+
+
+2)  Another In Fix in spectral counting table in S02...
+
+```
+table(fData(msnset$accession$Value)
+```
+
+This happens because PSMs/peptides match to multiple proteins,
+which are recorded as a list in the feature variable.
+
+```{r}
+load("data/td.rda")
+```
+
+`td` comes from rfp4 `S03`:
+
+```
+td <- as(msnid, "data.table")
+msnset <- as(msnid, "MSnSet")
+```
+
+3)  In general we need to sometime combine some samples. All should
+start by applying filters on the Sample-Experiment-Table (SEx table).
+In this respect, Marielle has suggested following:
+
+```
+fn <- tab %>% group_by(biorep,sample,treatment,cleavage) %>%
+  summarise(file = paste0(file, collapse="+"))
+```
+ 
+
+Using this pipe gives groups, where we want to combine fractions of
+biosamples. Now we should work out how to incorporate this into our
+scripts. I am not sure if I understand your suggestion at the very
+bottom of script `S03-id.R`
+
+We to counts peptides or spectra of proteins of individual samples
+replicates of individual categories (of individual categories,
+sometimes). And we should rely on the table as it contains all the
+information already.
+
+4)  When the previous is done, we can/need to add sample
+meta-information to MSnSet. And then, at last, we should be able to
+start plotting, right? Directly from MSnSet? How?
+
+```
+sampleNames(msnset)
+tab[1:3, 1]
+
+pd <- data.frame(tab[1:3, ])
+rownames(pd) <- sampleNames(msnset)
+pData(msnset) <- pd
+```
+
+5)  Mascot MzIdentML Export issue – will it be fixed? A direct
+comparison with MSGF+ would be very useful.
+
+Yes, this is fixed, but still meed to be pushed to github.
+
+Also spectra annotations
+- in MSnbase, match observed and theoretical peaks
+- read it from Mascot; do we have an mzid file with these? See issue
+  173 in mzR.
+
+6) Statstical analyses
+- `msmsTests` for spectral counting - See `S01-msmsTests.R`.
+- `DEP` for reporter ions
+
+- `ProSTAR`
+
+7)  Future meetings and collaboration
