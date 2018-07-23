@@ -9,7 +9,7 @@ source("S00-env.R")
 tab <- readr::read_csv("data/SampleExperimentTable.csv")
 names(tab)[1:2] <- c("file", "raw")
 tab
-rownames(tab) <- tab$filea
+rownames(tab) <- tab$file
 
 fns <- c()
 labs <- c()
@@ -24,6 +24,8 @@ for(file in rownames(tab)){
 }
 ndf <- data.frame(file=fns, labs=labs, stringsAsFactors = FALSE)
 saveRDS(ndf, "data/tab_unq")
+write.table(ndf,"data/tab_unq.txt", sep="\t", row.names = TRUE, col.names = TRUE,
+            quote=FALSE)
 rm(ndf)
 
 rdf <- readRDS("data/tab_unq")
@@ -37,8 +39,8 @@ msnid <- read_mzIDs(msnid, fn)
 labs <- rdf$labs
 names(labs) <- rdf$file
 labs["PDLP1_wt-1t_1_1_1_111206"]
-labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
 
-msnid$spectrumFile <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
-# next - we should add a new column with our special string that describes smpl-exp,
-# for we do not wish to loose spectrumFile.
+labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
+# new column called 'label' to put our sample-experiment description in
+msnid$label <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
+

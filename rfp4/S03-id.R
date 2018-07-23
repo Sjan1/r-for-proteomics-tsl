@@ -23,16 +23,6 @@ fn2 <- dir("MSGF2", pattern = "wt", full.names = TRUE)
 ## sample 2, and we will want to rename it accordingly with 
 ## sampleNames(.) <- "sample2"
 
-msnid <- MSnID()
-msnid <- read_mzIDs(msnid, fn)
-
-labs <- rdf$labs
-names(labs) <- rdf$file
-labs["PDLP1_wt-1t_1_1_1_111206"]
-labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
-
-msnid$spectrumFile <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
-
 
 msnid <- assess_termini(msnid, validCleavagePattern="[KR]\\.[^P]")
 msnid <- assess_missed_cleavages(msnid, missedCleavagePattern="[KR](?=[^P$])")
@@ -62,7 +52,7 @@ msnid <- apply_filter(msnid, filtObj.grid)
 
 ## different fractions, same lane (all same sample)
 td <- as(msnid, "data.table")
-## View(td)
+View(td)
 
 sel <- !duplicated(td$pepSeq)
 count <- table(td$pepSeq)
