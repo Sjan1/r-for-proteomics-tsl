@@ -3,6 +3,7 @@ fn <- tab %>%
   filter(category == "CI" & cleavage == "tryp") %>% 
   select(file) 
 
+library("MSnID")
 ## one bio-sample/lane
 fn <- dir("MSGF2", pattern = "lp", full.names = TRUE)
 ## these files will be processed by MSnID, will 
@@ -24,6 +25,14 @@ fn2 <- dir("MSGF2", pattern = "wt", full.names = TRUE)
 
 msnid <- MSnID()
 msnid <- read_mzIDs(msnid, fn)
+
+labs <- rdf$labs
+names(labs) <- rdf$file
+labs["PDLP1_wt-1t_1_1_1_111206"]
+labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
+
+msnid$spectrumFile <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
+
 
 msnid <- assess_termini(msnid, validCleavagePattern="[KR]\\.[^P]")
 msnid <- assess_missed_cleavages(msnid, missedCleavagePattern="[KR](?=[^P$])")

@@ -87,9 +87,8 @@ y <- combineFeatures(x, groupBy = gbl,
 exprs(combineFeatures(x, fcol = "acc", fun = "median"))
 exprs(combineFeatures(x, fcol = "acc", fun = "mean"))
 
-## !!!a problem here - the list must be when combined only data with one protein per peptide!!!
-## we have to do this on unique list of proteins
-## when more proteins is in acc, this metod fails
+## !!!A problem - combineFeatures needs one accession per peptide sequence!!!
+## A peptide with several protein accessions on one row, as a vector, this metod fails
 exprs(combineFeatures(x, groupBy = fData(x)$acc, fun = "median"))
 
 

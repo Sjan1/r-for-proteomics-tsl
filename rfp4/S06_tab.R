@@ -40,4 +40,5 @@ labs["PDLP1_wt-1t_1_1_1_111206"]
 labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
 
 msnid$spectrumFile <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
-# we should add a new column with our special string that describes smpl-exp
+# next - we should add a new column with our special string that describes smpl-exp,
+# for we do not wish to loose spectrumFile.
