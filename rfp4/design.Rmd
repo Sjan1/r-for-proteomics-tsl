@@ -3,12 +3,42 @@ title: "Experimental design"
 author: "Laurent Gatto"
 date: "24 May 2018"
 output: html_document
----
 
+---
+## Extract meta data from the table
 ```{r env, message=FALSE, warning=FALSE}
 source("S00-env.R")
-tab <- read_csv("data/SampleExperimentTable.csv")
+tab <- read_csv("data/SampleExperimentTable_fixed.csv")
+## this renames the first two columns to something more concise
 names(tab)[1:2] <- c("file", "raw")
+```
+
+
+## Check the input integrity
+### Meta data names, raw and search filnenames should be the same. 
+We need to strip filename extensions for the comparison.
+
+```{r Integrity, message=FALSE, warning=FALSE}
+## Read filenames from:
+## 1. meta data table are in tab$file
+## 2. raw (mzML) filenames
+## 3. id (iii) files names
+tab$file
+mzML_files <- dir("raw", full.names = FALSE)
+mzid_files <- dir("MSGF", full.names = FALSE)
+
+## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
+setdiff(sub("\\.mzML$","",mzML_files),sub("\\.mzid$","",mzid_files))
+
+## There might be some discrepancy in meta data though.
+## In the following section, diff result is evaluated as zero, when there is no differnece in the file names compared. To print the differences in both sets, we have to run it twice.
+
+## meta data vs. raw data
+setdiff(tab$file,sub("\\.mzML$","",mzML_files))
+setdiff(sub("\\.mzML$","",mzML_files),tab$file)
+## meta data vs. id data
+setdiff(tab$file,sub("\\.mzid$","",mzid_files))
+setdiff(sub("\\.mzid$","",mzid_files),tab$file)
 ```
 
 ```{r}
@@ -39,4 +69,3 @@ knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"))
 ```{r}
 ggplot(tab, aes(x = treatment)) + geom_bar()
 ```
-

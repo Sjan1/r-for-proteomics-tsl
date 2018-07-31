@@ -32,7 +32,10 @@ rdf <- readRDS("data/tab_unq")
 head(rdf)
 
 
-# Here we connec to scripts S02, S03
+# Here weneeed to bring in the data (like in the scripts S02, S03)
+
+fn <- dir("MSGF", full.names = TRUE)
+
 msnid <- MSnID()
 msnid <- read_mzIDs(msnid, fn)
 
@@ -43,4 +46,16 @@ labs["PDLP1_wt-1t_1_1_1_111206"]
 labs_sub <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
 # new column called 'label' to put our sample-experiment description in
 msnid$label <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
+
+## different fractions, same lane (all same sample)
+td <- as(msnid, "data.table")
+
+# check for missing labels 
+# samples not measured, inconsistency in the Smpl-Exp table
+x <- unique(td$label)
+length(x)
+length(rdf)
+rdf
+# idealy comparison of rdf and unique(td$label)
+
 
