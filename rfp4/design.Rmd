@@ -3,8 +3,14 @@ title: "Experimental design"
 author: "Laurent Gatto"
 date: "24 May 2018"
 output: html_document
-
 ---
+## This document checks and summarizes data integrity and experimental design.
+- Is all we expect to be ananlyzed present? 
+- Where are all the data? 
+- Do file names of raw data, search data and sample meta data correspond?
+- What is the experimental design? 
+- Are categories, time points, fractions, added to sample_ meta_data  table?
+
 ## Extract meta data from the table
 ```{r env, message=FALSE, warning=FALSE}
 source("S00-env.R")
