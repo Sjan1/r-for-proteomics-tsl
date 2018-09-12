@@ -6,7 +6,7 @@
 
 source("S00-env.R")
 
-tab <- readr::read_csv("data/SampleExperimentTable.csv")
+tab <- readr::read_csv("data/SampleExperimentTable_fixed.csv")
 names(tab)[1:2] <- c("file", "raw")
 tab
 rownames(tab) <- tab$file
@@ -32,7 +32,7 @@ rdf <- readRDS("data/tab_unq")
 head(rdf)
 
 
-# Here weneeed to bring in the data (like in the scripts S02, S03)
+# Here we neeed to bring in the data (like in the scripts S02, S03)
 
 fn <- dir("MSGF", full.names = TRUE)
 
@@ -51,11 +51,68 @@ msnid$label <- labs[sub("\\.mzML$","",msnid$spectrumFile)]
 td <- as(msnid, "data.table")
 
 # check for missing labels 
-# samples not measured, inconsistency in the Smpl-Exp table
+# due to samples not being measured or inconsistency in the Smpl-Exp table
 x <- unique(td$label)
 length(x)
 length(rdf)
 rdf
 # idealy comparison of rdf and unique(td$label)
+#sel <- is.na(td$label)
+#sum(sel)
+#table(sel)
+#View(td[sel,])
+
+## 180816
+## all one 
+## here we count spectra, different spectral counts in the new column
+sel <- !duplicated(td$pepSeq)
+count <- table(td$pepSeq)
+x <- td[sel, ]
+x$count <- as.vector(count[x$pepSeq])
+View(x)
+
+## read all (samples, fractions) into one msnset object
+i <- which(names(x) == "count")
+e <- readMSnSet2(x, i)
+featureNames(e) <- fData(e)$pepSeq
 
 
+## keeping samples separate
+list_msnsets <- list()
+reps <- unique(sub("\\d+$","",rdf$labs,perl = TRUE))
+## reps contains unique biosamples (fractions removed)
+
+for (biorep in reps) {
+  #grepl(reps[1],td$label)
+  tds <- td[grepl(biorep,td$label),]
+
+#merging fraction, making msnset 
+  sel <- !duplicated(tds$pepSeq)
+  count <- table(tds$pepSeq)
+  x <- tds[sel, ]
+  x$count <- as.vector(count[x$pepSeq])
+#View(x)
+
+## read into msnset object
+  i <- which(names(x) == "count")
+  e <- readMSnSet2(x, i)
+  featureNames(e) <- fData(e)$pepSeq
+
+  list_msnsets[[biorep]] <- e
+}
+
+## combine all into one msnset
+msnset = BiocGenerics::do.call(combine,list_msnsets)
+
+#testing
+e1 <- list_msnsets[[1]]
+e2 <- list_msnsets[[2]]
+c <- do.call(combine,list(e1,e2))
+
+e1_1 <- list_msnsets[[1]][1:10]
+e1_2 <- list_msnsets[[1]][11:21]
+c <- do.call(combine,list(e1_1,e1_2))
+
+e11 <- e[1:10,]
+e22 <- e[11:21,]
+c <- do.call(combine,list(e11,e22))
