@@ -62,14 +62,14 @@ rdf
 #table(sel)
 #View(td[sel,])
 
-## 180816
+## 180716 
 ## all one 
 ## here we count spectra, different spectral counts in the new column
 sel <- !duplicated(td$pepSeq)
 count <- table(td$pepSeq)
 x <- td[sel, ]
 x$count <- as.vector(count[x$pepSeq])
-View(x)
+#View(x)
 
 ## read all (samples, fractions) into one msnset object
 i <- which(names(x) == "count")
@@ -77,7 +77,7 @@ e <- readMSnSet2(x, i)
 featureNames(e) <- fData(e)$pepSeq
 
 
-## keeping samples separate
+## keeping samples separately
 list_msnsets <- list()
 reps <- unique(sub("\\d+$","",rdf$labs,perl = TRUE))
 ## reps contains unique biosamples (fractions removed)
@@ -115,4 +115,17 @@ c <- do.call(combine,list(e1_1,e1_2))
 
 e11 <- e[1:10,]
 e22 <- e[11:21,]
+sampleNames(e11) <- c("sample11")
+sampleNames(e22) <- c("sample22")
+
+e11 <- updateSampleNames(e11)
+e22 <- updateSampleNames(e22)
+
+e11 <- updateFeatureNames(e11)
+e22 <- updateFeatureNames(e22)
+
+e11 <- updateFvarLabels(e11)
+e22 <- updateFvarLabels(e22)
+
 c <- do.call(combine,list(e11,e22))
+

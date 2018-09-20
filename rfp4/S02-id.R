@@ -1,5 +1,4 @@
-library("MSnID")
-library("MSnbase")
+source("S00-env.R")
 
 ## To read the vignette:openVignette("MSnID")
 
@@ -48,6 +47,7 @@ ggplot(as.data.frame(ppm), aes(x=ppm)) +
   geom_histogram(binwidth=100)
 
 msnid$msmsScore <- -log10(msnid$`MS-GF:SpecEValue`)
+msnid$absParentMassErrorPPM <- abs(mass_measurement_error(msnid))
 
 ## create filter
 filtObj <- MSnIDFilter(msnid)
@@ -56,10 +56,13 @@ filtObj$msmsScore <- list(comparison=">", threshold=10.0)
 show(filtObj)
 
 
-## optimise filter
+## optimise filter - this does not seem working!!!
 filtObj.grid <- optimize_filter(filtObj, msnid, fdr.max=0.01,
                                 method="Grid", level="peptide",
                                 n.iter=500)
+
+
+
 show(filtObj.grid)
 
 msnid0 <- msnid
@@ -73,6 +76,18 @@ msnset <- as(msnid, "MSnSet")
 prots <- combineFeatures(msnset, 
                          fcol = "accession",
                          fun = "sum")
+## for older vesion of MSnBase
+prots <- combineFeatures(msnset,
+                         groupBy = fData(msnset)$accession,
+                         fun="sum")
+## checks
+class(fData(msnset))
+fData(msnset)$accession
+class(fData(msnset)$accession)
+#to show the object's content
+str(fData(msnset)$accession)
+
+
 
 ## different fractions, same lane (all same sample)
 td <- as(msnid, "data.table")

@@ -1,15 +1,16 @@
 1)  Fix the scripts from the last session, S03...
 
-```
+
+```{r}
 sampleNames(eprots) <- sample1
 ```
 
 This needed to combine properly. For instance, set all acquisitions to the 
 same sample name if they are different fractions from the same sample.
 
-```
+```{r}
 sampleNames(eprots1) <- sample1
-sampleNames(eprots2) <- sample1
+sampleNames(eprots2) <- sample2
 combine(eprots1, eprots2) ## will rbind (along the rows)
 ```
 
@@ -40,8 +41,8 @@ Example:
 
 2)  Another In Fix in spectral counting table in S02...
 
-```
-table(fData(msnset$accession$Value)
+```{r}
+table(fData(msnset$accession$Value))
 ```
 
 This happens because PSMs/peptides match to multiple proteins,
@@ -84,7 +85,8 @@ start plotting, right? Directly from MSnSet? How?
 
 ```
 sampleNames(msnset)
-tab[1:3, 1]
+table[1:3, 1]
+
 
 pd <- data.frame(tab[1:3, ])
 rownames(pd) <- sampleNames(msnset)
