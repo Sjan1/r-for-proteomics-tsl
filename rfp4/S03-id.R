@@ -80,17 +80,27 @@ eprots <- combineFeatures(e,
 eprots1 <- eprots 
 eprots2 <- eprots
 
-sampleNames(eprots1) <- c("sample1")
-sampleNames(eprots2) <- c("sample2")
+sampleNames(eprots1) <- c("smpl1")
+sampleNames(eprots2) <- c("smpl2")
+eprots1 <- updateSampleNames(eprots1)
+eprots2 <- updateSampleNames(eprots2)
+eprots1 <- updateFvarLabels(eprots1)
+eprots2 <- updateFvarLabels(eprots2)
 ## eprots1, named sample1
 ## eprots2, named sample2
 ## ...
-
 ## efinal <- combine(eprots1, eprots2)
-list_msnsets <- list(eprots1,eprots2)
+list_eprots <- list(eprots1,eprots2)
 
-efinal <- do.call(combine,list_msnsets)
-efinal <- combine(combine,list_msnsets)
+## works
+efinal <- do.call(BiocGenerics::combine,list_eprots)
+
+## works too
+efinal2 <- BiocGenerics::combine(list_eprots[[1]],list_eprots[[2]])
+
+## this one works
+efinal <- BiocGenerics::combine(eprots1,eprots2)
+head(exprs(efinal),20)
 
 ## use tab to populate pData(efinal)
 ## for example

@@ -3,7 +3,7 @@
 ## We are creating a unique stting that link raw file names with experiments, 
 ## then we shall cut this string to find which groups of files form samples, 
 ## replicates and how they should be combined and how to assemle the proteins.   
-
+rm(list=ls())
 source("S00-env.R")
 
 tab <- readr::read_csv("data/SampleExperimentTable_fixed.csv")
@@ -80,8 +80,10 @@ featureNames(e) <- fData(e)$pepSeq
 ## keeping samples separately
 list_msnsets <- list()
 reps <- unique(sub("\\d+$","",rdf$labs,perl = TRUE))
-## reps contains unique biosamples (fractions removed)
 
+## reps contains unique biosamples (fractions removed)
+## the counter is needed for the loop
+counter <- 1
 for (biorep in reps) {
   #grepl(reps[1],td$label)
   tds <- td[grepl(biorep,td$label),]
@@ -91,27 +93,171 @@ for (biorep in reps) {
   count <- table(tds$pepSeq)
   x <- tds[sel, ]
   x$count <- as.vector(count[x$pepSeq])
-#View(x)
+  #View(x)
 
 ## read into msnset object
   i <- which(names(x) == "count")
   e <- readMSnSet2(x, i)
   featureNames(e) <- fData(e)$pepSeq
 
-  list_msnsets[[biorep]] <- e
+  ## update sample names and Feature Labels
+  sampleNames(e) <- biorep
+  #e <- updateSampleNames(e,biorep)
+  e <- updateFvarLabels(e,biorep)
+  
+  ## First MSnSet
+  if(counter==1){
+    combined_e <- e
+  }
+  ## Second MSnSet and up -> here we combine generated MSnSets 
+  if(counter>1){
+    combined_e <- BiocGenerics::combine(combined_e,e)
+  }
+  
+  #initial idea that did not work  
+  #list_msnsets[[biorep]] <- e
+  
+    counter <- counter+1
+  ##to stop it
+  if(counter>5){break}
+  
+  ## visualize the progress
+    print(paste(counter, biorep, sep=" - "))
+    Sys.sleep(0.01)
+    flush.console()
 }
 
-## combine all into one msnset
-msnset = BiocGenerics::do.call(combine,list_msnsets)
+## 2-10-2018: asign peptides to proteins
+## let us create a vector with all accessions that every peptide matches.
 
-#testing
+accvec <- c()
+
+acc <- grep("accession",fvarLabels(combined_e),value = TRUE)
+df_temp <- (fData(combined_e)[,acc])
+for (rn in rownames(df_temp)) {
+  onerow <- df_temp[rn,]
+  for (cn in 1:length(onerow)) {
+    oneacc <- onerow[1,cn]
+    if (is.na(oneacc)){}else{accvec <- c(accvec,oneacc);
+      break}    
+  }
+}
+## The lenght of accvec should be the same as all unique peptides in combined_e MSnSet
+length(unique(accvec))
+grep(",",accvec)
+
+fData(combined_e)$acc <- accvec
+
+## PROTEOTYPIC PEPTIDES ########################################
+## combining proteotypic peptides to the corresponding proteins
+comb1 <- combineFeatures(combined_e, groupBy = fData(combined_e)$acc, 
+                                               fun = "sum")
+## remove NAs
+head(exprs(comb1))
+comb1 <- impute(comb1, method = "zero")
+head(exprs(comb1))
+
+## sanity check
+one <- fData(combined_e)
+pep <- rownames(one[one$acc=="AT1G23410.1",])
+pep
+head(exprs(combined_e))
+exprs(combined_e)[pep,]
+
+##more checks - protein that exist in two or more samples
+test <- exprs(comb1)
+#vector to order test
+ordervec <- base::rowSums(test,na.rm=TRUE)
+#order rows of test using ordervec
+test[order(ordervec,decreasing=TRUE),]
+head(test[order(ordervec,decreasing=TRUE),])
+
+## ALL PEPTIDES ###########################################
+## combining ALL peptides to  to the corresponding proteins
+comb2 <- combineFeatures(combined_e, groupBy = accvec, 
+                      redundancy.handler = "multiple",
+                      fun = "sum")
+## remove NAs
+head(exprs(comb2))
+comb2 <- impute(comb2, method = "zero")
+head(exprs(comb2))
+
+## sanity check
+one <- fData(combined_e)
+pep <- rownames(one[one$acc=="AT1G23410.1",])
+pep
+head(exprs(combined_e))
+exprs(combined_e)[pep,]
+
+##more checks - protein that exist in two or more samples
+test <- exprs(comb2)
+#vector to order test
+ordervec <- base::rowSums(test,na.rm=TRUE)
+#order rows of test using ordervec
+test[order(ordervec,decreasing=TRUE),]
+head(test[order(ordervec,decreasing=TRUE),])
+
+## sanity checks
+ft <- fData(combined_e)$acc=="AT1G23410.1"
+which(ft)
+fData(combined_e)[446,"acc"]
+fData(combined_e)[3094,"acc"]
+fData(combined_e)[ft,"acc"]
+
+features <- fData(combined_e)
+class(features)
+## what is 'grepEcols' good for?
+
+##peptide - accession pairs
+fn <- featureNames(combined_e)
+ac <- fData(combined_e)$acc
+fn
+ac
+pair <- as.data.frame(ac,fn)
+head(pair)
+pair[1,]
+pair[ft,]
+names(pair)
+head(rownames(pair))
+
+## oh, this is it
+## and we have a problem...
+
+head(test[order(ordervec,decreasing=TRUE),])
+ft <- fData(combined_e)$acc=="AT1G23410.1"
+subset(pair,ft)
+exprs(combined_e)[ft,]
+
+
+
+
+
+
+## END END END #########################################
+
+## some older testing
+## combine all into one msnset
+msnset <-  do.call(BiocGenerics::combine,list_msnsets)
+
+msnset <-  BiocGenerics::combine(list_msnsets[[1]],list_msnsets[[2]],list_msnsets[[3]])
+
+msnset <-  BiocGenerics::combine(list_msnsets[[1:3]])
+
+
+#testing on two msnsets
 e1 <- list_msnsets[[1]]
 e2 <- list_msnsets[[2]]
-c <- do.call(combine,list(e1,e2))
+sampleNames(e1) <- c("sample1")
+sampleNames(e2) <- c("sample2")
+e1 <- updateSampleNames(e1)
+e2 <- updateSampleNames(e2)
+e1 <- updateFvarLabels(e1)
+e2 <- updateFvarLabels(e2)
+c <- BiocGenerics::combine(e1,e2)
 
-e1_1 <- list_msnsets[[1]][1:10]
-e1_2 <- list_msnsets[[1]][11:21]
-c <- do.call(combine,list(e1_1,e1_2))
+#e1_1 <- list_msnsets[[1]][1:10]
+#e1_2 <- list_msnsets[[1]][11:21]
+#c <- do.call(combine,list(e1_1,e1_2))
 
 e11 <- e[1:10,]
 e22 <- e[11:21,]
@@ -121,11 +267,11 @@ sampleNames(e22) <- c("sample22")
 e11 <- updateSampleNames(e11)
 e22 <- updateSampleNames(e22)
 
-e11 <- updateFeatureNames(e11)
-e22 <- updateFeatureNames(e22)
+#e11 <- updateFeatureNames(e11)
+#e22 <- updateFeatureNames(e22)
 
 e11 <- updateFvarLabels(e11)
 e22 <- updateFvarLabels(e22)
 
-c <- do.call(combine,list(e11,e22))
+c <- BiocGenerics::combine(e11,e22)
 
