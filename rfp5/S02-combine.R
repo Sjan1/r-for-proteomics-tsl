@@ -1,6 +1,8 @@
 library("MSnbase")
 library("BiocInstaller")
 biocLite("rlang")
+biocLite("limma")
+biocLite("MSnbase")
 
 x1 = msnset[1:10, ]
 x2 = msnset[11:30, ]
@@ -83,13 +85,14 @@ exprs(x)
 y1 <- combineFeatures(x, groupBy = fData(x)$acc, 
                      fun = "sum")
 exprs(y1)
-## 1-2: combining peptides that can match multiple proteins
+## 1-2: combining peptides that match multiple proteins;
+## 'sum' makes most sense, 'median' works as well.
 y2 <- combineFeatures(x, groupBy = gbl, 
                      redundancy.handler = "multiple",
                      fun = "sum")
-
 exprs(y2)
 
+## this does not work in my R/RS/MSNbase, but might work in newer
 exprs(combineFeatures(x, fcol = "acc", fun = "median"))
 exprs(combineFeatures(x, fcol = "acc", fun = "mean"))
 

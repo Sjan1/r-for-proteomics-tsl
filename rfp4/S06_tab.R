@@ -127,11 +127,12 @@ for (biorep in reps) {
     flush.console()
 }
 
-## 2-10-2018: asign peptides to proteins
-## let us create a vector with all accessions that every peptide matches.
-
+## 2-10-2018: Asign peptides to proteins
+## Let us create a vector with all accessions matching every peptide matches.
+## Mind the possibility one peptide can match more accessions
+## This vector we then append to feature data
+## In a loop we will step through features and remember an accession when found
 accvec <- c()
-
 acc <- grep("accession",fvarLabels(combined_e),value = TRUE)
 df_temp <- (fData(combined_e)[,acc])
 for (rn in rownames(df_temp)) {
@@ -141,46 +142,65 @@ for (rn in rownames(df_temp)) {
     if (is.na(oneacc)){}else{accvec <- c(accvec,oneacc);
       break}    
   }
+  
 }
-## The lenght of accvec should be the same as all unique peptides in combined_e MSnSet
-length(unique(accvec))
-grep(",",accvec)
 
+## lenght of accvec should be the same as the length of featurenames
+length(accvec)
+length(featureNames(combined_e))
+## The lenght of accvec should be the number of non redundant protein
+## after features are combined this will be number of combined features
+## length(featureNames(comb1))
+length(unique(accvec))
+## Are there more accesions inthe same row?
+grep(",",accvec)
+grep(",",fData(combined_e)$acc)
+## append combined accessions to feature data
 fData(combined_e)$acc <- accvec
+
+## remove NAs before combining features
+head(exprs(combined_e))
+combined_e <- impute(combined_e, method = "zero")
+head(exprs(combined_e))
 
 ## PROTEOTYPIC PEPTIDES ########################################
 ## combining proteotypic peptides to the corresponding proteins
 comb1 <- combineFeatures(combined_e, groupBy = fData(combined_e)$acc, 
                                                fun = "sum")
-## remove NAs
-head(exprs(comb1))
-comb1 <- impute(comb1, method = "zero")
-head(exprs(comb1))
 
-## sanity check
-one <- fData(combined_e)
-pep <- rownames(one[one$acc=="AT1G23410.1",])
-pep
-head(exprs(combined_e))
-exprs(combined_e)[pep,]
+## sanity checks
+## number of combined features
+length(featureNames(comb1))
+##number of features in the original combined_e
+length(fData(combined_e)$acc)
 
-##more checks - protein that exist in two or more samples
+## Let's check the abundant proteins present in more than one sample
+## were combined correctly
 test <- exprs(comb1)
 #vector to order test
 ordervec <- base::rowSums(test,na.rm=TRUE)
 #order rows of test using ordervec
-test[order(ordervec,decreasing=TRUE),]
 head(test[order(ordervec,decreasing=TRUE),])
+## Let's pick one of the accessions
+## and find which peptides it containts 
+one <- fData(combined_e)
+pep <- rownames(one[one$acc=="AT1G23410.1",])
+pep
+## This is how the peptides were distribute among smaples
+exprs(combined_e)[pep,]
+## This is after features were combineed
+ex1 <- exprs(comb1)
+s <- rownames(ex1)=="AT1G23410.1"
+ex1[s,,drop=FALSE]
+
+
+
 
 ## ALL PEPTIDES ###########################################
 ## combining ALL peptides to  to the corresponding proteins
 comb2 <- combineFeatures(combined_e, groupBy = accvec, 
                       redundancy.handler = "multiple",
                       fun = "sum")
-## remove NAs
-head(exprs(comb2))
-comb2 <- impute(comb2, method = "zero")
-head(exprs(comb2))
 
 ## sanity check
 one <- fData(combined_e)
@@ -208,6 +228,7 @@ features <- fData(combined_e)
 class(features)
 ## what is 'grepEcols' good for?
 
+## more controls
 ##peptide - accession pairs
 fn <- featureNames(combined_e)
 ac <- fData(combined_e)$acc
@@ -234,7 +255,25 @@ exprs(combined_e)[ft,]
 
 
 ## END END END #########################################
+## 6-10-2018
+## check all peptides are unique
+pepvec <- c()
+pep <- grep("peptide",fvarLabels(combined_e),value = TRUE)
+df_temp <- (fData(combined_e)[,pep])
+for (rn in rownames(df_temp)) {
+  onerow <- df_temp[rn,]
+  for (cn in 1:length(onerow)) {
+    onepep <- onerow[1,cn]
+    if (is.na(onepep)){}else{pepvec <- c(pepvec,onepep);
+    break}    
+  }
+}
+length(pepvec)
+length(unique(pepvec))
 
+
+
+########################################################
 ## some older testing
 ## combine all into one msnset
 msnset <-  do.call(BiocGenerics::combine,list_msnsets)
