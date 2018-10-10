@@ -202,6 +202,34 @@ comb2 <- combineFeatures(combined_e, groupBy = accvec,
                       redundancy.handler = "multiple",
                       fun = "sum")
 
+## new sanity checks
+## number of combined features
+length(featureNames(comb2))
+##number of features in the original combined_e
+length(fData(combined_e)$acc)
+
+## Let's check the abundant proteins present in more than one sample
+## were combined correctly
+test <- exprs(comb2)
+#vector to order test
+ordervec <- base::rowSums(test,na.rm=TRUE)
+#order rows of test using ordervec
+head(test[order(ordervec,decreasing=TRUE),])
+## Let's pick one of the accessions
+## and find which peptides it containts 
+one <- fData(combined_e)
+pep <- rownames(one[one$acc=="AT1G23410.1",])
+pep
+## This is how the peptides were distribute among smaples
+exprs(combined_e)[pep,]
+## This is after features were combineed
+ex1 <- exprs(comb1)
+s <- rownames(ex1)=="AT1G23410.1"
+ex1[s,,drop=FALSE]
+
+
+
+
 ## sanity check
 one <- fData(combined_e)
 pep <- rownames(one[one$acc=="AT1G23410.1",])
