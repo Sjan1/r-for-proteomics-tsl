@@ -223,61 +223,9 @@ pep
 ## This is how the peptides were distribute among smaples
 exprs(combined_e)[pep,]
 ## This is after features were combineed
-ex1 <- exprs(comb1)
+ex2 <- exprs(comb2)
 s <- rownames(ex1)=="AT1G23410.1"
-ex1[s,,drop=FALSE]
-
-
-
-
-## sanity check
-one <- fData(combined_e)
-pep <- rownames(one[one$acc=="AT1G23410.1",])
-pep
-head(exprs(combined_e))
-exprs(combined_e)[pep,]
-
-##more checks - protein that exist in two or more samples
-test <- exprs(comb2)
-#vector to order test
-ordervec <- base::rowSums(test,na.rm=TRUE)
-#order rows of test using ordervec
-test[order(ordervec,decreasing=TRUE),]
-head(test[order(ordervec,decreasing=TRUE),])
-
-## sanity checks
-ft <- fData(combined_e)$acc=="AT1G23410.1"
-which(ft)
-fData(combined_e)[446,"acc"]
-fData(combined_e)[3094,"acc"]
-fData(combined_e)[ft,"acc"]
-
-features <- fData(combined_e)
-class(features)
-## what is 'grepEcols' good for?
-
-## more controls
-##peptide - accession pairs
-fn <- featureNames(combined_e)
-ac <- fData(combined_e)$acc
-fn
-ac
-pair <- as.data.frame(ac,fn)
-head(pair)
-pair[1,]
-pair[ft,]
-names(pair)
-head(rownames(pair))
-
-## oh, this is it
-## and we have a problem...
-
-head(test[order(ordervec,decreasing=TRUE),])
-ft <- fData(combined_e)$acc=="AT1G23410.1"
-subset(pair,ft)
-exprs(combined_e)[ft,]
-
-
+ex2[s,,drop=FALSE]
 
 
 
