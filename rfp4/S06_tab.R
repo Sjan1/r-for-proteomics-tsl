@@ -6,9 +6,14 @@
 rm(list=ls())
 source("S00-env.R")
 
-tab <- readr::read_csv("data/SampleExperimentTable_fixed.csv")
-names(tab)[1:2] <- c("file", "raw")
-tab
+tab <- readr::read_csv("data/SampleExperimentTable_fixed.csv", comment = "#")
+
+if(colnames(tab)[1]=="not_used"){
+names(tab)[2:3] <- c("file", "raw")
+} else{
+names(tab)[1:2] <- c("file", "raw")}
+
+head(tab)
 rownames(tab) <- tab$file
 
 fns <- c()
@@ -117,17 +122,27 @@ for (biorep in reps) {
   #initial idea that did not work  
   #list_msnsets[[biorep]] <- e
   
-    counter <- counter+1
+    
   ##to stop it
-  if(counter>5){break}
+  if(counter>999){break}
   
   ## visualize the progress
     print(paste(counter, biorep, sep=" - "))
     Sys.sleep(0.01)
     flush.console()
+    
+    counter <- counter+1  
 }
+saveRDS(combined_e,"combined_e.rds")
+combined_e <- readRDS("combined_e.rds")
 
-## 2-10-2018: Asign peptides to proteins
+## sums of peptides in individual samples
+sample_peptide_sums <- colSums(exprs(combined_e),na.rm = TRUE)
+temp <- names(sample_peptide_sums)
+otemp <- order(temp)
+barplot(sample_peptide_sums[otemp])
+
+## 2-10-2018: ASSIGN PEPTIDES TO PROTEINS ###################################
 ## Let us create a vector with all accessions matching every peptide matches.
 ## Mind the possibility one peptide can match more accessions
 ## This vector we then append to feature data
