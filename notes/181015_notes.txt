@@ -1,0 +1,22 @@
+180920
+============
+S002 and 3
+Optimize_filter does not work. It still expects some input.
+when three samples are loaded, there
+
+181015
+============
+Combined_e should rename to combined_e to smpl_peptides
+
+we should also create smpl_proteins_proteotypic AND combined_e_proteins_ambiguous, right?
+
+We agreed that the best seems to have these MSnSets and then summarise groups by calculating statistic on the fly for the purpose of their differential analysis.
+
+How can we use sample meta (pheno) data? Can we calculate statistic and save results there?
+Obviously when we calculate a summary of grouped samples, we need another table. Would it be advantage to create grouped MSnSet? Probably not. But consider what will follow. The next step following a differential expression (aundance) ananlysis as a proteinIDs is to investigate/check underlying peptide IDs. How do we get these IDs? Presumably querying the combined MSnSets. How to make this as smooth as possible? (The alternative is to click protein in Scaffold)
+
+How and where to save the important partial results such as df, MSnSets, etc? 
+rds?
+
+How to delete or not to use unwanted samples, e.g. outliers from MSnSet object? Our current answer is to generate the object without the unwnated input.
+
