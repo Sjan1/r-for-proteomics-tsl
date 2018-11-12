@@ -6,17 +6,196 @@ when three samples are loaded, there
 
 181015
 ============
-Combined_e should rename to combined_e to smpl_peptides
+Combined_e and other MSnSets should be renamed somehow to reflect what they store:
 
-we should also create smpl_proteins_proteotypic AND combined_e_proteins_ambiguous, right?
+frac_pep
+smpl_pep
+smpl_prot
+smpl_prot_proteotyp
+smpl_prot_ambig
+
 
 We agreed that the best seems to have these MSnSets and then summarise groups by calculating statistic on the fly for the purpose of their differential analysis.
 
 How can we use sample meta (pheno) data? Can we calculate statistic and save results there?
-Obviously when we calculate a summary of grouped samples, we need another table. Would it be advantage to create grouped MSnSet? Probably not. But consider what will follow. The next step following a differential expression (aundance) ananlysis as a proteinIDs is to investigate/check underlying peptide IDs. How do we get these IDs? Presumably querying the combined MSnSets. How to make this as smooth as possible? (The alternative is to click protein in Scaffold)
 
+Obviously when we calculate a summary of grouped samples, we need another table. Would it be advantage to create grouped MSnSet? (Probably not.)
+The next step following a differential abundance analysis of proteins is to investigate/check/correlate behaviour of the underlying peptides. 
+How do we get to these peptides? Presumably querying the combined MSnSets. How to make this as smooth as possible? (The alternative to clicking a protein in Scaffold.)
+
+Data management question.
 How and where to save the important partial results such as df, MSnSets, etc? 
 rds?
 
 How to delete or not to use unwanted samples, e.g. outliers from MSnSet object? Our current answer is to generate the object without the unwnated input.
 
+181017
+============
+Define unique strings for the samples. Can we find a definition that fits to all? 
+
+Candidates:
+
+1) Name_br_tr_fr_date (with Joe)
+Both name and the date are redundant, but informative.
+
+2)sample_treatment_biorep_fraction_enzyme (PDLD1 so far)
+In case of time courses, the time information is missing. Technical rep is missing as well. I think we should separate the substings with _.
+
+Another problem: if we remove a replicate, then the sample number will be discontinuous. Is it a problem? I think it is not.
+Consider an experiment with samples "control" "treatment", where in the scatter plot we color sample number to see how the pairs were scattered in the individual the experiments. The other way of doing it, is to use the date.
+Conclusion: Either we need to keep the "date" or "biorep".
+
+sample-treatment-date (P-H-140114)
+sample-treatment-biorep (P-H-1)
+
+The advantage of the first is the direct link with an experiment. But it works only with our convention of one experiment per day. For that reason it is better to n
+umber all experiments with numbers. In case we later remove some outliers, the sequence will be discontinuous. This should not be a problem, for total number of samples should be printed in each plot, especially in case something is missing. Beside, when removing an outliers from an experiment, all types of samples prepared in that particular experiments should be removed.     
+That seems we will renumber the experimets. It would be nice to produce a table "date - biorep" and print it is the experimental design.
+
+Experiment replica	|	date
+-----------------------------------------
+1			|	140114 P,C, H, I
+2			|	150115
+3			|	161016
+
+
+What can happen is:
+
+Exp 1A (day1)	T1, C1
+Exp 1B (day2)	T1,, C1
+
+Exp 1C (day3)	T1, T2, T3,, C1, C2
+Exp 1D (day4)	T1, T2, T3,, C1, C2, C3
+
+Therefore the string that describes experimental design is:
+Experiment-replica__Sample_Treatment_Replicate_Fraction_Time-point_Enzyme-digest_Measurement
+
+But it mixes thinks up a bit, beside there might be redundancy.
+Better still seems to separate numerical data from the factors:
+
+Exp_Exprep_Smpl_Smplrep_Fraction___Treatment_Timepoint_Sampleprep_Measurement
+Exp-rep_Smpl-rep_Fraction___Treat_Timepoint_Sampleprep_Measurement
+1-a_GFP-1_fr-1___mock_12h_tryps_Top20-HCD-CID
+
+	
+The same in a table
+---------------------
+
+number	descriptor			example						comment
+------------------------------------------------------------------------------------------ 	
+1	Experiment name			default, x					Does not change very often and if it does, the good practice is not mix it with different experiment. There could exceptions though.
+2	Exp-replicate			yymmdd or 1, 2, 3,...		Date is useful, but should be replaced by Exp-replicate for simplicity
+3	Sample order No.		1, 2, 3,...					len(Sample_order_No) = total number of samples withing on a replicate of an experiment	
+4	Sample type (name)		Control, Ctrl, C			Not a number, when a biological meaning is sough wt, numbers are better left for replicates. 	
+5	Replicate				1, 2, 3 					To distinguish sample types from replicates. While sample types have a meaningful names, e.g. WT, Mutant, GFP, the replicates such as GFP1, GFP2, GFP3 are simply replicates 1, 2, 3.
+6	Fraction				1, 2, 3,...					Almost always pooled together after the first search.
+7	Measurement				default, x 					Typically in the end the best measurement is chosen, but at the first stage all is taken togethere
+8	Treatment				mock, m						
+9	Time-point				3dpi, 3d	
+10	Enzyme-digest			trypsin, tryps, t	
+
+When a descriptor is missing, _x_ will be displayed. The unique string should be generated by our script, including the missing descriptors.
+E.g
+x1_1_G_1_fr1_x__flg22_3dpi_tryps
+X.1.1.G.1.1.T.Flg22.3d.1
+x.1.x.G.1.x.x.x.x.x
+
+IT IS A BIT TOO COMLEX!
+THERE IS NOT NEED TO ADD NOT RELEVANT EMPTY "_x_"!
+Would not be the best to count samples by a number, then create a sting to combine then rename then run our script?
+
+Something simple:
+id	smpl	fr
+1	A		1
+2	A		2
+3	A		3
+4	B		1
+5	B		2
+6	B		3
+
+This would combine all in two samples A and B if we use .
+1A1, 2A2, 3A4, 4B1, 5B2, 6B6   ---> A, B
+
+Therefore proper visualization of results is going to need a table to store factors for calculation summaries, plots, etc.,
+but for MSnSet on sample level we need to combine just fractions. 
+There should be a way to add the factors to the PhenoData and use it from there.
+However, sub-setting  a table with sample names and factors should work as well.
+
+For plotting we will need likely both wide and long format anyway...
+proteinID	smpl1	smpl2	... factor1	factor2 factor3
+
+Complete maximal format
+
+id	exp_id	exp_date	exp_smpl_id	smpl_id	smpl_name	smpl_name_short	rep	fr	treatment_id	treatment	treatment_short	time_point	digest	tech_rep	unique_short	unique_long	id_code (smpl_treat_rep)
+1	1	121212	1	1	GFP	G	1	x	1	ctrl	C	x	tryp	x	GFP_ctrl_1	G_C_1	1_1_1
+2	1	121212	2	1	GFP	G	2	x	1	ctrl	C	x	tryp	x	GFP_ctrl_2	G_C_2	1_1_2
+3	1	121212	3	1	GFP	G	3	x	1	ctrl	C	x	tryp	x	GFP_ctrl_3	G_C_3	1_1_3
+4	1	121212	4	1	GFP	G	1	x	2	flg22	F	x	tryp	x	GFP_flg22_1	G_F_1	1_2_1
+5	1	121212	5	1	GFP	G	2	x	2	flg22	F	x	tryp	x	GFP_flg22_2	G_F_2	1_2_2
+6	1	121212	6	1	GFP	G	3	x	2	flg22	F	x	tryp	x	GFP_flg22_3	G_F_3	1_2_3
+7	1	121212	7	2	Eff	E	1	x	2	flg22	F	x	tryp	x	Eff_flg22_1	E_F_1	2_2_1
+8	1	121212	8	2	Eff	E	2	x	2	flg22	F	x	tryp	x	Eff_flg22_2	E_F_2	2_2_2
+9	1	121212	9	2	Eff	E	3	x	2	flg22	F	x	tryp	x	Eff_flg22_3	E_F_3	2_2_3
+10	1	121212	10	2	Eff	E	1	x	1	ctrl	C	x	tryp	x	Eff_ctrl_1	E_C_1	2_1_1
+11	1	121212	11	2	Eff	E	2	x	1	ctrl	C	x	tryp	x	Eff_ctrl_2	E_C_2	2_1_2
+12	1	121212	12	2	Eff	E	3	x	1	ctrl	C	x	tryp	x	Eff_ctrl_3	E_C_3	2_1_3
+																	
+																	
+easy on the eye…																	
+																	
+exp_date	smpl_name	rep	fr	treatment	time_point	tech_rep	unique_short										
+121212	GFP	1	x	ctrl	x	x	GFP_ctrl_1										
+121212	GFP	2	x	ctrl	x	x	GFP_ctrl_2										
+121212	GFP	3	x	ctrl	x	x	GFP_ctrl_3										
+121212	GFP	1	x	flg22	x	x	GFP_flg22_1										
+121212	GFP	2	x	flg22	x	x	GFP_flg22_2										
+121212	GFP	3	x	flg22	x	x	GFP_flg22_3										
+121212	Eff	1	x	flg22	x	x	Eff_flg22_1										
+121212	Eff	2	x	flg22	x	x	Eff_flg22_2										
+121212	Eff	3	x	flg22	x	x	Eff_flg22_3										
+121212	Eff	1	x	ctrl	x	x	Eff_ctrl_1										
+121212	Eff	2	x	ctrl	x	x	Eff_ctrl_2										
+121212	Eff	3	x	ctrl	x	x	Eff_ctrl_3										
+																	
+																	
+Depending on DOE, samples can be labeled in several ways. Therefore unique strings that define the replicates can be assembled in various fassion.																	
+																	
+e.g.															
+exp	smpl																
+DATE	NAME	TREAT	REP			…	replicates for calculation of summary, plots, etc.										
+EXP_ID	NAME_ID	TREAT	REP			…	fractions that needs to be combined										
+DATE	NAME	TREAT	REP	FR		…	individual fractions that need to be combined										
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+## 5th Oct 2018, HOPEFULLY THE LAST REFINEMENT
+==============================================
+sample = phenotype
+sample_prep = missing
+MS_sample_prep = typsin
+exp_data = date
+
+
+Column headers for the table:
+id							1,2,3,...
+exp_id						1
+exp_date					181116
+exp_smpls_id				1,2,3,...
+
+pheno_id					1,2.3,...
+pheno_name					GFP, control, PDLP1,...
+pheno_name_short			G,C,P
+	
+treatment_id				1,2,3,...
+treatment_name				water, flg22,...
+treatment_short				W,F
+time_point					3d
+rep							1,2,3,...
+fr							1,2,3,...
+
+MS_smpl_prep_id				1,2,3,...
+MS_smpl_prep				tryps
+tech_rep					1,2,3,...
+
+unique_short				1_G_1_W	
+unique_long
+id_code

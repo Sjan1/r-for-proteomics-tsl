@@ -164,6 +164,183 @@ names(tab)[1:2] &lt;- c(&quot;file&quot;, &quot;raw&quot;)</code></pre>
 ## 2. raw (mzML) filenames
 ## 3. id (iii) files names
 tab$file</code></pre>
+<pre><code>##  [1] NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA 
+## [18] NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  &quot;#&quot; NA  &quot;#&quot;
+## [35] NA  &quot;#&quot; NA  &quot;#&quot; NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA 
+## [52] NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA 
+## [69] NA  NA  NA  &quot;#&quot; NA  &quot;#&quot; NA  &quot;#&quot; NA  &quot;#&quot; NA</code></pre>
+<pre class="r"><code>mzML_files &lt;- dir(&quot;raw&quot;, full.names = FALSE)
+mzid_files &lt;- dir(&quot;MSGF&quot;, full.names = FALSE)
+mzML_files</code></pre>
+<pre><code>##  [1] &quot;PDLP1_C1_2_1_1_120416.mzML&quot;         
+##  [2] &quot;PDLP1_C1_3_1_1_120415.mzML&quot;         
+##  [3] &quot;PDLP1_C2_2_1_2_120416.mzML&quot;         
+##  [4] &quot;PDLP1_C2_3_1_2_120415.mzML&quot;         
+##  [5] &quot;PDLP1_C3_2_1_3_120416.mzML&quot;         
+##  [6] &quot;PDLP1_C3_3_1_3_120415.mzML&quot;         
+##  [7] &quot;PDLP1_C4_2_1_4_120416.mzML&quot;         
+##  [8] &quot;PDLP1_C4_3_1_4_120415.mzML&quot;         
+##  [9] &quot;PDLP1_C5_2_1_5_120416.mzML&quot;         
+## [10] &quot;PDLP1_C5_3_1_5_120415.mzML&quot;         
+## [11] &quot;PDLP1_Col1_4_1_1_120607.mzML&quot;       
+## [12] &quot;PDLP1_Col2_4_1_2_120607.mzML&quot;       
+## [13] &quot;PDLP1_Col3_4_1_3_120607.mzML&quot;       
+## [14] &quot;PDLP1_Col4_4_1_4_120607.mzML&quot;       
+## [15] &quot;PDLP1_Col5_4_1_5_120607.mzML&quot;       
+## [16] &quot;PDLP1_GH1_5_1_1_130209.mzML&quot;        
+## [17] &quot;PDLP1_GH2_5_1_2_130209.mzML&quot;        
+## [18] &quot;PDLP1_GH3_5_1_3_130209.mzML&quot;        
+## [19] &quot;PDLP1_GH4_5_1_4_130209.mzML&quot;        
+## [20] &quot;PDLP1_GH5_5_1_5_130209.mzML&quot;        
+## [21] &quot;PDLP1_GH6_5_1_6_130209.mzML&quot;        
+## [22] &quot;PDLP1_H1_2_1_1_120416.mzML&quot;         
+## [23] &quot;PDLP1_H1_3_1_1_120415.mzML&quot;         
+## [24] &quot;PDLP1_H2_2_1_2_120416.mzML&quot;         
+## [25] &quot;PDLP1_H2_3_1_2_120415.mzML&quot;         
+## [26] &quot;PDLP1_H3_2_1_3_120416.mzML&quot;         
+## [27] &quot;PDLP1_H3_3_1_3_120415.mzML&quot;         
+## [28] &quot;PDLP1_H4_2_1_4_120416.mzML&quot;         
+## [29] &quot;PDLP1_H4_3_1_4_120415.mzML&quot;         
+## [30] &quot;PDLP1_H5_2_1_5_120416.mzML&quot;         
+## [31] &quot;PDLP1_H5_3_1_5_120415.mzML&quot;         
+## [32] &quot;PDLP1_lp-1n_1_1_1_111206.mzML&quot;      
+## [33] &quot;PDLP1_lp-1t_1_1_1_111206.mzML&quot;      
+## [34] &quot;PDLP1_lp-2n_1_1_2_111206.mzML&quot;      
+## [35] &quot;PDLP1_lp-2t_1_1_2_111206.mzML&quot;      
+## [36] &quot;PDLP1_lp-3n_1_1_3_111206.mzML&quot;      
+## [37] &quot;PDLP1_lp-3t_1_1_3_111206.mzML&quot;      
+## [38] &quot;PDLP1_lp-4n_1_1_4_111206.mzML&quot;      
+## [39] &quot;PDLP1_lp-4t_1_1_4_111206.mzML&quot;      
+## [40] &quot;PDLP1_P1_3_1_1_120415.mzML&quot;         
+## [41] &quot;PDLP1_P1_5_1_1_130209.mzML&quot;         
+## [42] &quot;PDLP1_P1true_2_1_1_120416.mzML&quot;     
+## [43] &quot;PDLP1_P2_3_1_2_120415.mzML&quot;         
+## [44] &quot;PDLP1_P2_5_1_2_130209.mzML&quot;         
+## [45] &quot;PDLP1_P2true_2_1_2_120416.mzML&quot;     
+## [46] &quot;PDLP1_P3_3_1_3_120415.mzML&quot;         
+## [47] &quot;PDLP1_P3_5_1_3_130209.mzML&quot;         
+## [48] &quot;PDLP1_P3true_2_1_3_120416.mzML&quot;     
+## [49] &quot;PDLP1_P4_3_1_4_120415.mzML&quot;         
+## [50] &quot;PDLP1_P4_5_1_4_130209.mzML&quot;         
+## [51] &quot;PDLP1_P4true_2_1_4_120416.mzML&quot;     
+## [52] &quot;PDLP1_P5_3_1_5_120415.mzML&quot;         
+## [53] &quot;PDLP1_P5_5_1_5_130209.mzML&quot;         
+## [54] &quot;PDLP1_P5true_2_1_5_120416.mzML&quot;     
+## [55] &quot;PDLP1_P6_5_1_6_130209.mzML&quot;         
+## [56] &quot;PDLP1_PDLP1inf1_4_1_1_120607.mzML&quot;  
+## [57] &quot;PDLP1_PDLP1inf2_4_1_2_120607.mzML&quot;  
+## [58] &quot;PDLP1_PDLP1inf3_4_1_3_120607.mzML&quot;  
+## [59] &quot;PDLP1_PDLP1inf4_4_1_4_120607.mzML&quot;  
+## [60] &quot;PDLP1_PDLP1inf5_4_1_5_120607.mzML&quot;  
+## [61] &quot;PDLP1_PDLP1noinf1_4_1_1_120607.mzML&quot;
+## [62] &quot;PDLP1_PDLP1noinf2_4_1_2_120607.mzML&quot;
+## [63] &quot;PDLP1_PDLP1noinf3_4_1_3_120607.mzML&quot;
+## [64] &quot;PDLP1_PDLP1noinf4_4_1_4_120607.mzML&quot;
+## [65] &quot;PDLP1_PDLP1noinf5_4_1_5_120607.mzML&quot;
+## [66] &quot;PDLP1_PH1_5_1_1_130209.mzML&quot;        
+## [67] &quot;PDLP1_PH2_5_1_2_130209.mzML&quot;        
+## [68] &quot;PDLP1_PH3_5_1_3_130209.mzML&quot;        
+## [69] &quot;PDLP1_PH4_5_1_4_130209.mzML&quot;        
+## [70] &quot;PDLP1_PH5_5_1_5_130209.mzML&quot;        
+## [71] &quot;PDLP1_PH6_5_1_6_130209.mzML&quot;        
+## [72] &quot;PDLP1_wt-1n_1_1_1_111206.mzML&quot;      
+## [73] &quot;PDLP1_wt-1t_1_1_1_111206.mzML&quot;      
+## [74] &quot;PDLP1_wt-2n_1_1_2_111206.mzML&quot;      
+## [75] &quot;PDLP1_wt-2t_1_1_2_111206.mzML&quot;      
+## [76] &quot;PDLP1_wt-3n_1_1_3_111206.mzML&quot;      
+## [77] &quot;PDLP1_wt-3t_1_1_3_111206.mzML&quot;      
+## [78] &quot;PDLP1_wt-4n_1_1_4_111206.mzML&quot;      
+## [79] &quot;PDLP1_wt-4t_1_1_4_111206.mzML&quot;</code></pre>
+<pre class="r"><code>mzid_files</code></pre>
+<pre><code>##  [1] &quot;PDLP1_C1_2_1_1_120416.mzid&quot;         
+##  [2] &quot;PDLP1_C1_3_1_1_120415.mzid&quot;         
+##  [3] &quot;PDLP1_C2_2_1_2_120416.mzid&quot;         
+##  [4] &quot;PDLP1_C2_3_1_2_120415.mzid&quot;         
+##  [5] &quot;PDLP1_C3_2_1_3_120416.mzid&quot;         
+##  [6] &quot;PDLP1_C3_3_1_3_120415.mzid&quot;         
+##  [7] &quot;PDLP1_C4_2_1_4_120416.mzid&quot;         
+##  [8] &quot;PDLP1_C4_3_1_4_120415.mzid&quot;         
+##  [9] &quot;PDLP1_C5_2_1_5_120416.mzid&quot;         
+## [10] &quot;PDLP1_C5_3_1_5_120415.mzid&quot;         
+## [11] &quot;PDLP1_Col1_4_1_1_120607.mzid&quot;       
+## [12] &quot;PDLP1_Col2_4_1_2_120607.mzid&quot;       
+## [13] &quot;PDLP1_Col3_4_1_3_120607.mzid&quot;       
+## [14] &quot;PDLP1_Col4_4_1_4_120607.mzid&quot;       
+## [15] &quot;PDLP1_Col5_4_1_5_120607.mzid&quot;       
+## [16] &quot;PDLP1_GH1_5_1_1_130209.mzid&quot;        
+## [17] &quot;PDLP1_GH2_5_1_2_130209.mzid&quot;        
+## [18] &quot;PDLP1_GH3_5_1_3_130209.mzid&quot;        
+## [19] &quot;PDLP1_GH4_5_1_4_130209.mzid&quot;        
+## [20] &quot;PDLP1_GH5_5_1_5_130209.mzid&quot;        
+## [21] &quot;PDLP1_GH6_5_1_6_130209.mzid&quot;        
+## [22] &quot;PDLP1_H1_2_1_1_120416.mzid&quot;         
+## [23] &quot;PDLP1_H1_3_1_1_120415.mzid&quot;         
+## [24] &quot;PDLP1_H2_2_1_2_120416.mzid&quot;         
+## [25] &quot;PDLP1_H2_3_1_2_120415.mzid&quot;         
+## [26] &quot;PDLP1_H3_2_1_3_120416.mzid&quot;         
+## [27] &quot;PDLP1_H3_3_1_3_120415.mzid&quot;         
+## [28] &quot;PDLP1_H4_2_1_4_120416.mzid&quot;         
+## [29] &quot;PDLP1_H4_3_1_4_120415.mzid&quot;         
+## [30] &quot;PDLP1_H5_2_1_5_120416.mzid&quot;         
+## [31] &quot;PDLP1_H5_3_1_5_120415.mzid&quot;         
+## [32] &quot;PDLP1_lp-1n_1_1_1_111206.mzid&quot;      
+## [33] &quot;PDLP1_lp-1t_1_1_1_111206.mzid&quot;      
+## [34] &quot;PDLP1_lp-2n_1_1_2_111206.mzid&quot;      
+## [35] &quot;PDLP1_lp-2t_1_1_2_111206.mzid&quot;      
+## [36] &quot;PDLP1_lp-3n_1_1_3_111206.mzid&quot;      
+## [37] &quot;PDLP1_lp-3t_1_1_3_111206.mzid&quot;      
+## [38] &quot;PDLP1_lp-4n_1_1_4_111206.mzid&quot;      
+## [39] &quot;PDLP1_lp-4t_1_1_4_111206.mzid&quot;      
+## [40] &quot;PDLP1_P1_3_1_1_120415.mzid&quot;         
+## [41] &quot;PDLP1_P1_5_1_1_130209.mzid&quot;         
+## [42] &quot;PDLP1_P1true_2_1_1_120416.mzid&quot;     
+## [43] &quot;PDLP1_P2_3_1_2_120415.mzid&quot;         
+## [44] &quot;PDLP1_P2_5_1_2_130209.mzid&quot;         
+## [45] &quot;PDLP1_P2true_2_1_2_120416.mzid&quot;     
+## [46] &quot;PDLP1_P3_3_1_3_120415.mzid&quot;         
+## [47] &quot;PDLP1_P3_5_1_3_130209.mzid&quot;         
+## [48] &quot;PDLP1_P3true_2_1_3_120416.mzid&quot;     
+## [49] &quot;PDLP1_P4_3_1_4_120415.mzid&quot;         
+## [50] &quot;PDLP1_P4_5_1_4_130209.mzid&quot;         
+## [51] &quot;PDLP1_P4true_2_1_4_120416.mzid&quot;     
+## [52] &quot;PDLP1_P5_3_1_5_120415.mzid&quot;         
+## [53] &quot;PDLP1_P5_5_1_5_130209.mzid&quot;         
+## [54] &quot;PDLP1_P5true_2_1_5_120416.mzid&quot;     
+## [55] &quot;PDLP1_P6_5_1_6_130209.mzid&quot;         
+## [56] &quot;PDLP1_PDLP1inf1_4_1_1_120607.mzid&quot;  
+## [57] &quot;PDLP1_PDLP1inf2_4_1_2_120607.mzid&quot;  
+## [58] &quot;PDLP1_PDLP1inf3_4_1_3_120607.mzid&quot;  
+## [59] &quot;PDLP1_PDLP1inf4_4_1_4_120607.mzid&quot;  
+## [60] &quot;PDLP1_PDLP1inf5_4_1_5_120607.mzid&quot;  
+## [61] &quot;PDLP1_PDLP1noinf1_4_1_1_120607.mzid&quot;
+## [62] &quot;PDLP1_PDLP1noinf2_4_1_2_120607.mzid&quot;
+## [63] &quot;PDLP1_PDLP1noinf3_4_1_3_120607.mzid&quot;
+## [64] &quot;PDLP1_PDLP1noinf4_4_1_4_120607.mzid&quot;
+## [65] &quot;PDLP1_PDLP1noinf5_4_1_5_120607.mzid&quot;
+## [66] &quot;PDLP1_PH1_5_1_1_130209.mzid&quot;        
+## [67] &quot;PDLP1_PH2_5_1_2_130209.mzid&quot;        
+## [68] &quot;PDLP1_PH3_5_1_3_130209.mzid&quot;        
+## [69] &quot;PDLP1_PH4_5_1_4_130209.mzid&quot;        
+## [70] &quot;PDLP1_PH5_5_1_5_130209.mzid&quot;        
+## [71] &quot;PDLP1_PH6_5_1_6_130209.mzid&quot;        
+## [72] &quot;PDLP1_wt-1n_1_1_1_111206.mzid&quot;      
+## [73] &quot;PDLP1_wt-1t_1_1_1_111206.mzid&quot;      
+## [74] &quot;PDLP1_wt-2n_1_1_2_111206.mzid&quot;      
+## [75] &quot;PDLP1_wt-2t_1_1_2_111206.mzid&quot;      
+## [76] &quot;PDLP1_wt-3n_1_1_3_111206.mzid&quot;      
+## [77] &quot;PDLP1_wt-3t_1_1_3_111206.mzid&quot;      
+## [78] &quot;PDLP1_wt-4n_1_1_4_111206.mzid&quot;      
+## [79] &quot;PDLP1_wt-4t_1_1_4_111206.mzid&quot;</code></pre>
+<pre class="r"><code>## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
+setdiff(sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files),sub(&quot;\\.mzid$&quot;,&quot;&quot;,mzid_files))</code></pre>
+<pre><code>## character(0)</code></pre>
+<pre class="r"><code>## There might be some discrepancy in meta data though.
+## In the following section, diff result is evaluated as zero, when there is no differnece in the file names compared. To print the differences in both sets, we have to run it twice.
+
+## meta data vs. raw data
+setdiff(tab$file,sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files))</code></pre>
+<pre><code>## [1] NA  &quot;#&quot;</code></pre>
+<pre class="r"><code>setdiff(sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files),tab$file)</code></pre>
 <pre><code>##  [1] &quot;PDLP1_C1_2_1_1_120416&quot;          &quot;PDLP1_C1_3_1_1_120415&quot;         
 ##  [3] &quot;PDLP1_C2_2_1_2_120416&quot;          &quot;PDLP1_C2_3_1_2_120415&quot;         
 ##  [5] &quot;PDLP1_C3_2_1_3_120416&quot;          &quot;PDLP1_C3_3_1_3_120415&quot;         
@@ -204,30 +381,55 @@ tab$file</code></pre>
 ## [75] &quot;PDLP1_wt-2t_1_1_2_111206&quot;       &quot;PDLP1_wt-3n_1_1_3_111206&quot;      
 ## [77] &quot;PDLP1_wt-3t_1_1_3_111206&quot;       &quot;PDLP1_wt-4n_1_1_4_111206&quot;      
 ## [79] &quot;PDLP1_wt-4t_1_1_4_111206&quot;</code></pre>
-<pre class="r"><code>mzML_files &lt;- dir(&quot;raw&quot;, full.names = FALSE)
-mzid_files &lt;- dir(&quot;MSGF&quot;, full.names = FALSE)
-
-## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
-setdiff(sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files),sub(&quot;\\.mzid$&quot;,&quot;&quot;,mzid_files))</code></pre>
-<pre><code>## character(0)</code></pre>
-<pre class="r"><code>## There might be some discrepancy in meta data though.
-## In the following section, diff result is evaluated as zero, when there is no differnece in the file names compared. To print the differences in both sets, we have to run it twice.
-
-## meta data vs. raw data
-setdiff(tab$file,sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files))</code></pre>
-<pre><code>## character(0)</code></pre>
-<pre class="r"><code>setdiff(sub(&quot;\\.mzML$&quot;,&quot;&quot;,mzML_files),tab$file)</code></pre>
-<pre><code>## character(0)</code></pre>
 <pre class="r"><code>## meta data vs. id data
 setdiff(tab$file,sub(&quot;\\.mzid$&quot;,&quot;&quot;,mzid_files))</code></pre>
-<pre><code>## character(0)</code></pre>
+<pre><code>## [1] NA  &quot;#&quot;</code></pre>
 <pre class="r"><code>setdiff(sub(&quot;\\.mzid$&quot;,&quot;&quot;,mzid_files),tab$file)</code></pre>
-<pre><code>## character(0)</code></pre>
+<pre><code>##  [1] &quot;PDLP1_C1_2_1_1_120416&quot;          &quot;PDLP1_C1_3_1_1_120415&quot;         
+##  [3] &quot;PDLP1_C2_2_1_2_120416&quot;          &quot;PDLP1_C2_3_1_2_120415&quot;         
+##  [5] &quot;PDLP1_C3_2_1_3_120416&quot;          &quot;PDLP1_C3_3_1_3_120415&quot;         
+##  [7] &quot;PDLP1_C4_2_1_4_120416&quot;          &quot;PDLP1_C4_3_1_4_120415&quot;         
+##  [9] &quot;PDLP1_C5_2_1_5_120416&quot;          &quot;PDLP1_C5_3_1_5_120415&quot;         
+## [11] &quot;PDLP1_Col1_4_1_1_120607&quot;        &quot;PDLP1_Col2_4_1_2_120607&quot;       
+## [13] &quot;PDLP1_Col3_4_1_3_120607&quot;        &quot;PDLP1_Col4_4_1_4_120607&quot;       
+## [15] &quot;PDLP1_Col5_4_1_5_120607&quot;        &quot;PDLP1_GH1_5_1_1_130209&quot;        
+## [17] &quot;PDLP1_GH2_5_1_2_130209&quot;         &quot;PDLP1_GH3_5_1_3_130209&quot;        
+## [19] &quot;PDLP1_GH4_5_1_4_130209&quot;         &quot;PDLP1_GH5_5_1_5_130209&quot;        
+## [21] &quot;PDLP1_GH6_5_1_6_130209&quot;         &quot;PDLP1_H1_2_1_1_120416&quot;         
+## [23] &quot;PDLP1_H1_3_1_1_120415&quot;          &quot;PDLP1_H2_2_1_2_120416&quot;         
+## [25] &quot;PDLP1_H2_3_1_2_120415&quot;          &quot;PDLP1_H3_2_1_3_120416&quot;         
+## [27] &quot;PDLP1_H3_3_1_3_120415&quot;          &quot;PDLP1_H4_2_1_4_120416&quot;         
+## [29] &quot;PDLP1_H4_3_1_4_120415&quot;          &quot;PDLP1_H5_2_1_5_120416&quot;         
+## [31] &quot;PDLP1_H5_3_1_5_120415&quot;          &quot;PDLP1_lp-1n_1_1_1_111206&quot;      
+## [33] &quot;PDLP1_lp-1t_1_1_1_111206&quot;       &quot;PDLP1_lp-2n_1_1_2_111206&quot;      
+## [35] &quot;PDLP1_lp-2t_1_1_2_111206&quot;       &quot;PDLP1_lp-3n_1_1_3_111206&quot;      
+## [37] &quot;PDLP1_lp-3t_1_1_3_111206&quot;       &quot;PDLP1_lp-4n_1_1_4_111206&quot;      
+## [39] &quot;PDLP1_lp-4t_1_1_4_111206&quot;       &quot;PDLP1_P1_3_1_1_120415&quot;         
+## [41] &quot;PDLP1_P1_5_1_1_130209&quot;          &quot;PDLP1_P1true_2_1_1_120416&quot;     
+## [43] &quot;PDLP1_P2_3_1_2_120415&quot;          &quot;PDLP1_P2_5_1_2_130209&quot;         
+## [45] &quot;PDLP1_P2true_2_1_2_120416&quot;      &quot;PDLP1_P3_3_1_3_120415&quot;         
+## [47] &quot;PDLP1_P3_5_1_3_130209&quot;          &quot;PDLP1_P3true_2_1_3_120416&quot;     
+## [49] &quot;PDLP1_P4_3_1_4_120415&quot;          &quot;PDLP1_P4_5_1_4_130209&quot;         
+## [51] &quot;PDLP1_P4true_2_1_4_120416&quot;      &quot;PDLP1_P5_3_1_5_120415&quot;         
+## [53] &quot;PDLP1_P5_5_1_5_130209&quot;          &quot;PDLP1_P5true_2_1_5_120416&quot;     
+## [55] &quot;PDLP1_P6_5_1_6_130209&quot;          &quot;PDLP1_PDLP1inf1_4_1_1_120607&quot;  
+## [57] &quot;PDLP1_PDLP1inf2_4_1_2_120607&quot;   &quot;PDLP1_PDLP1inf3_4_1_3_120607&quot;  
+## [59] &quot;PDLP1_PDLP1inf4_4_1_4_120607&quot;   &quot;PDLP1_PDLP1inf5_4_1_5_120607&quot;  
+## [61] &quot;PDLP1_PDLP1noinf1_4_1_1_120607&quot; &quot;PDLP1_PDLP1noinf2_4_1_2_120607&quot;
+## [63] &quot;PDLP1_PDLP1noinf3_4_1_3_120607&quot; &quot;PDLP1_PDLP1noinf4_4_1_4_120607&quot;
+## [65] &quot;PDLP1_PDLP1noinf5_4_1_5_120607&quot; &quot;PDLP1_PH1_5_1_1_130209&quot;        
+## [67] &quot;PDLP1_PH2_5_1_2_130209&quot;         &quot;PDLP1_PH3_5_1_3_130209&quot;        
+## [69] &quot;PDLP1_PH4_5_1_4_130209&quot;         &quot;PDLP1_PH5_5_1_5_130209&quot;        
+## [71] &quot;PDLP1_PH6_5_1_6_130209&quot;         &quot;PDLP1_wt-1n_1_1_1_111206&quot;      
+## [73] &quot;PDLP1_wt-1t_1_1_1_111206&quot;       &quot;PDLP1_wt-2n_1_1_2_111206&quot;      
+## [75] &quot;PDLP1_wt-2t_1_1_2_111206&quot;       &quot;PDLP1_wt-3n_1_1_3_111206&quot;      
+## [77] &quot;PDLP1_wt-3t_1_1_3_111206&quot;       &quot;PDLP1_wt-4n_1_1_4_111206&quot;      
+## [79] &quot;PDLP1_wt-4t_1_1_4_111206&quot;</code></pre>
 <pre class="r"><code>library(&quot;DT&quot;)</code></pre>
 <pre><code>## Warning: package 'DT' was built under R version 3.4.4</code></pre>
 <pre class="r"><code>datatable(tab)</code></pre>
-<div id="htmlwidget-511ffd0269f6f58f50fa" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-511ffd0269f6f58f50fa">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79"],["PDLP1_C1_2_1_1_120416","PDLP1_C1_3_1_1_120415","PDLP1_C2_2_1_2_120416","PDLP1_C2_3_1_2_120415","PDLP1_C3_2_1_3_120416","PDLP1_C3_3_1_3_120415","PDLP1_C4_2_1_4_120416","PDLP1_C4_3_1_4_120415","PDLP1_C5_2_1_5_120416","PDLP1_C5_3_1_5_120415","PDLP1_Col1_4_1_1_120607","PDLP1_Col2_4_1_2_120607","PDLP1_Col3_4_1_3_120607","PDLP1_Col4_4_1_4_120607","PDLP1_Col5_4_1_5_120607","PDLP1_GH1_5_1_1_130209","PDLP1_GH2_5_1_2_130209","PDLP1_GH3_5_1_3_130209","PDLP1_GH4_5_1_4_130209","PDLP1_GH5_5_1_5_130209","PDLP1_GH6_5_1_6_130209","PDLP1_H1_2_1_1_120416","PDLP1_H1_3_1_1_120415","PDLP1_H2_2_1_2_120416","PDLP1_H2_3_1_2_120415","PDLP1_H3_2_1_3_120416","PDLP1_H3_3_1_3_120415","PDLP1_H4_2_1_4_120416","PDLP1_H4_3_1_4_120415","PDLP1_H5_2_1_5_120416","PDLP1_H5_3_1_5_120415","PDLP1_lp-1n_1_1_1_111206","PDLP1_lp-1t_1_1_1_111206","PDLP1_lp-2n_1_1_2_111206","PDLP1_lp-2t_1_1_2_111206","PDLP1_lp-3n_1_1_3_111206","PDLP1_lp-3t_1_1_3_111206","PDLP1_lp-4n_1_1_4_111206","PDLP1_lp-4t_1_1_4_111206","PDLP1_P1_3_1_1_120415","PDLP1_P1_5_1_1_130209","PDLP1_P1true_2_1_1_120416","PDLP1_P2_3_1_2_120415","PDLP1_P2_5_1_2_130209","PDLP1_P2true_2_1_2_120416","PDLP1_P3_3_1_3_120415","PDLP1_P3_5_1_3_130209","PDLP1_P3true_2_1_3_120416","PDLP1_P4_3_1_4_120415","PDLP1_P4_5_1_4_130209","PDLP1_P4true_2_1_4_120416","PDLP1_P5_3_1_5_120415","PDLP1_P5_5_1_5_130209","PDLP1_P5true_2_1_5_120416","PDLP1_P6_5_1_6_130209","PDLP1_PDLP1inf1_4_1_1_120607","PDLP1_PDLP1inf2_4_1_2_120607","PDLP1_PDLP1inf3_4_1_3_120607","PDLP1_PDLP1inf4_4_1_4_120607","PDLP1_PDLP1inf5_4_1_5_120607","PDLP1_PDLP1noinf1_4_1_1_120607","PDLP1_PDLP1noinf2_4_1_2_120607","PDLP1_PDLP1noinf3_4_1_3_120607","PDLP1_PDLP1noinf4_4_1_4_120607","PDLP1_PDLP1noinf5_4_1_5_120607","PDLP1_PH1_5_1_1_130209","PDLP1_PH2_5_1_2_130209","PDLP1_PH3_5_1_3_130209","PDLP1_PH4_5_1_4_130209","PDLP1_PH5_5_1_5_130209","PDLP1_PH6_5_1_6_130209","PDLP1_wt-1n_1_1_1_111206","PDLP1_wt-1t_1_1_1_111206","PDLP1_wt-2n_1_1_2_111206","PDLP1_wt-2t_1_1_2_111206","PDLP1_wt-3n_1_1_3_111206","PDLP1_wt-3t_1_1_3_111206","PDLP1_wt-4n_1_1_4_111206","PDLP1_wt-4t_1_1_4_111206"],["/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML"],["/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML"],["/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid"],[120416,120415,120416,120415,120416,120415,120416,120415,120416,120415,120607,120607,120607,120607,120607,130209,130209,130209,130209,130209,130209,120416,120415,120416,120415,120416,120415,120416,120415,120416,120415,111206,111206,111206,111206,111206,111206,111206,111206,120415,130209,120416,120415,130209,120416,120415,130209,120416,120415,130209,120416,120415,130209,120416,130209,120607,120607,120607,120607,120607,120607,120607,120607,120607,120607,130209,130209,130209,130209,130209,130209,111206,111206,111206,111206,111206,111206,111206,111206],[2,3,2,3,2,3,2,3,2,3,4,4,4,4,4,5,5,5,5,5,5,2,3,2,3,2,3,2,3,2,3,1,1,1,1,1,1,1,1,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,2,2,3,3,4,4,5,5,1,2,3,4,5,1,2,3,4,5,6,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,6,1,1,2,2,3,3,4,4],["CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CI","CI","CI","CI","CI","CI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PI","PI","PI","PI","PI","PH","PH","PH","PH","PH","PI","PI","PI","PI","PI","PI","CI","CI","CI","CI","CI","CI","CI","CI"],["C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","C","C","C","C","C","C","C","C"],["H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","I","I","I","I","I","H","H","H","H","H","I","I","I","I","I","I","I","I","I","I","I","I","I","I"],["tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","LysN","tryp","LysN","tryp","LysN","tryp","LysN","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","LysN","tryp","LysN","tryp","LysN","tryp","LysN","tryp"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>file<\/th>\n      <th>raw<\/th>\n      <th>Mascot<\/th>\n      <th>MSGFPlus<\/th>\n      <th>date<\/th>\n      <th>biorep<\/th>\n      <th>techrep<\/th>\n      <th>fraction<\/th>\n      <th>category<\/th>\n      <th>sample<\/th>\n      <th>treatment<\/th>\n      <th>cleavage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-572c9237b60bc44e1792" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-572c9237b60bc44e1792">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79"],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#",null,"#",null,"#",null,"#",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#",null,"#",null,"#",null,"#",null],["PDLP1_C1_2_1_1_120416","PDLP1_C1_3_1_1_120415","PDLP1_C2_2_1_2_120416","PDLP1_C2_3_1_2_120415","PDLP1_C3_2_1_3_120416","PDLP1_C3_3_1_3_120415","PDLP1_C4_2_1_4_120416","PDLP1_C4_3_1_4_120415","PDLP1_C5_2_1_5_120416","PDLP1_C5_3_1_5_120415","PDLP1_Col1_4_1_1_120607","PDLP1_Col2_4_1_2_120607","PDLP1_Col3_4_1_3_120607","PDLP1_Col4_4_1_4_120607","PDLP1_Col5_4_1_5_120607","PDLP1_GH1_5_1_1_130209","PDLP1_GH2_5_1_2_130209","PDLP1_GH3_5_1_3_130209","PDLP1_GH4_5_1_4_130209","PDLP1_GH5_5_1_5_130209","PDLP1_GH6_5_1_6_130209","PDLP1_H1_2_1_1_120416","PDLP1_H1_3_1_1_120415","PDLP1_H2_2_1_2_120416","PDLP1_H2_3_1_2_120415","PDLP1_H3_2_1_3_120416","PDLP1_H3_3_1_3_120415","PDLP1_H4_2_1_4_120416","PDLP1_H4_3_1_4_120415","PDLP1_H5_2_1_5_120416","PDLP1_H5_3_1_5_120415","PDLP1_lp-1n_1_1_1_111206","PDLP1_lp-1t_1_1_1_111206","PDLP1_lp-2n_1_1_2_111206","PDLP1_lp-2t_1_1_2_111206","PDLP1_lp-3n_1_1_3_111206","PDLP1_lp-3t_1_1_3_111206","PDLP1_lp-4n_1_1_4_111206","PDLP1_lp-4t_1_1_4_111206","PDLP1_P1_3_1_1_120415","PDLP1_P1_5_1_1_130209","PDLP1_P1true_2_1_1_120416","PDLP1_P2_3_1_2_120415","PDLP1_P2_5_1_2_130209","PDLP1_P2true_2_1_2_120416","PDLP1_P3_3_1_3_120415","PDLP1_P3_5_1_3_130209","PDLP1_P3true_2_1_3_120416","PDLP1_P4_3_1_4_120415","PDLP1_P4_5_1_4_130209","PDLP1_P4true_2_1_4_120416","PDLP1_P5_3_1_5_120415","PDLP1_P5_5_1_5_130209","PDLP1_P5true_2_1_5_120416","PDLP1_P6_5_1_6_130209","PDLP1_PDLP1inf1_4_1_1_120607","PDLP1_PDLP1inf2_4_1_2_120607","PDLP1_PDLP1inf3_4_1_3_120607","PDLP1_PDLP1inf4_4_1_4_120607","PDLP1_PDLP1inf5_4_1_5_120607","PDLP1_PDLP1noinf1_4_1_1_120607","PDLP1_PDLP1noinf2_4_1_2_120607","PDLP1_PDLP1noinf3_4_1_3_120607","PDLP1_PDLP1noinf4_4_1_4_120607","PDLP1_PDLP1noinf5_4_1_5_120607","PDLP1_PH1_5_1_1_130209","PDLP1_PH2_5_1_2_130209","PDLP1_PH3_5_1_3_130209","PDLP1_PH4_5_1_4_130209","PDLP1_PH5_5_1_5_130209","PDLP1_PH6_5_1_6_130209","PDLP1_wt-1n_1_1_1_111206","PDLP1_wt-1t_1_1_1_111206","PDLP1_wt-2n_1_1_2_111206","PDLP1_wt-2t_1_1_2_111206","PDLP1_wt-3n_1_1_3_111206","PDLP1_wt-3t_1_1_3_111206","PDLP1_wt-4n_1_1_4_111206","PDLP1_wt-4t_1_1_4_111206"],["/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML","/Processing/$.mzML"],["/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML","/Mascot/$.mzIdentML"],["/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid","/MSGFPlus/$.mzid"],[120416,120415,120416,120415,120416,120415,120416,120415,120416,120415,120607,120607,120607,120607,120607,130209,130209,130209,130209,130209,130209,120416,120415,120416,120415,120416,120415,120416,120415,120416,120415,111206,111206,111206,111206,111206,111206,111206,111206,120415,130209,120416,120415,130209,120416,120415,130209,120416,120415,130209,120416,120415,130209,120416,130209,120607,120607,120607,120607,120607,120607,120607,120607,120607,120607,130209,130209,130209,130209,130209,130209,111206,111206,111206,111206,111206,111206,111206,111206],[2,3,2,3,2,3,2,3,2,3,4,4,4,4,4,5,5,5,5,5,5,2,3,2,3,2,3,2,3,2,3,1,1,1,1,1,1,1,1,3,5,2,3,5,2,3,5,2,3,5,2,3,5,2,5,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,2,2,3,3,4,4,5,5,1,2,3,4,5,1,2,3,4,5,6,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,6,1,1,2,2,3,3,4,4],["CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CH","CI","CI","CI","CI","CI","CI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PI","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PH","PI","PI","PI","PI","PI","PH","PH","PH","PH","PH","PI","PI","PI","PI","PI","PI","CI","CI","CI","CI","CI","CI","CI","CI"],["C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","P","C","C","C","C","C","C","C","C"],["H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","I","H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","I","I","I","I","I","H","H","H","H","H","I","I","I","I","I","I","I","I","I","I","I","I","I","I"],["tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","LysN","tryp","LysN","tryp","LysN","tryp","LysN","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","tryp","LysN","tryp","LysN","tryp","LysN","tryp","LysN","tryp"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>file<\/th>\n      <th>raw<\/th>\n      <th>PSI-raw<\/th>\n      <th>Mascot<\/th>\n      <th>MSGFPlus<\/th>\n      <th>date<\/th>\n      <th>biorep<\/th>\n      <th>techrep<\/th>\n      <th>fraction<\/th>\n      <th>category<\/th>\n      <th>sample<\/th>\n      <th>treatment<\/th>\n      <th>cleavage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="files" class="section level2">

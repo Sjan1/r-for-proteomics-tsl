@@ -17,6 +17,7 @@ source("S00-env.R")
 tab <- read_csv("data/SampleExperimentTable_fixed.csv")
 ## this renames the first two columns to something more concise
 names(tab)[1:2] <- c("file", "raw")
+
 ```
 
 
@@ -32,7 +33,6 @@ We need to strip filename extensions for the comparison.
 tab$file
 mzML_files <- dir("raw", full.names = FALSE)
 mzid_files <- dir("MSGF", full.names = FALSE)
-
 ## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
 setdiff(sub("\\.mzML$","",mzML_files),sub("\\.mzid$","",mzid_files))
 

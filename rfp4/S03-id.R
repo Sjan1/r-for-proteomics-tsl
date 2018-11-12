@@ -25,7 +25,7 @@ fn2 <- dir("MSGF2", pattern = "wt", full.names = TRUE)
 
 
 msnid <- MSnID()
-msnid <- read_mzIDs(msnid, fn2)
+msnid <- read_mzIDs(msnid, fn)
 msnid
 
 
@@ -106,9 +106,10 @@ head(exprs(efinal),20)
 ## for example
 
 sampleNames(msnset)
-tab[1:3, 1]
+tab[1:3, ]
 
 pd <- data.frame(tab[1:3, ])
+sampleNames(msnset)[1:3]
 rownames(pd) <- sampleNames(msnset)[1:3]
 pData(msnset) <- pd
 
