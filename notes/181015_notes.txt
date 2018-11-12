@@ -1,11 +1,21 @@
-180920
+NOTES for RfP DEVELOPMENT
+=========================
+
+
 ============
+=  180920  =
+============
+
 S002 and 3
 Optimize_filter does not work. It still expects some input.
 when three samples are loaded, there
 
-181015
+
+
 ============
+=  181015  =
+============
+
 Combined_e and other MSnSets should be renamed somehow to reflect what they store:
 
 frac_pep
@@ -29,8 +39,12 @@ rds?
 
 How to delete or not to use unwanted samples, e.g. outliers from MSnSet object? Our current answer is to generate the object without the unwnated input.
 
-181017
+
+
 ============
+=  181017  =
+============
+
 Define unique strings for the samples. Can we find a definition that fits to all? 
 
 Candidates:
@@ -175,27 +189,49 @@ MS_sample_prep = typsin
 exp_data = date
 
 
-Column headers for the table:
-id							1,2,3,...
-exp_id						1
-exp_date					181116
-exp_smpls_id				1,2,3,...
+DOE_table
+=================
+= file_name     =
+= search_name   =
+=               =
+= factor_id     =
+= factor_level  =
+= factor_parent =
+= factor_name   =
+= factor_abrev  =
+=================
 
-pheno_id					1,2.3,...
-pheno_name					GFP, control, PDLP1,...
-pheno_name_short			G,C,P
-	
-treatment_id				1,2,3,...
-treatment_name				water, flg22,...
-treatment_short				W,F
-time_point					3d
-rep							1,2,3,...
-fr							1,2,3,...
+Typical project factors:
+------------------------ 
+date (experiment)
+sample
+phenotype
+treatment
+time point
+post treatment
+fraction
+rep
+MS_smpl_prep
+technical replicate
+_____
+Note there are hierarchical relations between the factors.
 
-MS_smpl_prep_id				1,2,3,...
-MS_smpl_prep				tryps
-tech_rep					1,2,3,...
 
-unique_short				1_G_1_W	
-unique_long
-id_code
+============
+=  181112  =
+============
+
+In rfp4/S06_tab.R, before reading the factors from the table,  
+we should check all the headers exist in the form we expect them to be. In its current reincarnation, the script is tailored to PDLP1 only. We should aim for more general experimental design. For that we need more general DOE_table, see example above, check for how may project factors are there, then look them up into a used_table. That will create the flexible matrix with all factors we have talked about today.
+
+
+
+============
+=  18----  =
+============
+
+
+
+
+
+

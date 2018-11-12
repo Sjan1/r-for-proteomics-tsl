@@ -5,15 +5,22 @@
 ## replicates and how they should be combined and how to assemle the proteins.   
 rm(list=ls())
 source("S00-env.R")
-## this creates tibble
-##tab <- readr::read_csv("data/SampleExperimentTable_fixed_Mascot.csv", comment = "#",
-##                       col_names = TRUE)
-##this creates dataframe
-tab <- read.table("data/SampleExperimentTable_fixed_Mascot.csv", comment = "#",
-                       header = TRUE, sep=",")
+
+## this creates tibble -  we has a problem here: 
+## empty spaces in "not_used" were not read/saved correcly.
+#tab <- readr::read_csv("data/SampleExperimentTable_fixed_Mascot.csv", comment = "#",
+#                       col_names = TRUE)
+## this creates dataframe
+tab <- read.table("data/SampleExperimentTable_fixed_Mascot.csv",
+                  header = TRUE, sep=",")
+## only the records without "not_used" are allowed  
 tab <- tab[tab[[1]]!= "not_used",]
 head(tab)
 
+## first three columns must be "not_used", "file", "raw"
+## I think we should check the other header exist in the form we expect them
+## In the current form this script is tailored to PDLP1
+## We should aim for variable DOE into account...
 if(colnames(tab)[1]=="not_used"){
 names(tab)[2:3] <- c("file", "raw")
 } else{
@@ -41,8 +48,9 @@ if(any(grepl("uniq",temp))){
   ## to attach unique string to the original table
   tab$uniq <- labs
 }
-write.table(tab,"data/SamplesExperimentsTable_edited.csv",col.names = FALSE)
-
+## Save the tab that will be used.
+View(tab)
+write.table(tab,"data/SamplesExperimentsTable_used.csv", col.names = TRUE, row.names=FALSE)
 
 
 ndf <- data.frame(file=fns, labs=labs, stringsAsFactors = FALSE)
