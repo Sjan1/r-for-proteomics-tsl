@@ -1,12 +1,12 @@
 ## Date: 12th-November-2018
-## 
-## Using S06_tab create MSnSets from all the files from the DOE table
+## This script needs rdf from S06_table.R 
+## S07_msnset_build.R creates MSnSets from the files in from DOE table.
 ## 
 ##    
 ##rm(list=ls())
 source("S00-env.R")
 
-
+head(rdf)
 
 # Here we neeed to bring in the data (like in the scripts S02, S03)
 
@@ -115,7 +115,12 @@ combined_e <- readRDS("combined_e.rds")
 sample_peptide_sums <- colSums(exprs(combined_e),na.rm = TRUE)
 temp <- names(sample_peptide_sums)
 otemp <- order(temp)
+## plot total SPCs for samples
 barplot(sample_peptide_sums[otemp])
+
+## add some more QC here...
+
+
 
 ## 2-10-2018: ASSIGN PEPTIDES TO PROTEINS ###################################
 ## Let us create a vector with all accessions matching every peptide matches.

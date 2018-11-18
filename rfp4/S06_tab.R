@@ -11,7 +11,7 @@ source("S00-env.R")
 #tab <- readr::read_csv("data/SampleExperimentTable_fixed_Mascot.csv", comment = "#",
 #                       col_names = TRUE)
 ## this creates dataframe
-tab <- read.table("data/SampleExperimentTable_fixed_Mascot.csv",
+tab <- read.table("data/SampleExperimentTable_fixed.csv",
                   header = TRUE, sep=",")
 ## only the records without "not_used" are allowed  
 tab <- tab[tab[[1]]!= "not_used",]
@@ -49,7 +49,7 @@ if(any(grepl("uniq",temp))){
   tab$uniq <- labs
 }
 ## Save the tab that will be used.
-View(tab)
+#View(tab)
 write.table(tab,"data/SamplesExperimentsTable_used.csv", col.names = TRUE, row.names=FALSE)
 
 
@@ -61,4 +61,6 @@ rm(ndf)
 
 rdf <- readRDS("data/tab_unq")
 head(rdf)
+
+## ...conntinue with script S07_msnset_build.R
 
