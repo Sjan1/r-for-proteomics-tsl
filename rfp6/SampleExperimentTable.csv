@@ -1,4 +1,4 @@
-name,date,biorep,techrep,fraction,category,sample,treatment,cleavage,not_used
+name,date,biorep,techrep,fraction,category,phenotype,treatment,cleavage,not_used
 PDLP1_C1_2_1_1_120416,120416,2,1,1,CH,C,H,tryp,
 PDLP1_C1_3_1_1_120415,120415,3,1,1,CH,C,H,tryp,
 PDLP1_C2_2_1_2_120416,120416,2,1,2,CH,C,H,tryp,
