@@ -72,7 +72,6 @@ basename(raw_files <- dir("raw", full.names = TRUE))
 - Comparing bioreps against all the factors -  category, sample, treatment, cleavage.
 - Are there any NAs?
 - Where exactly are the NAs ?
-<<<<<<< HEAD
 
 
 ```{r tab1, echo=TRUE}

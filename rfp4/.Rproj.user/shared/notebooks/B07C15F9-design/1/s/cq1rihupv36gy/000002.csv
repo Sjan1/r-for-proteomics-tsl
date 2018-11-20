@@ -1,3 +1,0 @@
-"0","source(""S00-env.R"")"
-"0","tab <- read_csv(""data/SampleExperimentTable.csv"")"
-"0","names(tab)[1:2] <- c(""file"", ""raw"")"

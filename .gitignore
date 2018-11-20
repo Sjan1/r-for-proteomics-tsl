@@ -6,3 +6,4 @@ rfp[1-5]/.*
 *.rds
 *.png
 rfp4/Mascot/
+.Rproj.user
