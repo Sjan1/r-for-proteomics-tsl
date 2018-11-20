@@ -11,7 +11,9 @@ exp <- exp %>%
   select(-category) %>%
   dropConstantVariables()
 
-etab <- experimentHierarchy(exp, fcol)
+
+fcols <- c("phenotype", "treatment", "biorep")
+etab <- experimentHierarchy(exp, fcols)
 
 msnl <- apply(etab, 1, function(.etab) {
   filenames <- exp %>%
@@ -19,9 +21,9 @@ msnl <- apply(etab, 1, function(.etab) {
            phenotype == .etab[["phenotype"]],
            treatment == .etab[["treatment"]]) %>%
     select(name)
-  mzid_files <- file.path(mzid, paste(filenames[[1]], "mzid", sep = "."))
+  mzid_files <- file.path(mzid, paste(filenames[[1]], "mzid", 
+                                      sep = "."))
   e <- rtslprot:::make_pep_MSnSet(mzid_files, fcol = "pepSeq")
-  e <- combineFeatures(e, fcol = "pepSeq", fun = sum)
   e@processingData@files <- mzid_files
   sampleNames(e) <- paste(.etab, collapse = "_")
   e <- updateFvarLabels(e, sampleNames(e))
@@ -32,11 +34,21 @@ msnl <- apply(etab, 1, function(.etab) {
 e <- MSnbase::combine(msnl[[1]], msnl[[2]])
 for (i in 3:length(msnl))
   e <- MSnbase::combine(e, msnl[[i]])
-
 rownames(etab) <- sampleNames(e)
 pData(e) <- etab
 
+save(e, file = "e.rda")
 
-epep <- combineFeatures(e, 
-                        fcol = "pepSeq", 
-                        fun = sum)
+e0 <- e
+e <- impute(e, method = "zero")
+
+null.f <- "y~treatment"
+alt.f <- "y~phenotype+treatment"
+
+e <- rtslprot:::msms_edgeR_test(e, 
+                           null.f = null.f, 
+                           alt.f = alt.f, 
+                           fnm = "phenotype",
+                           test_name = "phenotype")
+
+
