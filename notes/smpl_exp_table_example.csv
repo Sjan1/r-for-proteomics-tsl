@@ -1,0 +1,70 @@
+id,exp_id,exp_date,exp_smpl_id,smpl_id,smpl_name,smpl_name_short,rep,fr,treatment_id,treatment,treatment_short,time_point,digest,tech_rep,unique_short,unique_long,id_code (smpl_treat_rep)
+1,1,121212,1,1,GFP,G,1,x,1,ctrl,C,x,tryp,x,GFP_ctrl_1,G_C_1,1_1_1
+2,1,121212,2,1,GFP,G,2,x,1,ctrl,C,x,tryp,x,GFP_ctrl_2,G_C_2,1_1_2
+3,1,121212,3,1,GFP,G,3,x,1,ctrl,C,x,tryp,x,GFP_ctrl_3,G_C_3,1_1_3
+4,1,121212,4,1,GFP,G,1,x,2,flg22,F,x,tryp,x,GFP_flg22_1,G_F_1,1_2_1
+5,1,121212,5,1,GFP,G,2,x,2,flg22,F,x,tryp,x,GFP_flg22_2,G_F_2,1_2_2
+6,1,121212,6,1,GFP,G,3,x,2,flg22,F,x,tryp,x,GFP_flg22_3,G_F_3,1_2_3
+7,1,121212,7,2,Eff,E,1,x,2,flg22,F,x,tryp,x,Eff_flg22_1,E_F_1,2_2_1
+8,1,121212,8,2,Eff,E,2,x,2,flg22,F,x,tryp,x,Eff_flg22_2,E_F_2,2_2_2
+9,1,121212,9,2,Eff,E,3,x,2,flg22,F,x,tryp,x,Eff_flg22_3,E_F_3,2_2_3
+10,1,121212,10,2,Eff,E,1,x,1,ctrl,C,x,tryp,x,Eff_ctrl_1,E_C_1,2_1_1
+11,1,121212,11,2,Eff,E,2,x,1,ctrl,C,x,tryp,x,Eff_ctrl_2,E_C_2,2_1_2
+12,1,121212,12,2,Eff,E,3,x,1,ctrl,C,x,tryp,x,Eff_ctrl_3,E_C_3,2_1_3
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+easy on the eye…,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+exp_date,smpl_name,rep,fr,treatment,time_point,tech_rep,unique_short,,,,,,,,,,
+121212,GFP,1,x,ctrl,x,x,GFP_ctrl_1,,,,,,,,,,
+121212,GFP,2,x,ctrl,x,x,GFP_ctrl_2,,,,,,,,,,
+121212,GFP,3,x,ctrl,x,x,GFP_ctrl_3,,,,,,,,,,
+121212,GFP,1,x,flg22,x,x,GFP_flg22_1,,,,,,,,,,
+121212,GFP,2,x,flg22,x,x,GFP_flg22_2,,,,,,,,,,
+121212,GFP,3,x,flg22,x,x,GFP_flg22_3,,,,,,,,,,
+121212,Eff,1,x,flg22,x,x,Eff_flg22_1,,,,,,,,,,
+121212,Eff,2,x,flg22,x,x,Eff_flg22_2,,,,,,,,,,
+121212,Eff,3,x,flg22,x,x,Eff_flg22_3,,,,,,,,,,
+121212,Eff,1,x,ctrl,x,x,Eff_ctrl_1,,,,,,,,,,
+121212,Eff,2,x,ctrl,x,x,Eff_ctrl_2,,,,,,,,,,
+121212,Eff,3,x,ctrl,x,x,Eff_ctrl_3,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+"Depending on DOE, samples can be labeled in several ways. Therefore unique strings that define the replicates can be assembled in various fassion.",,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+e.g.,,,,,,,,,,,,,,,,,
+exp,smpl,,,,,,,,,,,,,,,,
+DATE,NAME,TREAT,REP,,,…,"replicates for calculation of summary, plots, etc.",,,,,,,,,,
+EXP_ID,NAME_ID,TREAT,REP,,,…,fractions that needs to be combined,,,,,,,,,,
+DATE,NAME,TREAT,REP,FR,,…,individual fractions that need to be combined,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+bare bones…,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+Exp_ID,date,Sample_ID,Name,abbrev,Treatment_ID,Name,abbrev,unique,,,exp_id,,,,,,
+1,180101,1,Col0,WT,1,mock,M,1_WT_M,,,exp_date,,,,,,
+2,180102,2,GFP,G,2,flg22,T,1_WT_T,,,exp_smpl_id,,,,,,
+3,180103,3,effector,E,,,,1_G_M,,,,,,,,,
+,,,,,,,,1_G_T,,,factor_id,,,,,,
+,,,,,,,,1_E_M,,,factor_name,,,,,,
+,,,,,,,,1_E_T,,,factor_abbrev,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,subfactor_id,,,,,,
+,,,,,factors,,,,,,subfactor_name,,,,,,
+,,,id,level,name,abbrev,parent level,,,,subfactor_abbrev,,,,,,
+,,,1,1,date,D,0,,,,subfactor_parent,,,,,,
+,,,1,2,Col0,WT,1,,,,,,,,,,
+,,,2,2,GFP,G,1,,,,,,,,,,
+,,,3,2,effector,E,1,,,,rep,,,,,,
+,,,,,,,,,,,frac,,,,,,
+,,,1,3,mock,M,2,,,,smpl_prep,,,,,,
+,,,2,3,flg22,T,2,,,,techrep,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,1,4,time,T,3,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,1,5,fraction,F,4,,,,,,,,,,
+,,,1,6,smpl_prep,SP,5,,,,,,,,,,
+,,,1,7,techrep,TR,6,,,,,,,,,,

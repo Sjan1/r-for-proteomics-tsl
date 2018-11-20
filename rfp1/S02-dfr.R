@@ -22,7 +22,7 @@ mulvey[1, 1]
 ## emulate (1) head and (2) tail using [, ]
 mulvey[1:6, ]
 
-mulvey[, 2332:2337]
+mulvey[2332:2337,]
 
 from <- nrow(mulvey) - 5
 to <- nrow(mulvey)
@@ -46,9 +46,11 @@ rownames(mulvey) <- mulvey$FeatureNames
 ## Tip - see line 36
 
 mulvey[4, ]
+mulvey[4,1]
 mulvey["P17809", ]
 
 sel <- mulvey$FeatureNames == "P17809"
+class(sel)
 sum(sel)
 table(sel)
 mulvey[sel, ]

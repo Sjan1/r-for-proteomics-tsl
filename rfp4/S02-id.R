@@ -1,4 +1,4 @@
-library("MSnID")
+source("S00-env.R")
 
 ## To read the vignette:openVignette("MSnID")
 
@@ -56,10 +56,13 @@ filtObj$msmsScore <- list(comparison=">", threshold=10.0)
 show(filtObj)
 
 
-## optimise filter
+## optimise filter - this does not seem working!!!
 filtObj.grid <- optimize_filter(filtObj, msnid, fdr.max=0.01,
                                 method="Grid", level="peptide",
                                 n.iter=500)
+
+
+
 show(filtObj.grid)
 
 msnid0 <- msnid
@@ -77,13 +80,14 @@ msnset <- as(msnid, "MSnSet")
 prots <- combineFeatures(msnset,
                          groupBy = fData(msnset)$accession,
                          fun = "sum")
+## for older vesion of MSnBase
+prots <- combineFeatures(msnset,
+                         groupBy = fData(msnset)$accession,
+                         fun="sum")
+## checks
 class(fData(msnset))
 fData(msnset)$accession
 class(fData(msnset)$accession)
-
-#following line does not work
-table(fData(msnset)$accession$Value)
-
 #to show the object's content
 str(fData(msnset)$accession)
 

@@ -1,0 +1,19 @@
+---
+title: "Notes"
+author: "Jan Sklenar"
+date: "15 September 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notes to the scripts here
+
+S002, S002
+Optimize_filter does not work. It still expects some input.
+
+
+S003
+how to ellegantly use fn and fn2 and generate eprots1 and eprots2?

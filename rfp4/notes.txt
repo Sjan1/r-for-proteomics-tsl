@@ -1,0 +1,3 @@
+S002 and 3
+Optimize_filter does not work. It still expects some input.
+when three samples are loaded, there

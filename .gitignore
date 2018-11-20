@@ -1,0 +1,8 @@
+.*/
+.Rproj.user/
+rfp[1-5]/.*/
+rfp[1-5]/.*
+*.RDS
+*.rds
+*.png
+rfp4/Mascot/

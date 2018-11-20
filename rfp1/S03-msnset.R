@@ -1,7 +1,7 @@
 library("MSnbase")
 
-## source("https://bioconductor.org/biocLite.R")
-## biocLite("MSnbase")
+source("https://bioconductor.org/biocLite.R")
+biocLite("MSnbase")
 
 f <- "./data/mulvey2015.csv"
 e <- 2:19
