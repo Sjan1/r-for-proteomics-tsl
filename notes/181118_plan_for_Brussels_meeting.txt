@@ -1,4 +1,4 @@
-Plan for Brussell meeting
+﻿Plan for Brussell meeting
 =========================
 
 Here is the summary of our progress, my thoughts on what we could achieve in the upcoming meeting, and what Laurent could help with. In general, we made a good  progress and now is the right time to review it and make further plans. The hope is that the meeting will help us to shift the focus on the presentation for the Open Plant we plan for March.
@@ -53,3 +53,7 @@ Other useful things: (I think to do the above well is plenty of work, but just i
 -vi- Check the integrity of the individual measurements (LC-MS runs) to find out retention time drift, signal (sensitivity) drop, MS1 or MS2 level problem, distribution changes (charge states, precursors, MS2 fragments, infusion times, RTs, etc.) 
  
   
+ -------------in Brussels-------------- 
+- read PD output
+- how to MSnSet->ggplot using pData
+-feature data for QC, print spectra with scores, precursor mass, precursor error 

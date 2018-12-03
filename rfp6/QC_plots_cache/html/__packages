@@ -1,0 +1,13 @@
+base
+broom
+biobroom
+magrittr
+ggplot2
+plyr
+BiocGenerics
+Biobase
+Rcpp
+mzR
+S4Vectors
+ProtGenerics
+MSnbase

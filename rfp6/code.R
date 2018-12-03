@@ -1,6 +1,7 @@
 source("S00-env.R")
-library(rtslprot)
-library(dplyr)
+library("rtslprot")
+library("dplyr")
+library("msmsTests")
 
 mzid <- "msgf"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
@@ -32,8 +33,8 @@ msnl <- apply(etab, 1, function(.etab) {
 })
 
 e <- MSnbase::combine(msnl[[1]], msnl[[2]])
-for (i in 3:length(msnl))
-  e <- MSnbase::combine(e, msnl[[i]])
+for (i in 3:length(msnl)){
+  e <- MSnbase::combine(e, msnl[[i]])}
 rownames(etab) <- sampleNames(e)
 pData(e) <- etab
 
@@ -51,4 +52,9 @@ e <- rtslprot:::msms_edgeR_test(e,
                            fnm = "phenotype",
                            test_name = "phenotype")
 
+plot(fData(e)$LogFC_phenotype,-log10(fData(e)$adj.p.values_phenotype))
 
+save(e, file = "e.rda")
+head(exprs(e))
+head(fData(e))[,1:3]
+pData(e)
