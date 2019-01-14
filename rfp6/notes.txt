@@ -1,0 +1,31 @@
+S00-env.R 
+## script to load libraries
+
+code.R
+## script that 
+- 1. reads experimenal table with data annotation
+- 2. creates MSnSets of PSMs
+- 3. creates MSnSets of unique peptides
+
+code_tets.R
+## for testing
+
+functions.R
+## functions used in this project
+## development and troubleshooring purpose
+## eventually, if accepted, it should be moved to rtslprot
+
+core_prot.R
+## making proteins from the peptide MSnSet created in code.R
+## uses code.R output
+
+s03-tidy.R
+## tidy protein MSnSet creaded in code_prot.R data for ggplot2
+
+QC_plots.Rmd
+## here we create summaries of a project
+## for QC purposes and start data analusis
+## is uses scripts from s03-tidy.R
+
+
+

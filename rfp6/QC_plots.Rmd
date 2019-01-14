@@ -20,7 +20,9 @@ library("biobroom")
 library("magrittr")
 library("ggplot2")
 library("plyr")
+library("tidyverse")
 ```
+This script visualizes the results. It creates QC plots of samples in LC-MS measurements, based on protein and peptide identifications. It asumes all the data are in MSnSet object.
 
 ### Tidy MSnSet object containig the data
 ```{R, read data, cache=TRUE, eval=TRUE}
@@ -28,6 +30,7 @@ library("plyr")
 if (require("MSnbase")) {
   library(MSnbase)
   # import MSnSet object
+  }
 eprot <- readRDS("eprot.rds")
   #already imported...
   
@@ -35,7 +38,7 @@ eprot <- readRDS("eprot.rds")
   tidy(eprot)
   # add phenoType data
   et <- tidy(eprot, addPheno=TRUE)
-}
+
 saveRDS(et,"et.rds")
 et <- readRDS("et.rds")
 ```
@@ -48,12 +51,74 @@ et_p <- et %>% filter(phenotype == "P")
 et_h <- et %>% filter(treatment == "H")
 et_i <- et %>% filter(treatment == "I")
 ```
-### Plots
+### QC Plots
 ```{R, plots, fig.height=2}
 library("ggplot2")
 ggplot(et_c) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
 ggplot(et_p) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
 ggplot(et_h) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
 ggplot(et_i) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
+
+```
+
+### Other plots and stats
+
+```{R, plots an  stats}
+## split data (for stats and plots)
+etg <- et %>% group_by(phenotype)
+head(etg)
+dim(etg)
+dim(et)
+etg <- et %>% group_by(phenotype) %>% summarise(value = mean(value, na.rm = TRUE))
+etg <- et %>% group_by(phenotype) %>% summarise(value = n())
+etg <- et %>% group_by(treatment) %>% summarise(value = n())
+etg <- et %>% group_by(phenotype,treatment) %>% summarise(value = n())
+
+# average spectral count
+etg <- et %>% group_by(protein,phenotype,treatment) %>% summarise(value = mean(value, na.rm = TRUE))
+etg
+
+# wider format for scatter plot
+library("tidyr")
+ec  =  mutate(et,categ = paste(phenotype, treatment, sep = '_'))
+ecg <- ec %>% group_by(protein,categ) %>% summarise(value = mean(value, na.rm = TRUE))
+ecgw <- ecg %>% spread(key = "categ", value = "value", fill = NA)
+ecgw <- ecgw %>% replace(is.na(.),0)
+ggplot(data = ecgw, mapping = aes(x=C_H,y=P_H)) + geom_point()
+head(ecgw)
+ecgw <- as.data.frame(ecgw)
+# remove protein column, keeping protein info as rownames
+rownames(ecgw) <- ecgw$protein
+ecgwm <- ecgw[,2:ncol(ecgw)]
+
+# scatter plot
+head(ecgw[,2:ncol(ecgw)])
+plot(ecgw[,2:ncol(ecgw)])
+
+# correlation anatysis
+cr <- cor(ecgwm)
+cr
+
+library(corrplot)
+corrplot(cr, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+library("PerformanceAnalytics")
+# my_data <- mtcars[, c(1,3,4,5,6,7)]
+chart.Correlation(cr, histogram=TRUE, pch=19)
+
+# Get some colors
+col<- colorRampPalette(c("blue", "white", "red"))(20)
+heatmap(x = cr, col = col, symm = TRUE)
+
+# Heatmap...?
+
+# List clear outliers - true positive results
+# Reomove correlated proteins in  averaged  sample to sample comparisons. 
+# Set some thresholds of fold change 
+# sigmoid curve and Venn diagram 
+# My own calculation to compare with
+# Normalize to bait protein or to total SPC.
+
 
 ```

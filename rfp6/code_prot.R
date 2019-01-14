@@ -30,7 +30,7 @@ length(featureNames(e))
 ## length of MSnSet
 length(exprs(e))
 length(fData(e))
-fData(e)
+head(fData(e))
 dim(fData(e))
 ## The lenght of accvec should be the number of non redundant protein
 ## after features are combined this will be number of combined features
@@ -43,9 +43,10 @@ grep(",",fData(e)$acc)
 ## append combined accessions to feature data
 fData(e)$acc <- accvec
 
+
 ## remove NAs before combining features
 head(exprs(e))
-e <- impute(e, method = "zero")
+e <- impute(e, method = "ORILC")
 head(exprs(e))
 
 ## how data looks like?
@@ -53,10 +54,24 @@ table(exprs(e))
 ## plot historam
 hist(exprs(e))
 
+
+head(exprs(eprot))
 ## PROTEOTYPIC PEPTIDES ########################################
 ## combining proteotypic peptides to the corresponding proteins
 eprot <- combineFeatures(e, groupBy = fData(e)$acc, 
                          fun = "sum")
+
+## save results as RDS
+saveRDS(eprot,"eprot.rds")
+eprot <- readRDS("eprot.rds")
+## save as the original
+eprot0 <- eprot
+saveRDS(eprot0,"eprot0.rds")
+## read the original
+eprot <- readRDS("eprot0.rds")
+
+
+
 
 ## sanity checks
 ## number of combined features
@@ -89,45 +104,74 @@ hist(exprs(eprot))
 
 
 
-## save results as RDS
-saveRDS(eprot,"eprot.rds")
-eprot <- readRDS("eprot.rds")
 
-#hist(exprs(eprot))
-#hist(log(exprs(eprot),2)[exprs(eprot)>1])
-#hist(log(exprs(eprot),2))
+## statistical tests
 
-eprot0 <- eprot
-eprot <- impute(eprot, method = "zero")
-
-
-## phenotype
-null.f <- "y~1"
-alt.f <- "y~phenotype"
-
-## treatment
-null.f <- "y~1"
-alt.f <- "y~treatment"
-
-#phenotype ph0-treatment
-null.f <- "y~phenotype"
-alt.f <- "y~phenotype+treatment"
-
-#block treat0_phenotype
+## 01
+## Can variance be explained by phenotype and treatment? 
+## null_TR__alt_PH+TR 
 null.f <- "y~treatment"
 alt.f <- "y~phenotype+treatment"
-
-
 
 eprot <- rtslprot:::msms_edgeR_test(eprot, 
                                 null.f = null.f, 
                                 alt.f = alt.f, 
                                 fnm = "phenotype",
-                                test_name = "treat0_phenotype")
+                                test_name = "null_TR__alt_PH+TR")
 
+## 02
+## Can variance be explained by phenotype? 
+## null_1__alt_PH
+null.f <- "y~1"
+alt.f <- "y~phenotype"
+
+eprot <- rtslprot:::msms_edgeR_test(eprot, 
+                                    null.f = null.f, 
+                                    alt.f = alt.f, 
+                                    fnm = "phenotype",
+                                    test_name = "null_1__alt_PH")
+
+## 03
+## Is ohenotype an treatment influence each other?   
+## null_PH+TR__alt_PH*TR
+null.f <- "y~phenotype+treatment"
+alt.f <- "y~phenotype*treatment"
+
+eprot <- rtslprot:::msms_edgeR_test(eprot, 
+                                    null.f = null.f, 
+                                    alt.f = alt.f, 
+                                    fnm = "phenotype",
+                                    test_name = "null_PH+TR__alt_PH*TR")
+
+
+## histogram
+    ## not adjisted p-val
+    ## adjusted p-val 
+## null_TR__alt_PH+TR
+hist(fData(eprot)$`p.value_null_TR__alt_PH+TR`)
+hist(fData(eprot)$`adj.p.values_null_TR__alt_PH+TR`)
+## null_1__alt_PH
+hist(fData(eprot)$`p.value_null_1__alt_PH`)
+hist(fData(eprot)$`adj.p.values_null_1__alt_PH`)
+## null_PH+TR__alt_PH*TR
+hist(fData(eprot)$`p.value_null_PH+TR__alt_PH*TR`)
+hist(fData(eprot)$`adj.p.values_null_PH+TR__alt_PH*TR`)
 
 ## volcano plot
-plot(fData(eprot)$LogFC_treat0_phenotype,-log10(fData(eprot)$adj.p.values_treat0_phenotype))
+# non adjusted p-values
+# null_TR__alt_PH+TR
+plot(fData(eprot)$`LogFC_null_TR__alt_PH+TR`,
+     -log10(fData(eprot)$`p.value_null_TR__alt_PH+TR`))
+# null_1__alt_PH
+plot(fData(eprot)$`LogFC_null_1__alt_PH`,
+     -log10(fData(eprot)$`p.value_null_1__alt_PH`))
+# null_PH+TR__alt_PH*TR
+plot(fData(eprot)$`LogFC_null_PH+TR__alt_PH*TR`,
+     -log10(fData(eprot)$`p.value_null_PH+TR__alt_PH*TR`), ylim=c(0,10))
 
-plot(fData(eprot)$LogFC_treatment,-log10(fData(eprot)$adj.p.values_treatment))
-plot(fData(eprot)$LogFC_block_treat,-log10(fData(eprot)$adj.p.values_block_treat))
+## p-value distribution interpretation
+## http://varianceexplained.org/statistics/interpreting-pvalue-histogram/
+
+## what next -- distribusion of p-values seems to be influenced by imputation of the missing values.
+## what imputiaton to use?
+## at least remove the hits with SPC=<1, scoring in only one replicate of the treatment or phenotype

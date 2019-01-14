@@ -11,3 +11,11 @@ mzR
 S4Vectors
 ProtGenerics
 MSnbase
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
