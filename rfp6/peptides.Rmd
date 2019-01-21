@@ -1,0 +1,98 @@
+---
+title: "Peptide spectral counting differential analysis using msmsTests library"
+author: "Jan Sklenar"
+date: "20 January 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Peptide results
+
+Results taken from 'core.R' script to make a report
+This document concerns peptide only. 
+
+```{r read libraried, echo=FALSE, include=FALSE, eval=TRUE}
+source("S00-env.R")
+#library("rtslprot")
+#library("dplyr")
+library("msmsTests")
+```
+
+#### Read saved MSnSet with statistical models results
+
+```{r read data}
+e <- readRDS("e_stat.Rds")
+```
+
+#### This is how "msmsTests" were used 
+
+```{r statistics tests, echo=TRUE, eval=FALSE}
+print("DO NOT run this chunk, MSnSet is already loaded!")
+## open if needed
+e <- readRDS("e.Rds")
+
+## deal with NAs
+e <- impute(e, method = "min")
+
+## Statistical tests
+## Can variance be explained by phenotype? 
+## null_1__alt_PH
+null.f <- "y~1"
+alt.f <- "y~phenotype"
+e <- rtslprot:::msms_edgeR_test(e, 
+                                null.f = null.f, 
+                                alt.f = alt.f, 
+                                fnm = "phenotype",
+                                test_name = "null_1__alt_PH")
+
+## Can variance be explained by phenotype and treatment?
+## null_TR__alt_PH+TR 
+null.f <- "y~treatment"
+alt.f <- "y~phenotype+treatment"
+e <- rtslprot:::msms_edgeR_test(e, 
+                                null.f = null.f, 
+                                alt.f = alt.f, 
+                                fnm = "phenotype",
+                                test_name = "null_TR__alt_PH+TR")
+
+## Is treatment doing anything?   
+## null_PH+TR__alt_PH*TR
+null.f <- "y~phenotype+treatment"
+alt.f <- "y~phenotype*treatment"
+e <- rtslprot:::msms_edgeR_test(e, 
+                                null.f = null.f, 
+                                alt.f = alt.f, 
+                                fnm = "phenotype",
+                                test_name = "null_PH+TR__alt_PH*TR")
+
+```
+
+### Plots: Volcano, Histograms
+
+```{r plots, echo = TRUE}
+## Volcano plots
+plot(fData(e)$`LogFC_null_1__alt_PH`,-log10(fData(e)$`p.value_null_1__alt_PH`))
+plot(fData(e)$`LogFC_null_TR__alt_PH+TR`,-log10(fData(e)$`p.value_null_TR__alt_PH+TR`))
+plot(fData(e)$`LogFC_null_PH+TR__alt_PH*TR`,-log10(fData(e)$`p.value_null_PH+TR__alt_PH*TR`))
+
+## Histogram plots: p-values
+## null_1__alt_PH
+hist(fData(e)$`p.value_null_1__alt_PH`)
+## null_TR__alt_PH+TR
+hist(fData(e)$`p.value_null_TR__alt_PH+TR`)
+## null_PH+TR__alt_PH*TR
+hist(fData(e)$`p.value_null_PH+TR__alt_PH*TR`)
+
+## Histogram plots: adjusted p-values
+## null_1__alt_PH
+hist(fData(e)$`adj.p.values_null_1__alt_PH`)
+## null_TR__alt_PH+TR
+hist(fData(e)$`adj.p.values_null_TR__alt_PH+TR`)
+## null_PH+TR__alt_PH*TR
+hist(fData(e)$`adj.p.values_null_PH+TR__alt_PH*TR`)
+```
+
+
