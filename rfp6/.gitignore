@@ -3,3 +3,5 @@ tests.R
 s03-tidy.R
 S02-filter.R
 code_debug.R
+*.rds
+*.rda
