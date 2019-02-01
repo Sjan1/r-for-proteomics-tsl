@@ -14,7 +14,7 @@ allcol <- colnames(df);
 sellist <- list();
 
 ## which pair of sample types to compare  
-interested <- c("C_I", "C_H");
+interested <- c("C_H", "P_H");
 cols.done <- c();
 
 for(sample in interested) {
@@ -55,28 +55,38 @@ sellist[[sample]] <- tempv;
 sellist
 ## unnique
 all <- unique(c(sellist[[1]], sellist[[2]]));
-
+all
 ## selected proteins hits with at least two peptides in one group 
 seldf <- df[all, cols.done]
 seldf
 
 ## calculate means of selected groups
 ## what
-cic <- grepl("^C_I", colnames(seldf))
-cic <- grepl(paste0("^",interested[1]), colnames(seldf))  # beter?
-ci <- seldf[, cic]
+phc <- grepl("^P_H", colnames(seldf))
+phc <- grepl(paste0("^",interested[1]), colnames(seldf))  # beter?
+ph <- seldf[, phc]
 
 chc <- grepl("^C_H", colnames(seldf))
 chc <- grepl(paste0("^",interested[2]), colnames(seldf))  # beter?
 ch <- seldf[, chc]
 
-rownames(ci) <- rownames(seldf)
+rownames(ph) <- rownames(seldf)
 rownames(ch) <- rownames(seldf)
-cim <- rowMeans(ci)
+phm <- rowMeans(ph)
 chm <- rowMeans(ch)
 ## means of both samples we are comparing
-mdf <- data.frame(ci = cim, ch = chm)
+mdf <- data.frame(ph = phm, ch = chm)
 rownames(mdf) <- rownames(seldf)
 head(mdf)
+
+x <- mdf;
+
+nrow(x[x$ph == 0,]);
+nrow(x[x$ch == 0,]);
+
+max(x$ph)
+max(x$ch)
+
+
 
 

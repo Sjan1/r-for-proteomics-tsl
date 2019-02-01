@@ -101,3 +101,27 @@ and usage of dedicated R/Bioconductor packages for MS and proteomics.
   over time, annotate (with filename and date) and combine there.
 - Raw data, with `readMSData(, mode = "onDisk")`.
 - Differential expression of count data with `msmsTests`.
+
+  
+  
+## Final OP presentation 
+
+## Title: [R] for Proteomics
+
+### Date: 11th March 2019
+
+### Abstract:
+Final presentation of the Open Plant supported project to explore and bring close to the proteomics users data processing capability existing in [R] environment. General introduction of the open source “[R] for Proteomics” by developers and application on JIC/TSL projects. After training obtained directly from the developer, we were able to set up basic proteomics data pipeline that is independent alternative to existing, mostly commercial, infrastructure. The results of this teamwork, experience working with packages involved, and perspectives will be presented and discussed by team members 
+
+
+### The team:
+**Laurent Gatto**, RfP developer, Professor of Bioinformatics, Université catholique de Louvain, Belgium
+
+**Jan Sklenar**, proteomics and mass spectrometry specialist, The Sainsbury Laboratory Norwich
+
+**Marielle Vigouroux**, Bioinformatician, John Innes Centre, Norwich
+
+**Govind Chandra**, Bioinformatician, John Innes Centre, Norwich
+
+### Audience:
+Proteomics experts, users or anybody interested in learning open source proteomics data processing.
