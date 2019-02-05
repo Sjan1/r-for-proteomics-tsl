@@ -123,5 +123,5 @@ Final presentation of the Open Plant supported project to explore and bring clos
 
 **Govind Chandra**, Bioinformatician, John Innes Centre, Norwich
 
-### Audience:
+### Target audience:
 Proteomics experts, users or anybody interested in learning open source proteomics data processing.

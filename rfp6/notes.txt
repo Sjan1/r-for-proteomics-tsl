@@ -1,32 +1,45 @@
-S00-env.R 
-## script to load libraries
+# Notes on RfP6
+---
+## Scripts
+## S00-env.R 
+to load libraries
 
-code.R
-## script that 
+## code.R
 - 1. reads experimenal table with data annotation
 - 2. creates MSnSets of PSMs
 - 3. creates MSnSets of unique peptides
 
-code_tets.R
-## for testing
+## code_tets.R
+for testing
 
-functions.R
-## functions used in this project
-## development and troubleshooring purpose
-## eventually, if accepted, it should be moved to rtslprot
+## functions.R
+- functions used in this project
+- development and troubleshooring purpose
+- eventually, if accepted, it should be moved to rtslprot
 
-core_prot.R
-## making proteins from the peptide MSnSet created in code.R
-## uses code.R output
+## core_prot.R
+- making proteins from the peptide MSnSet created in code.R
+- uses code.R output
 
-s03-tidy.R
-## tidy protein MSnSet creaded in code_prot.R data for ggplot2
+## s03-tidy.R
+tidy protein MSnSet creaded in code_prot.R data for ggplot2
 
-QC_plots.Rmd
-## here we create summaries of a project
-## for QC purposes and start data analusis
-## is uses scripts from s03-tidy.R
+## QC_plots.Rmd
+- here we create summaries of a project
+- for QC purposes and start data analusis
+- is uses scripts from s03-tidy.R
 
-peptides.Rmd
-## to publish statistical testing results
+## peptides.Rmd
+to publish statistical testing results
 
+
+
+---
+
+## To do:
+To do:
+
+- function for fold changes (FC)
+- compare msgf vs mascot
+- subset peptide MSnSet to extract one protein (ideally like Similarity view in Scaffold), table of all the peptides that identifies a protein in all the samples
+- we could make function for that from rfp6/S03_code_prot.R

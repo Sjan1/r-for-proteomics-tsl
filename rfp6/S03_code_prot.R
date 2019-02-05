@@ -11,6 +11,8 @@
 ## If this is the case, We read them all in a vectake the first accession.
 
 load("e.rda") #MSnSet with peptides from the script code.R
+e <- readRDS("e_mascot.Rds")
+e <- readRDS("e_msgf.Rds")
 
 accvec <- c() # vector with the acctual Accession numbers 
 acc <- grep("accession",fvarLabels(e),value = TRUE) # headers (featureNames) with protein accessions
@@ -43,11 +45,15 @@ grep(",",fData(e)$acc)
 ## append combined accessions to feature data
 fData(e)$acc <- accvec
 
+saveRDS(e,"e.rds")
 
 ## remove NAs before combining features
 head(exprs(e))
-e <- impute(e, method = "ORILC")
+e <- impute(e, method = "QRILC")
+e <- impute(e, method = "zero")
 head(exprs(e))
+
+saveRDS(e,"e.rds")
 
 ## how data looks like?
 table(exprs(e))
@@ -67,9 +73,13 @@ eprot <- readRDS("eprot.rds")
 ## save as the original
 eprot0 <- eprot
 saveRDS(eprot0,"eprot0.rds")
+saveRDS(eprot,"eprot_msgf.rds")
+saveRDS(eprot,"eprot_mascot.rds")
 ## read the original
 eprot <- readRDS("eprot0.rds")
-
+eprot <- readRDS("eprot_msgf.rds")
+eprot <- readRDS("eprot_mascot.rds")
+eprot.msgf <- eprot
 
 
 

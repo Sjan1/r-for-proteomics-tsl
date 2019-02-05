@@ -9,6 +9,7 @@ library("msmsTests")
 ## (iii) searches
 ## (iv) experimental factors
 mzid <- "msgf"
+mzid <- "mascot"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
                                  mzid = mzid)
 ## APPLY FILTER if necessary
@@ -48,9 +49,12 @@ pData(e) <- etab
 
 save(e, file = "e.rda")
 saveRDS(e,"e.rds")
+saveRDS(e,"e_msgf.rds")
+saveRDS(e,"e_mascot.rds")
 ##keep the original
 e0 <- e
 e <- e0
+e_msfg <- e
 ## open if needed
 e <- readRDS("e.Rds")
 
@@ -93,6 +97,7 @@ e <- rtslprot:::msms_edgeR_test(e,
                            test_name = "null_PH+TR__alt_PH*TR")
 
 plot(fData(e)$LogFC_phenotype,-log10(fData(e)$adj.p.values_phenotype))
+plot(fData(e)$`LogFC_null_TR__alt_PH+TR`,-log10(fData(e)$`p.value_null_TR__alt_PH+TR`))
 
 ## null_TR__alt_PH+TR
 hist(fData(e)$`p.value_null_TR__alt_PH+TR`)

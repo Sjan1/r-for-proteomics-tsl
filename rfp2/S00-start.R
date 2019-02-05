@@ -8,8 +8,7 @@ x[3]
 letters[1:4]
 
 ## data.frame
-df <- 
-  read.csv("./data/mulvey2015.csv",
+df <- read.csv("./data/mulvey2015.csv",
            header = TRUE,
            stringsAsFactors = FALSE)
 
@@ -60,13 +59,14 @@ sampleNames(x)
 fvarLabels(x)
 featureNames(x)
 
+## name features using name in column 1
 x <- readMSnSet2(f, e, 
                  fnames = 1)
 featureNames(x)[1:5]
 
+## the same thing
 x <- readMSnSet2(f, e)
-featureNames(x) <- 
-  fData(x)$FeatureNames
+featureNames(x) <- fData(x)$FeatureNames
 
 ## saving and loading
 save(x, 
@@ -116,14 +116,14 @@ plot(log10(exprs(ms)[, i]),
 i <- exprs(ms)[, 5]
 j <- exprs(ms)[, 11]
 
-plot(i, j, 
-     col = c("red", "blue"))
+plot(i, j, col = c("red", "blue"))
 
 View(fData(ms))
 
 m <- fData(ms)$markers
 table(m)
 
+#creates logical vector with as many "black"s as there is rows in MSnSet
 cls <- rep("black", 
            nrow(ms))
 

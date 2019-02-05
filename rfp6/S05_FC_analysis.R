@@ -64,6 +64,7 @@ seldf
 ## what
 phc <- grepl("^P_H", colnames(seldf))
 phc <- grepl(paste0("^",interested[1]), colnames(seldf))  # beter?
+phc
 ph <- seldf[, phc]
 
 chc <- grepl("^C_H", colnames(seldf))
@@ -80,13 +81,31 @@ rownames(mdf) <- rownames(seldf)
 head(mdf)
 
 x <- mdf;
+head(mdf)
+nrow(mdf)
+nrow(y)
 
-nrow(x[x$ph == 0,]);
-nrow(x[x$ch == 0,]);
+x[x$ph == 0, "ph"] <- 0.001;
+x[x$ch == 0, "ch"] <- 0.001;
 
-max(x$ph)
-max(x$ch)
+x$ch <- log2(x$ch)
+x$ph <- log2(x$ph)
+head(x)
+x$lfc <- x$ph - x$ch;
 
+ordvec <- order(x$lfc)
+y <- x[ordvec,]
+head(y)
+windows()
+barplot(y$lfc)
 
+mdf$lfc <- y[rownames(mdf), "lfc"]
+head(mdf)
+y["35a12",]
+
+nrow(mdf[abs(mdf$lfc) >= 1, ])
+
+temp <- grepl("^XXX_", rownames(mdf))
+table(temp)
 
 
