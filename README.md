@@ -103,27 +103,37 @@ and usage of dedicated R/Bioconductor packages for MS and proteomics.
 - Differential expression of count data with `msmsTests`.
 
   
----
----
----  
-## Final OP presentation 
 
+
+<br>
+<br>
+
+---  
+# Final OpenPlant presentation 
+---
+<br>
 ## Title: [R] for Proteomics
 
-### Date: 11th March 2019
+#### Date: 11th March 2019
 
 ### Abstract:
-Final presentation of the Open Plant supported project to explore and bring close to the proteomics users data processing capability existing in [R] environment. General introduction of the open source “[R] for Proteomics” by developers and application on JIC/TSL projects. After training obtained directly from the developer, we were able to set up basic proteomics data pipeline that is independent alternative to existing, mostly commercial, infrastructure. The results of this teamwork, experience working with packages involved, and perspectives will be presented and discussed by team members 
+The final presentation of OpenPlant project aimed to facilitate proteomics data analysis capitalizing on infrastructure existing in [R] environment. The objective to organize training and explore “[R] for Proteomics”, an open source project published in Bioconductor package was met in several workshops with the developer. The generated code and knowledge was applied to current JIC/TSL projects. We set up basic proteomics data pipeline that is an independent alternative to the existing, mostly commercial, infrastructure. The results of this teamwork, experience working with the [R] packages and perspectives will be presented and discussed by team members.
 
+### Target audience:
+That carries out proteomics measurement, seeking a deeper understanding of data analysis involved or wishing to learn enabling open source tools.  
 
+<br>
 ### The team:
 **Laurent Gatto**, RfP developer, Professor of Bioinformatics, Université catholique de Louvain, Belgium
 
-**Jan Sklenar**, proteomics and mass spectrometry specialist, The Sainsbury Laboratory Norwich
+**Jan Sklenar**, proteomics and mass spectrometry specialist, The Sainsbury Laboratory, Norwich
 
 **Marielle Vigouroux**, Bioinformatician, John Innes Centre, Norwich
 
 **Govind Chandra**, Bioinformatician, John Innes Centre, Norwich
 
-### Target audience:
-Proteomics experts, users or anybody interested in learning open source proteomics data processing.
+<br>
+### Key words:
+Proteomics and proteomics data analysis, [R], open source. 
+
+##### GitHub: [github.com/Sjan1/r-for-proteomics-tsl](https://github.com/Sjan1/r-for-proteomics-tsl "link") 

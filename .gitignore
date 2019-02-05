@@ -1,7 +1,7 @@
 .*/
 .Rproj.user/
-rfp[1-5]/.*/
-rfp[1-5]/.*
+rfp[1-6]/.*/
+rfp[1-6]/.*
 *.RDS
 *.rds
 *.png
