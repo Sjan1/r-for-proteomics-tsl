@@ -8,3 +8,4 @@ rfp[1-5]/.*
 rfp4/Mascot/
 .Rproj.user
 .Rhistory
+.RData
