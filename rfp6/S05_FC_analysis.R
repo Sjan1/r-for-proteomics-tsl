@@ -4,7 +4,7 @@
 ##
 rm(list = ls());
 ## protein data
-eprot <- readRDS("eprot.rds")
+eprot <- readRDS("eprot_mascot.rds")
 df <- exprs(eprot)
 head(df)
 
@@ -83,7 +83,7 @@ head(mdf)
 x <- mdf;
 head(mdf)
 nrow(mdf)
-nrow(y)
+#nrow(y)
 
 x[x$ph == 0, "ph"] <- 0.001;
 x[x$ch == 0, "ch"] <- 0.001;
@@ -97,15 +97,30 @@ ordvec <- order(x$lfc)
 y <- x[ordvec,]
 head(y)
 windows()
+# y is in the right order required for plotting
 barplot(y$lfc)
 
 mdf$lfc <- y[rownames(mdf), "lfc"]
 head(mdf)
-y["35a12",]
+y["AT1G02500.1",]
 
 nrow(mdf[abs(mdf$lfc) >= 1, ])
+mdf[abs(mdf$lfc) >= 1,]
 
+cols <- c("blue", "red")[(abs(y$lfc) >= 4) + 1]
+barplot(y$lfc, col=cols)
+
+## more exxamples on how to produce colored bar plot here:
+## https://stackoverflow.com/questions/13112974/change-colours-of-particular-bars-in-a-bar-chart
+
+## check for decoys
 temp <- grepl("^XXX_", rownames(mdf))
 table(temp)
+
+## go back to mgf, subscript to get differentialy abundant proteins mdf[mdf$lfc>1...], 
+## lits the proteins for user to evaluate,
+## link it with raw spectral counts
+## link with petides
+
 
 

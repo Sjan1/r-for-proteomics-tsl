@@ -3,6 +3,7 @@ eprot <- readRDS("eprot_msgf.Rds")
 eprot <- readRDS("eprot_mascot.Rds")
 e <- readRDS("e_msgf.Rds")
 e <- readRDS("e_mascot.Rds")
+
 # all feature data columns
 cn <- colnames(fData(eprot))
 cn
@@ -21,6 +22,7 @@ table(pr)
 d <- fData(eprot)[pr,cn_pep]
 View(d)
 
+##PROTEIN===================================================
 # But this does not make much senseto do with the proteins
 # do it all again with the peptides
 # input above
@@ -33,7 +35,7 @@ head(fData(e)[cn_pep])
 
 
 # select all accesion numbers - logical
-ac <- grepl("^accession.",colnames(fData(e)))
+ac <- grepl("^accession.",colnames(fData(eprot)))
 head(ac)
 table(ac)
 acc <- fData(e)[,ac]

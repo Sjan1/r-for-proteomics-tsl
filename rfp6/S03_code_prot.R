@@ -14,18 +14,39 @@ load("e.rda") #MSnSet with peptides from the script code.R
 e <- readRDS("e_mascot.Rds")
 e <- readRDS("e_msgf.Rds")
 
+
+uniqacc <- function(e) {
 accvec <- c() # vector with the acctual Accession numbers 
-acc <- grep("accession",fvarLabels(e),value = TRUE) # headers (featureNames) with protein accessions
+acc <- grep("^[Aa]ccession",fvarLabels(e),value = TRUE) # headers (featureNames) with protein accessions
 df_temp <- (fData(e)[,acc])
 for (rn in rownames(df_temp)) {
+  rowvec <- c();
   onerow <- df_temp[rn,]
   for (cn in 1:length(onerow)) {
     oneacc <- onerow[1,cn]
-    if (is.na(oneacc)){}else{accvec <- c(accvec,oneacc);
+    if (is.na(oneacc)){}else{rowvec <- c(rowvec,oneacc);
     break}    
   }
+  acc.str <- paste(unique(rowvec), collapse = ",")
+  accvec <- c(accvec, acc.str)
+    if(length(unique(rowvec)) != 1) {
+  message(paste("There are several accessions for a peptide on row No.",rn, 
+                       "of MSnSet!"))
+}}
+return(accvec);
 }
 
+rm(accvec)
+accvec <- uniqacc(e);
+length(accvec)
+
+fData(e)$Prot_Acc <- accvec
+fvarLabels(e)
+
+
+
+
+length(accvec)
 ## lenght of accvec should be the same as the length of featurenames
 length(accvec)
 length(featureNames(e))
@@ -64,7 +85,7 @@ hist(exprs(e))
 head(exprs(eprot))
 ## PROTEOTYPIC PEPTIDES ########################################
 ## combining proteotypic peptides to the corresponding proteins
-eprot <- combineFeatures(e, groupBy = fData(e)$acc, 
+eprot <- combineFeatures(e, groupBy = fData(e)$Prot_Acc, 
                          fun = "sum")
 
 ## save results as RDS
