@@ -4,7 +4,6 @@
 
 <br>
 ## Title: R for Proteomics
-
 ### Date: 11th March 2019
 
 <br>
@@ -17,7 +16,6 @@ Those who carry out proteomics experiments and seek a deeper understanding of da
 
 <br>
 ### The team:
-
 **Jan Sklenar**^1, **Govind Chandra**^2, **Marielle Vigouroux**^2, **Laurent Gatto**^3
 
 [1] Proteomics and mass spectrometry specialist, The Sainsbury Laboratory, Norwich
@@ -28,7 +26,6 @@ Those who carry out proteomics experiments and seek a deeper understanding of da
 
 <br>
 ### Key words: 
-
 Proteomics data analysis, R, open source. 
 
 ##### GitHub:[github.com/Sjan1/r-for-proteomics-tsl](https://github.com/Sjan1/r-for-proteomics-tsl "link") 
