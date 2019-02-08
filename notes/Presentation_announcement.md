@@ -5,7 +5,9 @@
 
 ## Title: R for Proteomics
 
-### Date: 11th March 2019
+### Date: 11th March 2019, 2:00 PM
+
+### Venue: The Sainsbury Laboratory, room G26
 
 
 
