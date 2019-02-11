@@ -36,4 +36,7 @@ Those who carry out proteomics experiments and seek a deeper understanding of da
 
 Proteomics data analysis, R, open source. 
 
-##### GitHub:[github.com/Sjan1/r-for-proteomics-tsl](https://github.com/Sjan1/r-for-proteomics-tsl "link") 
+### References:
+
+**GitHub:** [github.com/.../r-for-proteomics-tsl](https://github.com/Sjan1/r-for-proteomics-tsl "link")  
+**Bioconductor:** [bioconductor.org/.../MSnbase](https://bioconductor.org/packages/release/bioc/html/MSnbase.html) 
