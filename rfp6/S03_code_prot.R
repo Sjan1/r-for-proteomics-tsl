@@ -42,7 +42,7 @@ length(accvec)
 
 fData(e)$Prot_Acc <- accvec
 fvarLabels(e)
-
+saveRDS(e,"e.rds")
 
 
 

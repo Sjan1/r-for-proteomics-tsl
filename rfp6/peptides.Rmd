@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Peptide results
 
 Results taken from 'core.R' script to make a report
-This document concerns peptide only. 
+This document concerns peptides only. 
 
 ```{r read libraried, echo=FALSE, include=FALSE, eval=TRUE}
 source("S00-env.R")
@@ -21,7 +21,7 @@ source("S00-env.R")
 library("msmsTests")
 ```
 
-#### Read saved MSnSet with statistical models results
+#### Read saved MSnSet with statistical model results
 
 ```{r read data}
 e <- readRDS("e_stat.Rds")
