@@ -24,6 +24,13 @@ interested <- c("C_H", "P_H");
 names(interested) <- c("C_H", "P_H")
 cols.done <- c();
 
+## FOR THE FUTURE IMPROVEMENTS
+## create labels for the data compared and link them to the pattern used above 
+treat <- gsub("[_]","",names(interested[2]))
+ctrl <- gsub("[_]","",names(interested[1]))
+treat
+ctrl
+  
 for(sample in interested) {
 sre <- paste("^", sample, sep = "");
   
@@ -233,8 +240,14 @@ cols <- rep("blue", nrow(spc))
 cols[abs(spc$lfc) >= 2] <- "red"
 cols[spc$ch == 0] <- "darkred"
 cols[spc$ph == 0] <- "darkred"
-barplot(spc$lfc, col=cols, ylim = c(min(spc$lfc),
-                                    max(spc$lfc)))
+barplot(spc$lfc,
+        col=cols,
+        ylim = c(min(spc$lfc),
+        max(spc$lfc)),
+        main=paste("Spectral count fold change (",treat,"/",ctrl,")"),
+        xlab="protein hits",
+        ylab=paste(c("log2 (",treat,"/",ctrl,")"),collapse = "")
+        )
 
 ## plot labels
 for(rn in c(1, nrow(spc))) {
