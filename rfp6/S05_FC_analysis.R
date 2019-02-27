@@ -220,6 +220,9 @@ res2 <- format(round(res2, 2))
 ## resulting list -  IT WOULD BE NICE TO ADD DESCRIPTION TO THE 'res' TABLES 
 head(res1,20)
 head(res2,20)
+write.csv(res1, file = paste0("res1_",treat,".csv", collapse = NULL))
+write.csv(res2, file = paste0("res2_",ctrl,".csv", collapse = NULL))
+
 ## remains to do - add description to the result table
 head(fData(eprot)[,c("description.C_H_2", "description.C_H_3")],10)
 
@@ -232,14 +235,16 @@ common
 uch
 ## IT WOULD BE NICE TO PLOT VENN DIAGRAM HERE
 
-# plot
-# windows()
+## plot
+#windows()
+#png(filename='Figs/eprot_mascot_S-curve.png')
 barplot(spc$lfc)
 #cols <- c("blue", "red")[(abs(spc$lfc) >= 2) + 1]
 cols <- rep("blue", nrow(spc))
 cols[abs(spc$lfc) >= 2] <- "red"
 cols[spc$ch == 0] <- "darkred"
 cols[spc$ph == 0] <- "darkred"
+
 barplot(spc$lfc,
         col=cols,
         ylim = c(min(spc$lfc),
@@ -267,8 +272,13 @@ if (temp["lfc"] > 0) {
   text(md, -5, label = labpos, pos = 4);
 }
 }
-match(0,spc$lfc)  #test
+dev.off()
 
+
+
+
+
+match(0,spc$lfc)  #test
 
 #temp <- as.matrix(res2[1,1:3])[1,]
 #cn1 <- names(temp)[1];

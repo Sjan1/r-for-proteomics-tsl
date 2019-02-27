@@ -3,16 +3,20 @@ title: "PDLP1 reanalysis, QC-plots"
 author: "Jan Sklenar"
 #date: "25 November 2018"
 date: "`r Sys.Date()`"
-output: html_document
+#output: html_document
+#output: ioslides_presentation
+#output: beamer_presentation
+#output: powerpoint_presentation
+output: slidy_presentation
+#fig_width: 6 
+#fig_height: 4 
 ---
 
 ```{r setup, include=TRUE}
-knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
-                      echo=TRUE, warning=FALSE, message=FALSE)
-
+knitr::opts_chunk$set(fig.width=8, fig.height=3, fig.path='Figs/', echo=TRUE, warning=FALSE, message=FALSE)
 ```
 
-### Start
+## Loading libraries
 ```{R, libraries, eval=TRUE}
 #source("https://bioconductor.org/biocLite.R")
 #biocLite("biobroom")
@@ -24,7 +28,7 @@ library("tidyverse")
 ```
 This script visualizes the results. It creates QC plots of samples in LC-MS measurements, based on protein and peptide identifications. It asumes all the data are in MSnSet object.
 
-### Tidy MSnSet object containig the data
+## Tidy MSnSet object containig the data
 ```{R, read data, cache=TRUE, eval=TRUE}
 
 if (require("MSnbase")) {
@@ -43,27 +47,41 @@ saveRDS(et,"et.rds")
 et <- readRDS("et.rds")
 ```
 
-### Subsets of data
+## Subsets of data
 ```{R, filter, cache=FALSE, eval=TRUE}
 library("dplyr")
 et_c <- et %>% filter(phenotype == "C")
 et_p <- et %>% filter(phenotype == "P")
 et_h <- et %>% filter(treatment == "H")
 et_i <- et %>% filter(treatment == "I")
+et_pc <- et %>% filter(phenotype =="C" | phenotype == "P")
+et_hi <- et %>% filter(treatment =="H" | treatment == "I")
+
+etm_hi <- mutate(et_hi, phtr = paste(phenotype, treatment, sep = ""))
+head(etm_hi)
 ```
-### QC Plots
-```{R, plots, fig.height=2}
+
+## QC Plots - all data
+```{R, plots}
 library("ggplot2")
+ggplot(etm_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=phtr))
+```
+
+## More plots - seclected views
+```{R, more plots}
+## treatment
 ggplot(et_c) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
 ggplot(et_p) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
+ggplot(et_pc) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
+## phenotype
 ggplot(et_h) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
 ggplot(et_i) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
-
+ggplot(et_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
 ```
 
-### Other plots and stats
+## Other plots and stats
 
-```{R, plots an  stats}
+```{R, make it wider}
 ## split data (for stats and plots)
 etg <- et %>% group_by(phenotype)
 head(etg)
@@ -85,6 +103,10 @@ ecg <- ec %>% group_by(protein,categ) %>% summarise(value = mean(value, na.rm = 
 ecgw <- ecg %>% spread(key = "categ", value = "value", fill = NA)
 ecgw <- ecgw %>% replace(is.na(.),0)
 ggplot(data = ecgw, mapping = aes(x=C_H,y=P_H)) + geom_point()
+```
+
+## All scatter plots (matrix)
+```{R, Scatter plot, fig.width=8, fig.height=8}
 head(ecgw)
 ecgw <- as.data.frame(ecgw)
 # remove protein column, keeping protein info as rownames
@@ -94,31 +116,38 @@ ecgwm <- ecgw[,2:ncol(ecgw)]
 # scatter plot
 head(ecgw[,2:ncol(ecgw)])
 plot(ecgw[,2:ncol(ecgw)])
+```
 
+## Correlation ananlysis
+```{R, correlation 1, fig.width=6, fig.height=6}
 # correlation anatysis
 cr <- cor(ecgwm)
 cr
 
-library(corrplot)
+library("corrplot")
 corrplot(cr, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
+```
 
+## More sofisticated correlation
+```{R, correlation 2, fig.width=6, fig.height=6}
 library("PerformanceAnalytics")
 # my_data <- mtcars[, c(1,3,4,5,6,7)]
 chart.Correlation(cr, histogram=TRUE, pch=19)
+```
 
+## Heat map
+```{R, heatmap, fig.width=6, fig.height=6}
 # Get some colors
 col<- colorRampPalette(c("blue", "white", "red"))(20)
 heatmap(x = cr, col = col, symm = TRUE)
-
-# Heatmap...?
-
-# List clear outliers - true positive results
-# Reomove correlated proteins in  averaged  sample to sample comparisons. 
-# Set some thresholds of fold change 
-# sigmoid curve and Venn diagram 
-# My own calculation to compare with
-# Normalize to bait protein or to total SPC.
-
-
 ```
+
+## What more?
+
+- List clear outliers - true positive results
+- Reomove correlated proteins in  averaged  sample to sample comparisons. 
+- Set some thresholds of fold change 
+- sigmoid curve and Venn diagram 
+- My own calculation to compare with
+- Normalize to bait protein or to total SPC.

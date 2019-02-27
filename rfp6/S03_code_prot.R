@@ -111,6 +111,8 @@ length(featureNames(eprot))
 length(fData(e)$acc)
 
 ## Let's check the abundant proteins present in more than one sample
+
+
 ## were combined correctly
 test <- exprs(eprot)
 #vector to order test
