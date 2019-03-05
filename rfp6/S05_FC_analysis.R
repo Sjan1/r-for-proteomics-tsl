@@ -267,12 +267,12 @@ if(temp[cn1] > temp[cn2]) {
     labpos = cn2; 
 }
 if (temp["lfc"] > 0) {
-  text(md, 5, label = labpos, pos=4);
+  text(md, 5, label = labpos, pos=4, offset = -5);
   } else {
-  text(md, -5, label = labpos, pos = 4);
+  text(md, -5, label = labpos, pos = 4, offset = 5);
 }
 }
-dev.off()
+#dev.off()
 
 
 
@@ -298,8 +298,10 @@ match(0,spc$lfc)  #test
 ## 1-plot selected accession
 res <- which(rownames(m2) == "AT1G02500.1")
 #res <- c(150,200,220)  #test
-abline(v=res)
-text(x=res, y=11, labels="AT1G02500.1")
+#abline(v=res)
+segments(x0=res,y0=-10,x1=res,y1=0,lwd=1,lty="dotted", col="black")
+#arrows(x0=res,y0=-10,x1=res,y1=0,lwd=5,lty="dotted", col="grey")
+text(x=res, y=-11, labels="AT1G02500.1")
 
 ## 2-plot several accesion stored in 'cherry' 
 cherry <- c("AT1G02500.1","AT5G28540.1","AT1G23410.1")

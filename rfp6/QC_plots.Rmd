@@ -20,21 +20,22 @@ knitr::opts_chunk$set(fig.width=8, fig.height=3, fig.path='Figs/', echo=TRUE, wa
 ```{R, libraries, eval=TRUE}
 #source("https://bioconductor.org/biocLite.R")
 #biocLite("biobroom")
+library("dplyr")
 library("biobroom")
+library("PerformanceAnalytics")
 library("magrittr")
 library("ggplot2")
 library("plyr")
 library("tidyverse")
 ```
-This script visualizes the results. It creates QC plots of samples in LC-MS measurements, based on protein and peptide identifications. It asumes all the data are in MSnSet object.
+This script visualizes the results. It creates QC plots of samples in LC-MS measurements, based on protein and peptide identifications. It asumes all the data are loded in an MSnSet object.
 
-## Tidy MSnSet object containig the data
+## Tidying MSnSet object with "biobroom"
 ```{R, read data, cache=TRUE, eval=TRUE}
 
 if (require("MSnbase")) {
-  library(MSnbase)
+  library(MSnbase)}
   # import MSnSet object
-  }
 eprot <- readRDS("eprot.rds")
   #already imported...
   
@@ -47,8 +48,8 @@ saveRDS(et,"et.rds")
 et <- readRDS("et.rds")
 ```
 
-## Subsets of data
-```{R, filter, cache=FALSE, eval=TRUE}
+## Creating subsets of data
+```{R, filter, include = TRUE, eval=TRUE}
 library("dplyr")
 et_c <- et %>% filter(phenotype == "C")
 et_p <- et %>% filter(phenotype == "P")
@@ -67,7 +68,7 @@ library("ggplot2")
 ggplot(etm_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=phtr))
 ```
 
-## More plots - seclected views
+## More plots - selected views
 ```{R, more plots}
 ## treatment
 ggplot(et_c) + aes(x=sample) + geom_bar(aes(weight=value, fill=treatment))
@@ -81,31 +82,31 @@ ggplot(et_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=phenotype))
 
 ## Other plots and stats
 
-```{R, make it wider}
+```{R, make it wider,include = TRUE, eval=TRUE}
 ## split data (for stats and plots)
 etg <- et %>% group_by(phenotype)
 head(etg)
 dim(etg)
 dim(et)
-etg <- et %>% group_by(phenotype) %>% summarise(value = mean(value, na.rm = TRUE))
-etg <- et %>% group_by(phenotype) %>% summarise(value = n())
-etg <- et %>% group_by(treatment) %>% summarise(value = n())
-etg <- et %>% group_by(phenotype,treatment) %>% summarise(value = n())
+etg <- et %>% group_by(phenotype) %>% dplyr::summarise(value = mean(value, na.rm = TRUE));
+etg <- et %>% group_by(phenotype) %>% dplyr::summarise(value = n());
+etg <- et %>% group_by(treatment) %>% dplyr::summarise(value = n());
+etg <- et %>% group_by(phenotype,treatment) %>% dplyr::summarise(value = n());
 
 # average spectral count
-etg <- et %>% group_by(protein,phenotype,treatment) %>% summarise(value = mean(value, na.rm = TRUE))
+etg <- et %>% group_by(protein,phenotype,treatment) %>% dplyr::summarise(value = mean(value, na.rm = TRUE));
 etg
 
 # wider format for scatter plot
 library("tidyr")
-ec  =  mutate(et,categ = paste(phenotype, treatment, sep = '_'))
-ecg <- ec %>% group_by(protein,categ) %>% summarise(value = mean(value, na.rm = TRUE))
+ec <-   mutate(et,categ = paste(phenotype, treatment, sep = '_'))
+ecg <- ec %>% group_by(protein,categ) %>% dplyr::summarise(value = mean(value, na.rm = TRUE))
 ecgw <- ecg %>% spread(key = "categ", value = "value", fill = NA)
 ecgw <- ecgw %>% replace(is.na(.),0)
 ggplot(data = ecgw, mapping = aes(x=C_H,y=P_H)) + geom_point()
 ```
 
-## All scatter plots (matrix)
+## All pairs of scatter plots
 ```{R, Scatter plot, fig.width=8, fig.height=8}
 head(ecgw)
 ecgw <- as.data.frame(ecgw)
@@ -118,7 +119,7 @@ head(ecgw[,2:ncol(ecgw)])
 plot(ecgw[,2:ncol(ecgw)])
 ```
 
-## Correlation ananlysis
+## Correlation analysis with "corrplot"
 ```{R, correlation 1, fig.width=6, fig.height=6}
 # correlation anatysis
 cr <- cor(ecgwm)
@@ -129,7 +130,7 @@ corrplot(cr, type = "upper", order = "hclust",
          tl.col = "black", tl.srt = 45)
 ```
 
-## More sofisticated correlation
+## Correlation analysis with "PerformanceAnalytics"
 ```{R, correlation 2, fig.width=6, fig.height=6}
 library("PerformanceAnalytics")
 # my_data <- mtcars[, c(1,3,4,5,6,7)]

@@ -10,6 +10,7 @@ library("msmsTests")
 ## (iv) experimental factors
 mzid <- "msgf"
 mzid <- "mascot"
+mzid <- "mascot_fdr1pc"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
                                  mzid = mzid)
 ## APPLY FILTER if necessary
