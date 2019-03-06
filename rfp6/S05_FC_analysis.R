@@ -280,24 +280,6 @@ text(md, -10, label = paste0(treat,"-unique =", uph,
                              ctrl,"-unique =", uch), pos = 1, offset = 0);
 
 
-
-
-
-match(0,spc$lfc)  #test
-
-#temp <- as.matrix(res2[1,1:3])[1,]
-#cn1 <- names(temp)[1];
-#cn2 <- names(temp)[2];
-#if (temp["lfc"] > 0) {
-#  if(temp[cn1] > temp[cn2]) {
-#    labpos = cn1;
-#  } else {
-#    labpos = cn2; 
-#  }
-#}
-
-
-
 ## Visualize input from a collaborator (cherry-picked proteins)
 ## 1-plot selected accession
 res <- which(rownames(m2) == "AT1G02500.1")
@@ -318,14 +300,17 @@ for(i in 1:length(cherry)) {
 
 
 
+match(0,spc$lfc)  # a test
+
 
 
 ## FURTHER IMPROVEMENTS FOR CONSIDERATION
 ## ======================================
-## - PROTEIN LABELS WITHOUT OVERLAPPING
+## - DISTRIBUTE PROTEIN LABELS WITHOUT OVERLAPPING
 ## - USE ctrl, treat VARIABLES CONSISTENTLY THROUGHOUT THE SCRIPT 
 ## - MAKE IT UNIVERSAL FOR ANY PAIRWISE COMPARISON
 ## - WOULD SCATTEP PLOT HAVE SOME ADVANTAGE?
-## - FILL BARS PROPORTINALLY TO A NUMBER OF REPLICATES
+## - FILL THE BARS PROPORTINALLY TO A NUMBER OF REPLICATES
+## - add protein description to 'cherry_desc' and swap it with cherry (accessions)
 
 
