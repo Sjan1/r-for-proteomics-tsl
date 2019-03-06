@@ -11,9 +11,9 @@
 ## If this is the case, We read them all in a vectake the first accession.
 
 load("e.rda") #MSnSet with peptides from the script code.R
-e <- readRDS("e_mascot.Rds")
-e <- readRDS("e_msgf.Rds")
-
+e <- readRDS("e_mascot.rds")
+e <- readRDS("e_msgf.rds")
+e <- readRDS("e_mascot_fdr1pc.rds")
 
 uniqacc <- function(e) {
 accvec <- c() # vector with the acctual Accession numbers 
@@ -42,7 +42,7 @@ length(accvec)
 
 fData(e)$Prot_Acc <- accvec
 fvarLabels(e)
-saveRDS(e,"e.rds")
+#saveRDS(e,"e.rds")
 
 
 
@@ -80,7 +80,7 @@ saveRDS(e,"e.rds")
 table(exprs(e))
 ## plot historam
 hist(exprs(e))
-
+hist(exprs(e), ylim = c(0,100)) 
 
 head(exprs(eprot))
 ## PROTEOTYPIC PEPTIDES ########################################
@@ -96,12 +96,12 @@ eprot0 <- eprot
 saveRDS(eprot0,"eprot0.rds")
 saveRDS(eprot,"eprot_msgf.rds")
 saveRDS(eprot,"eprot_mascot.rds")
+saveRDS(eprot,"eprot_mascot_fdr1pc.rds")
 ## read the original
 eprot <- readRDS("eprot0.rds")
 eprot <- readRDS("eprot_msgf.rds")
 eprot <- readRDS("eprot_mascot.rds")
-eprot.msgf <- eprot
-
+eprot <- readRDS("eprot_mascot_fdr1pc.rds")
 
 
 ## sanity checks
@@ -109,7 +109,7 @@ eprot.msgf <- eprot
 length(featureNames(eprot))
 ##number of features in the original combined_e
 length(fData(e)$acc)
-
+dim(eprot)
 ## Let's check the abundant proteins present in more than one sample
 
 
@@ -134,7 +134,7 @@ ex1[s,,drop=FALSE]
 table(exprs(eprot))
 ## plot historam
 hist(exprs(eprot))
-
+hist(exprs(eprot), ylim = c(0,100))
 
 
 

@@ -1,0 +1,111 @@
+---
+title: "Experimental design"
+author: "Laurent Gatto"
+date: "24 May 2018"
+output: html_document
+---
+## This document checks and summarizes data integrity and experimental design.
+- Is all we expect to be ananlyzed present? 
+- Where are all the data? 
+- Do file names of raw data, search data and sample meta data correspond?
+- What is the experimental design? 
+- Are categories, time points, fractions, added to sample_ meta_data  table?
+
+## Extract meta data from the table
+```{r env, message=FALSE, warning=FALSE}
+source("S00-env.R")
+tab <- read_csv("SampleExperimentTable.csv")
+#tab <- read_csv("../rfp4/data/SampleExperimentTable_fixed.csv")
+
+## this renames the first two columns to something more concise
+head(tab)
+names(tab)[2:3] <- c("file", "raw")
+
+```
+
+
+## Check the input integrity
+### Meta data names, raw and search filnenames should be the same. 
+We need to strip filename extensions for the comparison.
+
+```{r Integrity, message=FALSE, warning=FALSE}
+## Read filenames from:
+## 1. meta data table are in tab$file
+## 2. raw (mzML) filenames
+## 3. id (iii) files names
+tab$file
+mzML_files <- dir("raw", full.names = FALSE)
+mzid_files <- dir("MSGF", full.names = FALSE)
+## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
+setdiff(sub("\\.mzML$","",mzML_files),sub("\\.mzid$","",mzid_files))
+
+## There might be some discrepancy in meta data though.
+## In the following section, diff result is evaluated as zero, when there is no differnece in the file names compared. To print the differences in both sets, we have to run it twice.
+
+## meta data vs. raw data
+setdiff(tab$file,sub("\\.mzML$","",mzML_files))
+setdiff(sub("\\.mzML$","",mzML_files),tab$file)
+## meta data vs. id data
+setdiff(tab$file,sub("\\.mzid$","",mzid_files))
+setdiff(sub("\\.mzid$","",mzid_files),tab$file)
+```
+
+```{r}
+library("DT")
+datatable(tab)
+```
+
+## Files
+
+## Id files
+
+```{r idfiles}
+basename(id_files <- dir("MSGF", full.names = TRUE))
+```
+
+## Raw files
+
+```{r rawfiles}
+basename(raw_files <- dir("raw", full.names = TRUE))
+```
+
+## Design
+- How many replicates in each biorep (bioreps are just numbered dates)?
+- Are there any NAs?
+- Comparing bioreps against all the factors -  category, sample, treatment, cleavage.
+- Are there any NAs?
+- Where exactly are the NAs ?
+
+
+```{r tab1, echo=TRUE}
+knitr::kable(table(tab$date, tab$treatment,useNA = "ifany"),row.names=TRUE)
+## better
+table(tab[,c("date","treatment")],useNA="ifany")
+## even better
+table(tab[,c("date","sample","treatment")],useNA="ifany")
+## even even better
+table(tab[,c("sample","treatment","date")],useNA="ifany")
+```
+
+```{r tab2, echo=TRUE}
+
+## How many replicates in each biorep (bioreps are just numbered dates)?
+## Are there any NAs?
+## Comparing bioreps against all the factors -  category, sample, treatment, cleavage.
+knitr::kable(table(tab$biorep, tab$date, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"), row.names=TRUE)
+knitr::kable(table(tab$biorep, tab$sample, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$biorep, tab$cleavage, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$not_used, tab$cleavage, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$not_used, useNA = "ifany"),row.names=TRUE)
+## Where exactly are the NAs ?
+datatable(tab[!complete.cases(tab[,2:ncol(tab)]),])
+#another way of priting the table
+#knitr::kable(tab[!complete.cases(tab),])
+
+```
+
+
+```{r}
+ggplot(tab, aes(x = treatment)) + geom_bar()
+```

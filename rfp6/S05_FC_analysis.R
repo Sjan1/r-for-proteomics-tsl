@@ -9,7 +9,7 @@
 
 rm(list = ls());
 ## protein data
-eprot <- readRDS("eprot_mascot.rds")
+eprot <- readRDS("eprot_mascot_fdr1pc.rds")
 
 df <- exprs(eprot)
 head(df)
@@ -112,7 +112,7 @@ ordvec <- order(x$lfc,decreasing = TRUE)
 y <- x[ordvec,]
 head(y)
 # y is in the right order (reordered x) for plotting... lfc small to high
-#windows()
+windows()
 barplot(y$lfc)
 
 #adding lfc to mdf
@@ -157,7 +157,7 @@ head(m)
 ## Calculate unique peptide couints - UPC
 ## Read MSnset with peptides in it
 ## It needs to have Prot_Acc column (calculated in S03_code_prot.R)
-e <- readRDS("e.Rds")
+e <- readRDS("e_mascot.rds")
 f <- fData(e)
 f[,grepl("pepSeq",colnames(f))]
 
@@ -274,6 +274,11 @@ if (temp["lfc"] > 0) {
 }
 #dev.off()
 
+## unique hit numbers (like in Venn diagram)
+text(md, -10, label = paste0(treat,"-unique =", uph,
+                             ",  common = ",common,",  ",
+                             ctrl,"-unique =", uch), pos = 1, offset = 0);
+
 
 
 
@@ -294,7 +299,6 @@ match(0,spc$lfc)  #test
 
 
 ## Visualize input from a collaborator (cherry-picked proteins)
-
 ## 1-plot selected accession
 res <- which(rownames(m2) == "AT1G02500.1")
 #res <- c(150,200,220)  #test
@@ -311,9 +315,17 @@ for(i in 1:length(cherry)) {
    abline(v=res)
    text(x=res, y=11, labels=cherry[i])
 }
-## REMAINS TO DO - DISTRIBUTE PROTEIN LABELS WITHOUT OVERLAPPING
 
- 
 
+
+
+
+## FURTHER IMPROVEMENTS FOR CONSIDERATION
+## ======================================
+## - PROTEIN LABELS WITHOUT OVERLAPPING
+## - USE ctrl, treat VARIABLES CONSISTENTLY THROUGHOUT THE SCRIPT 
+## - MAKE IT UNIVERSAL FOR ANY PAIRWISE COMPARISON
+## - WOULD SCATTEP PLOT HAVE SOME ADVANTAGE?
+## - FILL BARS PROPORTINALLY TO A NUMBER OF REPLICATES
 
 

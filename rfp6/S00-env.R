@@ -20,9 +20,9 @@
 #  install.packages("BiocManager")
 #BiocManager::install("biobroom", version = "3.8")
 
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install("MSnID", version = "3.8")
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#  install.packages("BiocManager")
+#BiocManager::install("MSnID", version = "3.8")
 
 #install.packages("tidyverse")
 

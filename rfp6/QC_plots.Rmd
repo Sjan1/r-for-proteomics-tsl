@@ -144,11 +144,8 @@ col<- colorRampPalette(c("blue", "white", "red"))(20)
 heatmap(x = cr, col = col, symm = TRUE)
 ```
 
-## What more?
+## What else we could do to desribe the data as such, before we switch focus to the samples and their biological meaning?
 
-- List clear outliers - true positive results
-- Reomove correlated proteins in  averaged  sample to sample comparisons. 
-- Set some thresholds of fold change 
-- sigmoid curve and Venn diagram 
-- My own calculation to compare with
-- Normalize to bait protein or to total SPC.
+- Count NA values 
+- Plot distributions of the samples and individual LC MS/MS runs. 
+

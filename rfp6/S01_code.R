@@ -52,6 +52,7 @@ save(e, file = "e.rda")
 saveRDS(e,"e.rds")
 saveRDS(e,"e_msgf.rds")
 saveRDS(e,"e_mascot.rds")
+saveRDS(e,"e_mascot_fdr1pc.rds")
 ##keep the original
 e0 <- e
 e <- e0
