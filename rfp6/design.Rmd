@@ -19,8 +19,7 @@ tab <- read_csv("SampleExperimentTable.csv")
 
 ## this renames the first two columns to something more concise
 head(tab)
-names(tab)[2:3] <- c("file", "raw")
-
+#names(tab)[2:3] <- c("file", "raw")
 ```
 
 
@@ -33,9 +32,10 @@ We need to strip filename extensions for the comparison.
 ## 1. meta data table are in tab$file
 ## 2. raw (mzML) filenames
 ## 3. id (iii) files names
-tab$file
+#tab$file
+tab$name
 mzML_files <- dir("raw", full.names = FALSE)
-mzid_files <- dir("MSGF", full.names = FALSE)
+mzid_files <- dir("mascot_fdr1pc", full.names = FALSE)
 ## raw files and id files should be the same - they usually are and the following command should produce zero if they really are the same.
 setdiff(sub("\\.mzML$","",mzML_files),sub("\\.mzid$","",mzid_files))
 
@@ -43,10 +43,12 @@ setdiff(sub("\\.mzML$","",mzML_files),sub("\\.mzid$","",mzid_files))
 ## In the following section, diff result is evaluated as zero, when there is no differnece in the file names compared. To print the differences in both sets, we have to run it twice.
 
 ## meta data vs. raw data
-setdiff(tab$file,sub("\\.mzML$","",mzML_files))
+#setdiff(tab$file,sub("\\.mzML$","",mzML_files))
+setdiff(tab$name,sub("\\.mzML$","",mzML_files))
 setdiff(sub("\\.mzML$","",mzML_files),tab$file)
 ## meta data vs. id data
-setdiff(tab$file,sub("\\.mzid$","",mzid_files))
+#setdiff(tab$file,sub("\\.mzid$","",mzid_files))
+setdiff(tab$name,sub("\\.mzid$","",mzid_files))
 setdiff(sub("\\.mzid$","",mzid_files),tab$file)
 ```
 
@@ -60,7 +62,7 @@ datatable(tab)
 ## Id files
 
 ```{r idfiles}
-basename(id_files <- dir("MSGF", full.names = TRUE))
+basename(id_files <- dir("mascot_fdr1pc", full.names = TRUE))
 ```
 
 ## Raw files
@@ -82,9 +84,9 @@ knitr::kable(table(tab$date, tab$treatment,useNA = "ifany"),row.names=TRUE)
 ## better
 table(tab[,c("date","treatment")],useNA="ifany")
 ## even better
-table(tab[,c("date","sample","treatment")],useNA="ifany")
+table(tab[,c("date","phenotype","treatment")],useNA="ifany")
 ## even even better
-table(tab[,c("sample","treatment","date")],useNA="ifany")
+table(tab[,c("biorep","treatment","date")],useNA="ifany")
 ```
 
 ```{r tab2, echo=TRUE}
@@ -94,14 +96,14 @@ table(tab[,c("sample","treatment","date")],useNA="ifany")
 ## Comparing bioreps against all the factors -  category, sample, treatment, cleavage.
 knitr::kable(table(tab$biorep, tab$date, useNA = "ifany"),row.names=TRUE)
 knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"), row.names=TRUE)
-knitr::kable(table(tab$biorep, tab$sample, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$biorep, tab$category, useNA = "ifany"),row.names=TRUE)
 knitr::kable(table(tab$biorep, tab$cleavage, useNA = "ifany"),row.names=TRUE)
-knitr::kable(table(tab$not_used, tab$cleavage, useNA = "ifany"),row.names=TRUE)
-knitr::kable(table(tab$not_used, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$date, tab$cleavage, useNA = "ifany"),row.names=TRUE)
+knitr::kable(table(tab$name,tab$date, useNA = "ifany"),row.names=TRUE)
 ## Where exactly are the NAs ?
-datatable(tab[!complete.cases(tab[,2:ncol(tab)]),])
+datatable(tab[!complete.cases(tab[,ncol(tab)]),])
 #another way of priting the table
-#knitr::kable(tab[!complete.cases(tab),])
+#knitr::kable(tab[complete.cases(tab),])
 
 ```
 

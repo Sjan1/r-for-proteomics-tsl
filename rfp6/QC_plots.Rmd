@@ -1,8 +1,9 @@
 ---
-title: "PDLP1 reanalysis, QC-plots"
+title: "PDLP1 reanalysis | QC-plots"
 author: "Jan Sklenar"
 #date: "25 November 2018"
 date: "`r Sys.Date()`"
+#subtitle: "Open Plant presentation"
 #output: html_document
 #output: ioslides_presentation
 #output: beamer_presentation
@@ -12,8 +13,9 @@ output: slidy_presentation
 #fig_height: 4 
 ---
 
-```{r setup, include=TRUE}
-knitr::opts_chunk$set(fig.width=8, fig.height=3, fig.path='Figs/', echo=TRUE, warning=FALSE, message=FALSE)
+```{r setup, include=TRUE, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, results = "hide"}
+knitr::opts_chunk$set(fig.width=8, fig.height=3, fig.path='Figs/', 
+                      echo=TRUE, warning=FALSE, message=FALSE)
 ```
 
 ## Loading libraries
@@ -25,7 +27,7 @@ library("biobroom")
 library("PerformanceAnalytics")
 library("magrittr")
 library("ggplot2")
-library("plyr")
+#library("plyr")
 library("tidyverse")
 ```
 This script visualizes the results. It creates QC plots of samples in LC-MS measurements, based on protein and peptide identifications. It asumes all the data are loded in an MSnSet object.
@@ -36,13 +38,15 @@ This script visualizes the results. It creates QC plots of samples in LC-MS meas
 if (require("MSnbase")) {
   library(MSnbase)}
   # import MSnSet object
-eprot <- readRDS("eprot.rds")
+eprot <- readRDS("eprot_Mascot_fdr1pc.rds")
   #already imported...
   
   # Use tidy to extract genes, sample ids and measured value
-  tidy(eprot)
+  head(tidy(eprot))
+  
   # add phenoType data
   et <- tidy(eprot, addPheno=TRUE)
+  dim(et)
 
 saveRDS(et,"et.rds")
 et <- readRDS("et.rds")
@@ -58,14 +62,14 @@ et_i <- et %>% filter(treatment == "I")
 et_pc <- et %>% filter(phenotype =="C" | phenotype == "P")
 et_hi <- et %>% filter(treatment =="H" | treatment == "I")
 
-etm_hi <- mutate(et_hi, phtr = paste(phenotype, treatment, sep = ""))
+etm_hi <- mutate(et_hi, categ = paste(phenotype, treatment, sep = ""))
 head(etm_hi)
 ```
 
 ## QC Plots - all data
 ```{R, plots}
 library("ggplot2")
-ggplot(etm_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=phtr))
+ggplot(etm_hi) + aes(x=sample) + geom_bar(aes(weight=value, fill=categ))
 ```
 
 ## More plots - selected views
@@ -88,17 +92,21 @@ etg <- et %>% group_by(phenotype)
 head(etg)
 dim(etg)
 dim(et)
+
 etg <- et %>% group_by(phenotype) %>% dplyr::summarise(value = mean(value, na.rm = TRUE));
+head(etg)
 etg <- et %>% group_by(phenotype) %>% dplyr::summarise(value = n());
+head(etg)
 etg <- et %>% group_by(treatment) %>% dplyr::summarise(value = n());
+head(etg)
 etg <- et %>% group_by(phenotype,treatment) %>% dplyr::summarise(value = n());
+head(etg)
 
 # average spectral count
 etg <- et %>% group_by(protein,phenotype,treatment) %>% dplyr::summarise(value = mean(value, na.rm = TRUE));
-etg
+head(etg)
 
 # wider format for scatter plot
-library("tidyr")
 ec <-   mutate(et,categ = paste(phenotype, treatment, sep = '_'))
 ecg <- ec %>% group_by(protein,categ) %>% dplyr::summarise(value = mean(value, na.rm = TRUE))
 ecgw <- ecg %>% spread(key = "categ", value = "value", fill = NA)
@@ -144,8 +152,8 @@ col<- colorRampPalette(c("blue", "white", "red"))(20)
 heatmap(x = cr, col = col, symm = TRUE)
 ```
 
-## What else we could do to desribe the data as such, before we switch focus to the samples and their biological meaning?
-
+## That is all as for the data desription before switching focus to the samples and their biological meaning.
+- What else we could add here?
 - Count NA values 
-- Plot distributions of the samples and individual LC MS/MS runs. 
+- Plot distributions in individual LC MS/MS runs. 
 
