@@ -2,10 +2,19 @@
 .Rproj.user/
 rfp[1-6]/.*/
 rfp[1-6]/.*
-*.RDS
-*.rds
+rfp6/.*
 *.png
-rfp4/Mascot/
-.Rproj.user
+# rfp4/Mascot/
+*/Mascot*/*.*
+*/mascot*/*.*
+*/MASCOT*/*.*
+*/raw/*.*
+*/MSGF*/*.*
 .Rhistory
 .RData
+**/.*
+**/*.backup
+**/*.bak
+**/*.rdx
+**/*.rdb
+**/*.RData

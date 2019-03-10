@@ -1,4 +1,10 @@
-# RfP presentation, 11th Mar 2019
+# R for Proteomimcs
+## Open Plant project (2018-2019)
+## Final presentation
+
+Jan Sklenar, Lauent Gatto, Marielle Vigouroux, Govind Chandra
+
+---
 
 ## Outline
 
@@ -7,16 +13,16 @@
 		- conception
 		- goals
  	+ Using example of PDLP1 experiment show the work-flow
-	+ Run script(s) to finish with S-curve
- 	+ Explain step by step important parts
+	+ Run script(s) or show results ... finish with S-curve
+ 	+ Explain step by step important bits:
 		+ inputs, pre-requisites
-		+ exp-table, rtslprot
-		+ MSnSet of the whole dataset
+		+ exp-table
+		+ MSnSet object
 		+ filters, decoys, sanity check
+		+ rtslprot library
 		+ QC plots, SPC, UPC
 		+ FC analysis
 		+ msmsTests
-		+ comparison with Scaffold
 
 - Laurent
 	+ History and philosophy of RfP
@@ -38,3 +44,53 @@
 		- symbolic links in Windows
 		- installed MSGF+ on our cluster
 	+ etc. 
+
+---
+
+## Details
+---
+
+## RfP pipeline description
+
+[github.com/Sjan1/r-for-proteomics-tsl/](https://github.com/Sjan1/r-for-proteomics-tsl/rfp6)
+
+**The pipeline:**
+
+* S01_code.R
+* S03_code_prot.R
+* S05_FC_analysis.R
+
+**Inputs:**
+
+* mzid search files in e.g. *mascot/*
+* project meta data e.g. *SampleExperimentTable.csv*
+
+**Description:**
+
+1.  S01 strats working on experimental design, removes unnecessary factors, and defines sample names (from the experimet factors), then it takes all the peptide data in one MSnSet object => e. Functions used here we believe to be reusable are in our library(“rtslprot”)
+2.  S03 groups peptides to form proteins => eprot
+3.  S05 calculated fold changes for one selected pair of project factors
+
+**Saved results:**
+e_mascot_fdr1pc.rds
+eprot_mascot_fdr1pc.rds
+
+**Markdown scripts:**
+
+* Design.Rmd
+* QC_plots.Rmd
+ 
+The first assists with experimental design and data integrity (names of files and factors).
+The second produces QC plots from data processed in our pipeline and provides a bigger picture of the results.
+
+While the scripts run they can generate plots, pdf or html documents, or presentations as required.
+
+---
+
+## Inputs in detail => run design.Rmd
+---
+## QC plots => run QC_plots.Rmd 
+---
+## Run the scripts
+---
+
