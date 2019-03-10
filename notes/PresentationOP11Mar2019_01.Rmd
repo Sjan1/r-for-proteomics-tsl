@@ -1,0 +1,123 @@
+---
+title: "R for Proteomics - part 1"
+author: "Jan Sklenar"
+date: "11 March 2019"
+output: slidy_presentation
+---
+
+
+## R for Proteomics - Open Plant project (2018-2019){.smaller}
+
+[https://www.biomaker.org/projects/r-for-proteomics](www.biomaker.org/projects/r-for-proteomics)
+This project brings together proteomics experts and computational biologists together to learn to use the R for Proteomics package, developed in Cambridge, integrate it into analysis pipelines to serve the proteomics community in Norwich.
+
+Team:
+  Jan Sklenar
+  Laurent Gatto
+  Marielle Vigouroux
+  Govind Chandra
+
+-----
+
+## Outline
+
+- **Jan**
+	+ Introduction of OP project
+ 	+ Using example of PDLP1 experiment show the work-flow
+	+ Run script(s) or show results ... finish with S-curve
+ 	+ Explain step by step important bits:
+		+ inputs, pre-requisites
+		+ exp-table
+		+ MSnSet object
+		+ filters, decoys, sanity check
+		+ rtslprot library
+		+ QC plots, SPC, UPC
+		+ FC analysis
+		+ msmsTests
+
+- **Laurent**
+<!---
+	+ History and philosophy of RfP
+	+ Documentation, vignettes, glossy pictures 
+	+ What is actually under the hood, hidden details, what is missing in our example above (do not be afraid to be critical)
+	+ MSnSet layout
+	+ Can rtslprot be of any use for the RfP in general?
+ 	+ Future direction of RfP
+ 	+ What more we can do now, how to expand. (us here in Norwich)
+	+ etc. 
+-->
+
+- **Everybody** - natural start of the discussion here
+	+ Personal experience, Learning curve, Like/don't like
+	+ What else we have learned (by-products)
+		- R, R-packages
+		- git
+		- symbolic links in Windows
+		- installed MSGF+ on our cluster
+		
+-----
+
+## RfP pipeline
+
+[github.com/Sjan1/r-for-proteomics-tsl/](https://github.com/Sjan1/r-for-proteomics-tsl/rfp6)
+
+**The pipeline:**
+
+  * S01_code.R
+  * S03_code_prot.R
+  * S05_FC_analysis.R
+
+**Inputs:**
+  
+  * mzid search files in e.g. *mascot/*
+  * project meta data e.g. *SampleExperimentTable.csv*
+
+<!---
+**Description:**
+  1.  S01 strats working on experimental design, removes unnecessary factors, and defines sample names (from the experimet factors), then it takes all the peptide data in one MSnSet object => e. Functions used here we believe to be reusable are in our library(“rtslprot”)
+  2.  S03 groups peptides to form proteins => eprot
+  3.  S05 calculated fold changes for one selected pair of project factors
+-->
+
+**Markdown scripts:**
+
+* Design.Rmd
+* QC_plots.Rmd
+
+<!---
+**Description:**
+  
+  1. The first assists with experimental design and data integrity (names of files and factors).
+  2. The second produces QC plots from data processed in our pipeline and provides a bigger picture of the results.
+-->
+-----
+
+## Results to show
+  - Inputs in detail
+  - design.Rmd
+  - build MSnSets (S01+S03)
+  - QC_plots
+  - FC_analysis
+  - msmsTests
+  
+-----
+
+## Acknowledgement
+
+**Open Plant team**
+
+- Laurent Gatto, Marielle Vigoiroux, Govind Chandra
+
+**TSL Bionformatics**
+
+- Dan Maclean, Ram Krishna Shrestha
+
+**TLS proteomics group**
+
+- Frank Menke, Paul Derbyshire
+
+**JIC protemics group**
+
+- Gerhard Saalbach, Carlo de-Oliveira-Martins
+
+-----

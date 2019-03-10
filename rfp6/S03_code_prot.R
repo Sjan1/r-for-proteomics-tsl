@@ -42,7 +42,7 @@ length(accvec)
 
 fData(e)$Prot_Acc <- accvec
 fvarLabels(e)
-#saveRDS(e,"e.rds")
+saveRDS(e,"e.rds")
 
 
 
@@ -66,16 +66,17 @@ grep(",",fData(e)$acc)
 ## append combined accessions to feature data
 fData(e)$acc <- accvec
 
-saveRDS(e,"e.rds")
+#saveRDS(e,"e.rds")
 
 ## remove NAs before combining features
 head(exprs(e))
-e <- impute(e, method = "QRILC")
+#e <- impute(e, method = "QRILC")
 e <- impute(e, method = "zero")
 head(exprs(e))
 
 saveRDS(e,"e.rds")
-
+saveRDS(e,"e_mascot.rds")
+saveRDS(e,"e_mascot_fdr1pc.rds")
 ## how data looks like?
 table(exprs(e))
 ## plot historam
@@ -86,7 +87,7 @@ head(exprs(eprot))
 ## PROTEOTYPIC PEPTIDES ########################################
 ## combining proteotypic peptides to the corresponding proteins
 eprot <- combineFeatures(e, groupBy = fData(e)$Prot_Acc, 
-                         fun = "sum")
+                         fun = "sum")#,redundancy.handler = "multiple")
 
 ## save results as RDS
 saveRDS(eprot,"eprot.rds")

@@ -6,10 +6,17 @@
 ## 3. set threshold and color S-shaped bar plot
 ## 4. provide list of proteins
 ## 5. link to relevant peptides
-
 rm(list = ls());
+if(!exists("foo", mode="function")) source("footnote.R")
+## load MSnSets
 ## protein data
-eprot <- readRDS("eprot_mascot_fdr1pc.rds")
+eprot <- readRDS("eprot_mascot.rds")
+#eprot <- readRDS("eprot_mascot_fdr1pc.rds")
+## peptide data
+## It needs to have Prot_Acc column (calculated in S03_code_prot.R)
+e <- readRDS("e_mascot.rds")
+#e <- readRDS("e_mascot_fdr1pc.rds")
+
 
 df <- exprs(eprot)
 head(df)
@@ -24,7 +31,7 @@ interested <- c("C_H", "P_H");
 names(interested) <- c("C_H", "P_H")
 cols.done <- c();
 
-## FOR THE FUTURE IMPROVEMENTS
+## FOR FUTURE IMPROVEMENTS
 ## create labels for the data compared and link them to the pattern used above 
 treat <- gsub("[_]","",names(interested[2]))
 ctrl <- gsub("[_]","",names(interested[1]))
@@ -70,7 +77,7 @@ sellist
 ## unnique
 all <- unique(c(sellist[[1]], sellist[[2]]));
 all
-## selected proteins hits with at least two peptides in one group 
+## selected protein hits with at least two peptides in one group 
 seldf <- df[all, cols.done]
 seldf
 
@@ -112,7 +119,7 @@ ordvec <- order(x$lfc,decreasing = TRUE)
 y <- x[ordvec,]
 head(y)
 # y is in the right order (reordered x) for plotting... lfc small to high
-windows()
+#windows()
 barplot(y$lfc)
 
 #adding lfc to mdf
@@ -157,7 +164,9 @@ head(m)
 ## Calculate unique peptide couints - UPC
 ## Read MSnset with peptides in it
 ## It needs to have Prot_Acc column (calculated in S03_code_prot.R)
-e <- readRDS("e_mascot.rds")
+#e <- readRDS("e_mascot.rds")
+#e <- readRDS("e_mascot_fdr1pc.rds")
+
 f <- fData(e)
 f[,grepl("pepSeq",colnames(f))]
 
@@ -220,8 +229,8 @@ res2 <- format(round(res2, 2))
 ## resulting list -  IT WOULD BE NICE TO ADD DESCRIPTION TO THE 'res' TABLES 
 head(res1,20)
 head(res2,20)
-write.csv(res1, file = paste0("res1_",treat,".csv", collapse = NULL))
-write.csv(res2, file = paste0("res2_",ctrl,".csv", collapse = NULL))
+write.csv(res1, file = paste0("res1_mascot",treat,".csv", collapse = NULL))
+write.csv(res2, file = paste0("res2_mascot",ctrl,".csv", collapse = NULL))
 
 ## remains to do - add description to the result table
 head(fData(eprot)[,c("description.C_H_2", "description.C_H_3")],10)
@@ -240,13 +249,14 @@ uch
 #png(filename='Figs/eprot_mascot_S-curve.png')
 barplot(spc$lfc)
 #cols <- c("blue", "red")[(abs(spc$lfc) >= 2) + 1]
-cols <- rep("blue", nrow(spc))
-cols[abs(spc$lfc) >= 2] <- "red"
-cols[spc$ch == 0] <- "darkred"
-cols[spc$ph == 0] <- "darkred"
+cols <- rep("red", nrow(spc))
+cols[abs(spc$lfc) >= 2] <- "yellow"
+cols[spc$ch == 0] <- "green"
+cols[spc$ph == 0] <- "green"
 
 barplot(spc$lfc,
         col=cols,
+        space = c(0,0),
         ylim = c(min(spc$lfc),
         max(spc$lfc)),
         main=paste("Spectral count fold change (",treat,"/",ctrl,")"),
@@ -272,25 +282,53 @@ if (temp["lfc"] > 0) {
   text(md, -5, label = labpos, pos = 4, offset = 5);
 }
 }
-#dev.off()
-
 ## unique hit numbers (like in Venn diagram)
 text(md, -10, label = paste0(treat,"-unique =", uph,
                              ",  common = ",common,",  ",
                              ctrl,"-unique =", uch), pos = 1, offset = 0);
+makeFootnote(footnote)
+makeFootnote(footnote)
+
+#dev.copy(png,'LFC_mascot_fdr1pc.png')
+#dev.copy(png,'LFC_mascot.png')
+#dev.off()
 
 
 ## Visualize input from a collaborator (cherry-picked proteins)
 ## 1-plot selected accession
-res <- which(rownames(m2) == "AT1G02500.1")
+res <- which(rownames(m2) == "AT5G43980.1")
 #res <- c(150,200,220)  #test
 #abline(v=res)
-segments(x0=res,y0=-10,x1=res,y1=0,lwd=1,lty="dotted", col="black")
+segments(x0=res,y0=-4,x1=res,y1=0,lwd=1,lty="dotted", col="black")
 #arrows(x0=res,y0=-10,x1=res,y1=0,lwd=5,lty="dotted", col="grey")
-text(x=res, y=-11, labels="AT1G02500.1")
+text(x=res, y=-5, labels="AT5G43980")
+
+## another one
+## 1-plot selected accession
+res <- which(rownames(m2) == "ATCG00490.1")
+segments(x0=res,y0=-6,x1=res,y1=0,lwd=1,lty="dotted", col="black")
+text(x=res, y=-7, labels="ATCG00490")
+
+## and another one
+## 1-plot selected accession
+res <- which(rownames(m2) == "AT1G04750.1")
+segments(x0=res,y0=-6,x1=res,y1=0,lwd=1,lty="dotted", col="black")
+text(x=res, y=-7, labels="AT1G04750")
+
+## print to file
+dev.copy(png,filename = "LFC_mascot.png",
+         width = 680,
+         height = 480,
+         units = "px",
+         bg = "white")
+dev.off()
+
+stop("never mind the error, execution stops here")
+
+
 
 ## 2-plot several accesion stored in 'cherry' 
-cherry <- c("AT1G02500.1","AT5G28540.1","AT1G23410.1")
+cherry <- c("AT1G02500.1","AT5G43980.1","AT1G23410.1")
 res <- NULL
 for(i in 1:length(cherry)) {
    res <- which(rownames(m2) == cherry[i])

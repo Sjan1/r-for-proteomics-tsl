@@ -30,7 +30,7 @@ msnl <- apply(etab, 1, function(.etab) {
     filter(biorep == .etab[["biorep"]], 
            phenotype == .etab[["phenotype"]],
            treatment == .etab[["treatment"]]) %>%
-    select(name)
+           select(name)
   mzid_files <- file.path(mzid, paste(filenames[[1]], "mzid", 
                                       sep = "."))
 ## make MSnSet (choose peptide or PSMs - two functions in rtslprot)
@@ -48,7 +48,10 @@ for (i in 3:length(msnl)){
 rownames(etab) <- sampleNames(e)
 pData(e) <- etab
 
-save(e, file = "e.rda")
+## deal with NAs
+e <- impute(e, method = "zero")
+
+#save(e, file = "e.rda")
 saveRDS(e,"e.rds")
 saveRDS(e,"e_msgf.rds")
 saveRDS(e,"e_mascot.rds")
@@ -60,8 +63,6 @@ e_msfg <- e
 ## open if needed
 e <- readRDS("e.Rds")
 
-## deal with NAs
-e <- impute(e, method = "zero")
 
 ## statistical tests
 
@@ -116,7 +117,7 @@ length(unique(fData(e)$`p.value_null_1__alt_PH`))
 length(unique(fData(e)$`p.value_null_PH+TR__alt_PH*TR`))
 
 
-save(e, file = "e.rda")
+saveRDS(e,"e.rds")
 ##
 head(exprs(e))
 head(fData(e))[,1:3]
