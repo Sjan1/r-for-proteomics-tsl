@@ -120,7 +120,7 @@ y <- x[ordvec,]
 head(y)
 # y is in the right order (reordered x) for plotting... lfc small to high
 #windows()
-barplot(y$lfc)
+barplot(y$lfc).
 
 #adding lfc to mdf
 mdf$lfc <- y[rownames(mdf), "lfc"]
@@ -350,5 +350,26 @@ match(0,spc$lfc)  # a test
 ## - WOULD SCATTEP PLOT HAVE SOME ADVANTAGE?
 ## - FILL THE BARS PROPORTINALLY TO A NUMBER OF REPLICATES
 ## - add protein description to 'cherry_desc' and swap it with cherry (accessions)
+
+
+
+
+ph <- grep("P_H", colnames(df))
+ch <- grep("C_H", colnames(df))
+
+
+rsch <- rowSums(df[, ch])
+rsph <- rowSums(df[, ph])
+
+cls <- rep("black", nrow(df))
+cls[rsch == 0] <- "red"
+cls[rsph == 0] <- "blue"
+
+
+plot((rsph + rsch + 2)/2, log2((rsph + 1)/(rsch + 1)), 
+     col = cls,
+     log = "x")
+grid()
+
 
 

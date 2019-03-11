@@ -24,7 +24,7 @@ exp <- exp %>%
 ## all this have to be described in the experiment table
 fcols <- c("phenotype", "treatment", "biorep")
 etab <- experimentHierarchy(exp, fcols)
-
+etab
 msnl <- apply(etab, 1, function(.etab) {
   filenames <- exp %>%
     filter(biorep == .etab[["biorep"]], 
@@ -61,7 +61,7 @@ e0 <- e
 e <- e0
 e_msfg <- e
 ## open if needed
-e <- readRDS("e.Rds")
+e <- readRDS("e_mascot.Rds")
 
 
 ## statistical tests
@@ -99,16 +99,18 @@ e <- rtslprot:::msms_edgeR_test(e,
                            fnm = "phenotype",
                            test_name = "null_PH+TR__alt_PH*TR")
 
-plot(fData(e)$LogFC_phenotype,-log10(fData(e)$adj.p.values_phenotype))
-plot(fData(e)$`LogFC_null_TR__alt_PH+TR`,-log10(fData(e)$`p.value_null_TR__alt_PH+TR`))
+
 
 ## null_TR__alt_PH+TR
+plot(fData(e)$`LogFC_null_TR__alt_PH+TR`,-log10(fData(e)$`p.value_null_TR__alt_PH+TR`))
 hist(fData(e)$`p.value_null_TR__alt_PH+TR`)
 hist(fData(e)$`adj.p.values_null_TR__alt_PH+TR`)
 ## null_1__alt_PH
+plot(fData(e)$`LogFC_null_1__alt_PH`,-log10(fData(e)$`p.value_null_1__alt_PH`))
 hist(fData(e)$`p.value_null_1__alt_PH`)
 hist(fData(e)$`adj.p.values_null_1__alt_PH`)
 ## null_PH+TR__alt_PH*TR
+plot(fData(e)$`LogFC_null_PH+TR__alt_PH*TR`,-log10(fData(e)$`p.value_null_PH+TR__alt_PH*TR`))
 hist(fData(e)$`p.value_null_PH+TR__alt_PH*TR`)
 hist(fData(e)$`adj.p.values_null_PH+TR__alt_PH*TR`)
 

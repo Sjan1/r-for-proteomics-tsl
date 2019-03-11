@@ -1,16 +1,15 @@
 ---
-title: "Experimental design"
+title: "Experimental design table integrity"
 author: "Laurent Gatto & Jan Sklenar"
 date: "24 May 2018"
 #output: html_document
 output: slidy_presentation
 ---
 ## This document checks and summarizes data integrity and experimental design.
-- Is all we expect to be ananlyzed present? 
-- Where are all the data? 
+- Is all we expect to be analyzed present? 
 - Do file names of raw data, search data and sample meta data correspond?
 - What is the experimental design? 
-- Are categories, time points, fractions, added to sample_ meta_data  table?
+- Are meta data captured correctly in SampleExperimentTable?
 
 ## Extract meta data from the table
 ```{r env, message=FALSE, warning=FALSE}
@@ -107,7 +106,7 @@ knitr::kable(table(tab$biorep, tab$treatment, useNA = "ifany"), row.names=TRUE)
 knitr::kable(table(tab$biorep, tab$category, useNA = "ifany"),row.names=TRUE)
 knitr::kable(table(tab$biorep, tab$cleavage, useNA = "ifany"),row.names=TRUE)
 knitr::kable(table(tab$date, tab$cleavage, useNA = "ifany"),row.names=TRUE)
-knitr::kable(table(tab$name,tab$date, useNA = "ifany"),row.names=TRUE)
+#knitr::kable(table(tab$name,tab$date, useNA = "ifany"),row.names=TRUE)
 ## Where exactly are the NAs ?
 datatable(tab[!complete.cases(tab[,ncol(tab)]),])
 #another way of priting the table

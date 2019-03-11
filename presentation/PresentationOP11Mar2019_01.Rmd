@@ -5,16 +5,20 @@ date: "11 March 2019"
 output: slidy_presentation
 ---
 
+```{r setup, include=FALSE, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, results = "hide"}
+knitr::opts_chunk$set(fig.width=8, fig.height=3, fig.path='Figs/', echo=FALSE, warning=FALSE, message=FALSE)
+```
 
 ## R for Proteomics - Open Plant project (2018-2019){.smaller}
 
 [https://www.biomaker.org/projects/r-for-proteomics](www.biomaker.org/projects/r-for-proteomics)
-This project brings together proteomics experts and computational biologists together to learn to use the R for Proteomics package, developed in Cambridge, integrate it into analysis pipelines to serve the proteomics community in Norwich.
+
+This project brings together proteomics experts and computational biologists to learn to use the R for Proteomics package, developed in Cambridge, integrate it into data analysis pipelines to serve the proteomics community in Norwich.
 
 Team:
-  Jan Sklenar
-  Laurent Gatto
-  Marielle Vigouroux
+  Jan Sklenar, 
+  Laurent Gatto, 
+  Marielle Vigouroux, 
   Govind Chandra
 
 -----
@@ -26,10 +30,9 @@ Team:
  	+ Using example of PDLP1 experiment show the work-flow
 	+ Run script(s) or show results ... finish with S-curve
  	+ Explain step by step important bits:
-		+ inputs, pre-requisites
-		+ exp-table
+		+ inputs, exp-table
 		+ MSnSet object
-		+ filters, decoys, sanity check
+		+ filters, decoys, sanity checks
 		+ rtslprot library
 		+ QC plots, SPC, UPC
 		+ FC analysis
@@ -37,24 +40,26 @@ Team:
 
 - **Laurent**
 <!---
-	+ History and philosophy of RfP
-	+ Documentation, vignettes, glossy pictures 
-	+ What is actually under the hood, hidden details, what is missing in our example above (do not be afraid to be critical)
+	+ History and philosophy of RfP, documentation, vignettes, glossy pictures 
+	+ What is actually under the hood, hidden details
 	+ MSnSet layout
 	+ Can rtslprot be of any use for the RfP in general?
  	+ Future direction of RfP
- 	+ What more we can do now, how to expand. (us here in Norwich)
-	+ etc. 
+ 	+ What more we could do now.
 -->
 
 - **Everybody** - natural start of the discussion here
 	+ Personal experience, Learning curve, Like/don't like
-	+ What else we have learned (by-products)
-		- R, R-packages
-		- git
-		- symbolic links in Windows
-		- installed MSGF+ on our cluster
+	+ By-products absorbed (R-packages, git, MSGF+, Win-symlink)
 		
+-----
+
+## Test case
+
+[PDLP1 project](https://www.researchgate.net/publication/268229378_The_Plasmodesmal_Protein_PDLP1_Localises_to_Haustoria-Associated_Membranes_during_Downy_Mildew_Infection_and_Regulates_Callose_Deposition)
+
+
+
 -----
 
 ## RfP pipeline
@@ -93,12 +98,38 @@ Team:
 -----
 
 ## Results to show
-  - Inputs in detail
-  - design.Rmd
-  - build MSnSets (S01+S03)
-  - QC_plots
-  - FC_analysis
-  - msmsTests
+  - S01.Rmd - explain exp-table
+  - design.Rmd - check exp table
+  - MSnSet (S01+S03) - create MSnSet
+      + combine fractions
+      + PSMs
+      + peptides
+      + proteins
+  - QC_plots - quality control
+  - FC_analysis - result
+  - msmsTests - statistical test
+  
+
+-----
+
+## Experimantal-table for meta data capture
+
+```{r}
+library("readr")
+tab <- read_csv("C:/Users/sklenarj/git/r-for-proteomics-tsl/rfp6/SampleExperimentTable.csv")
+knitr::kable(head(tab,20))
+
+```
+-----
+
+## Histogram - peptide data, spectral counts
+![Mascot search result as log2 fold changes of averaged spectral count](c:\Users\sklenarj\git\r-for-proteomics-tsl\rfp6\e_mascot_hist.png)
+
+-----
+
+## The final result (S-curve)
+![Mascot search result as log2 fold changes of averaged spectral count](c:\Users\sklenarj\git\r-for-proteomics-tsl\rfp6\LFC_mascot.png)
+
   
 -----
 
