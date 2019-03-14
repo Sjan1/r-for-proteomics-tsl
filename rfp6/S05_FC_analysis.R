@@ -352,7 +352,8 @@ match(0,spc$lfc)  # a test
 ## - add protein description to 'cherry_desc' and swap it with cherry (accessions)
 
 
-
+## MA-plot
+## better to 
 
 ph <- grep("P_H", colnames(df))
 ch <- grep("C_H", colnames(df))
@@ -365,7 +366,7 @@ cls <- rep("black", nrow(df))
 cls[rsch == 0] <- "red"
 cls[rsph == 0] <- "blue"
 
-
+## na values were removed by addition of 1 to enable fold change calculation
 plot((rsph + rsch + 2)/2, log2((rsph + 1)/(rsch + 1)), 
      col = cls,
      log = "x")

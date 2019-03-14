@@ -1,0 +1,61 @@
+---
+title: "Experimental table explained"
+author: "Jan Sklenar"
+date: "10 March 2019"
+#output: html_document
+output: slidy_presentation
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown version of S01 script
+The purpose is to explain the use of experimental table.
+
+```{r, load libraries, warning=FALSE, include=FALSE, cache=FALSE}
+source("S00-env.R")
+library("rtslprot")
+library("dplyr")
+library("msmsTests")
+
+## READ THE EXPERIMENT TABLE that describes:
+## (i) samples
+## (ii) measurements
+## (iii) searches
+## (iv) experimental factors
+```
+
+-----
+
+## Inputs
+
+Here we rear in the exp-table!
+
+```{r inputs, echo=TRUE}
+mzid <- "mascot"
+exp <- readSampleExperimentTable("SampleExperimentTable.csv",
+                                 mzid = mzid)
+head(exp,10)
+```
+
+-----
+
+## Now what we do with it.
+```{r, exp table}
+
+## APPLY FILTER if necessary
+exp <- exp %>% 
+  filter(cleavage == "tryp") %>%
+  select(-category) %>%
+  dropConstantVariables()
+
+## DEFINE UNIQUE SAMPLES
+## lower in hierarchy are only fractions (of samples) that will be combined
+## all this have to be described in the experiment table
+fcols <- c("phenotype", "treatment", "biorep")
+etab <- experimentHierarchy(exp, fcols)
+etab
+```
+
+-----

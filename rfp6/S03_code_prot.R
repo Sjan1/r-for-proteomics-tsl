@@ -15,6 +15,19 @@ e <- readRDS("e_mascot.rds")
 e <- readRDS("e_msgf.rds")
 e <- readRDS("e_mascot_fdr1pc.rds")
 
+
+## make accession feature variable - NEW 
+## e is an peptide-level MSnSet
+i <- grep("accession\\.", fvarLabels(e))
+k <- apply(fData(e)[, i], 1, 
+           function(x) unique(na.omit(as.character(x))))
+fData(e)$nprots <- lengths(k)
+fData(e)$accession <- sapply(k, paste, collapse = ";")
+
+eprot <- combineFeatures(e, fcol = "accesion")
+
+
+
 uniqacc <- function(e) {
 accvec <- c() # vector with the acctual Accession numbers 
 acc <- grep("^[Aa]ccession",fvarLabels(e),value = TRUE) # headers (featureNames) with protein accessions
