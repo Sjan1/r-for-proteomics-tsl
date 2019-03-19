@@ -19,7 +19,8 @@ filenames <- c("js190313_P6-pep12_hcd-sid",
                "js190313_pep11_cid",
                "js190313_pep10_cid",
                "js190313_pep10_hcd",
-               "js190313_P6-pep12_hcd")
+               "js190313_P6-pep12_hcd",
+               "js181130_iRT")
 afile <- NULL
 mzml_files <- NULL
 for (i in filenames){
@@ -27,10 +28,10 @@ for (i in filenames){
     mzml_files <- c(mzml_files,afile)
 }
 mzml_files
-fl <- mzml_files[1]
+fl <- mzml_files[8]
 fl
-data_prof <- readMSData(fl, mode = "onDisk", msLevel=1, centroided = FALSE)
-
+data_prof <- readMSData(fl, mode = "onDisk", msLevel = 1, centroided = FALSE)
+#data_prof <- readMSData(fl, mode = "onDisk", msLevel=1, centroided = FALSE)
 
 ## We next extract the profile MS data for the [M+H]+ adduct of serine
 ## with the expected m/z of 106.049871. 
@@ -41,9 +42,12 @@ data_prof <- readMSData(fl, mode = "onDisk", msLevel=1, centroided = FALSE)
 
 
 ## Define the mz and retention time ranges
-serine_mz <- 928.9807 #968.9591
-mzr <- c(serine_mz - 0.02, serine_mz + 0.02)
-rtr <- c(5000, 8000)
+#serine_mz <- 968.9591    #phospho
+#serine_mz <- 928.9807    #non phospho
+serine_mz <- 776.9298     #iRT
+#serine_mz <- 928.8000     #MS2
+mzr <- c(serine_mz - 0.007, serine_mz + 0.007)
+rtr <- c(3775, 4830)
 
 ## Filtering the object
 serine <- data_prof %>%
@@ -53,3 +57,4 @@ serine <- data_prof %>%
 
 plot(serine, type = "XIC")
 abline(h = serine_mz, col = "red", lty = 2)
+plot(serine[[10]])

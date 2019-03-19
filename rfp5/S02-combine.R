@@ -72,7 +72,7 @@ fData(x)
 gbl <- list(c("P1"), c("P1", "P4"), c("P2"),
             c("P2"), c("P3", "P4"))
 ## to add accession to the msnset 
-fData(x)$acc <- list(c("P1"), c("P1", "P4"), c("P2"),
+fData(x)$acc_li <- list(c("P1"), c("P1", "P4"), c("P2"),
             c("P2"), c("P3", "P4"))
 fData(x)
 ## This replaces NA with zeros

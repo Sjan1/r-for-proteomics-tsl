@@ -22,10 +22,13 @@ i <- grep("accession\\.", fvarLabels(e))
 k <- apply(fData(e)[, i], 1, 
            function(x) unique(na.omit(as.character(x))))
 fData(e)$nprots <- lengths(k)
-fData(e)$accession <- sapply(k, paste, collapse = ";")
-
-eprot <- combineFeatures(e, fcol = "accesion")
-
+#fData(e)$accession <- sapply(k, paste, collapse = ";") 
+fData(e)$accession <- sapply(k, paste) # when not separated, we can create list easily 
+l <- as.list(fData(e)$accession)
+eprot <- combineFeatures(e, groupBy = l, 
+                         fun = "sum",redundancy.handler = "multiple")
+#eprot <- combineFeatures(e, groupBy = fData(e)$accession, 
+#                        fun = "sum", redundancy.handler = "unique")
 
 
 uniqacc <- function(e) {
@@ -99,8 +102,11 @@ hist(exprs(e), ylim = c(0,100))
 head(exprs(eprot))
 ## PROTEOTYPIC PEPTIDES ########################################
 ## combining proteotypic peptides to the corresponding proteins
-eprot <- combineFeatures(e, groupBy = fData(e)$Prot_Acc, 
+eprot <- combineFeatures(e, groupBy = fData(e)$acc, 
                          fun = "sum")#,redundancy.handler = "multiple")
+
+eprot <- combineFeatures(e, groupBy = l, 
+                         fun = "sum",redundancy.handler = "multiple")
 
 ## save results as RDS
 saveRDS(eprot,"eprot.rds")
