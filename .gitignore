@@ -18,3 +18,12 @@ rfp6/.*
 **/*.rdx
 **/*.rdb
 **/*.RData
+**/*.html
+**/*.mzid
+**/*.mzML
+**/*.log
+**/*.xls
+**/*.xlsx
+**/res*.csv
+**/*cache*
+**/*.tex
