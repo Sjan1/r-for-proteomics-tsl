@@ -6,7 +6,7 @@
 library("MSnbase")
 #library("msdata")
 library("magrittr")
-
+library("rtslprot")
 #fl <- dir(system.file("sciex", package = "msdata"), full.names = TRUE)[2]
 #basename(fl)
 #data_prof <- readMSData(fl, mode = "onDisk", centroided = FALSE)
@@ -28,9 +28,9 @@ for (i in filenames){
     mzml_files <- c(mzml_files,afile)
 }
 mzml_files
-fl <- mzml_files[8]
+fl <- mzml_files[1]
 fl
-data_prof <- readMSData(fl, mode = "onDisk", msLevel = 1, centroided = FALSE)
+data_prof <- readMSData(mzml_files[8], mode = "onDisk", msLevel = 1, centroided = FALSE)
 #data_prof <- readMSData(fl, mode = "onDisk", msLevel=1, centroided = FALSE)
 
 ## We next extract the profile MS data for the [M+H]+ adduct of serine
@@ -47,7 +47,7 @@ data_prof <- readMSData(fl, mode = "onDisk", msLevel = 1, centroided = FALSE)
 serine_mz <- 776.9298     #iRT
 #serine_mz <- 928.8000     #MS2
 mzr <- c(serine_mz - 0.007, serine_mz + 0.007)
-rtr <- c(3775, 4830)
+rtr <- c(4775, 4830)
 
 ## Filtering the object
 serine <- data_prof %>%
@@ -58,3 +58,25 @@ serine <- data_prof %>%
 plot(serine, type = "XIC")
 abline(h = serine_mz, col = "red", lty = 2)
 plot(serine[[10]])
+
+
+## plot MS2 XIC
+par(mfrow=c(2,1))
+x <- readMSData(mzml_files[1], mode = "onDisk", msLevel = 2, centroided = FALSE)
+
+mzr <- c(968.9591-0.01, 968.9591+0.01) ## 968.9591 +/- 0.01
+rtr <- c(6300, 7000)
+#window()
+res_plot1 <- rtslprot:::plotxic(x, rtr, mzr) ## produces the plot
+
+mzr <- c(928.9807-0.01, 928.9807+0.01) ## 968.9591 +/- 0.01
+rtr <- c(6300, 7000)
+#window()
+res_plot2 <- rtslprot:::plotxic(x, rtr, mzr) ## produces the plot
+res ## contains the data used to plot
+dev.off()
+
+plot(res_plot2$rt,res_plot1$tic,type="l",col="red")
+par(new=TRUE)
+plot(res_plot2$rt,res_plot2$tic,type="l",col="blue")
+lines(res_plot2$rt,res_plot2$tic,col="green")
