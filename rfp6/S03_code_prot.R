@@ -23,12 +23,14 @@ k <- apply(fData(e)[, i], 1,
            function(x) unique(na.omit(as.character(x))))
 fData(e)$nprots <- lengths(k)
 #fData(e)$accession <- sapply(k, paste, collapse = ";") 
-fData(e)$accession <- sapply(k, paste) # when not separated, we can create list easily 
-l <- as.list(fData(e)$accession)
-eprot <- combineFeatures(e, groupBy = l, 
+fData(e)$accession <- sapply(k, paste) # when not collapsed, we then easily make a list  
+l <- as.list(fData(e)$accession)        # the list is nedded for combineFeatures
+
+eprot_m <- combineFeatures(e, groupBy = l, 
                          fun = "sum",redundancy.handler = "multiple")
-#eprot <- combineFeatures(e, groupBy = fData(e)$accession, 
-#                        fun = "sum", redundancy.handler = "unique")
+
+eprot_u <- combineFeatures(e, groupBy = fData(e)$accession, 
+                        fun = "sum", redundancy.handler = "unique")
 
 
 uniqacc <- function(e) {

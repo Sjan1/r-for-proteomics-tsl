@@ -25,6 +25,8 @@ exp <- exp %>%
 fcols <- c("phenotype", "treatment", "biorep")
 etab <- experimentHierarchy(exp, fcols)
 etab
+
+## READ INTO MSnSets
 ## This chunk reads each entry of the experimental design etab
 ## and creates the corresponding MSnSet from the mzid files.
 ## The MSnSets are returned as a list of MSnSets.
@@ -48,6 +50,7 @@ msnl <- apply(etab, 1, function(.etab) {
     return(e)
 })
 
+## COMBINE MSnSets IN ONE
 ## Convert the list of MSnSets to a single MSnSet where
 ## each element of the list becomes a columns (sample)
 ## and update the experimental design
@@ -58,20 +61,72 @@ for (i in 3:length(msnl)) {
 rownames(etab) <- sampleNames(e)
 pData(e) <- etab
 
-## deal with NAs
+## DEAL WITH NAs ON PEPIDE LEVEL
 e <- impute(e, method = "zero")
 
-#save(e, file = "e.rda")
+## keep the original
 saveRDS(e,"e.rds")
+e0 <- e
+saveRDS(e0,"e0.rds")
+## save others
 saveRDS(e,"e_msgf.rds")
 saveRDS(e,"e_mascot.rds")
 saveRDS(e,"e_mascot_fdr1pc.rds")
-##keep the original
-e0 <- e
-e <- e0
-e_msfg <- e
+
 ## open if needed
-e <- readRDS("e_mascot.Rds")
+e <- readRDS("e0.Rds")
+
+
+## 20-03-2019: COMBINE PEPTIDES INTO PROTEINS
+## Make vector with all accessions matching every peptide
+## Append the vector to the feature data
+## Step through all the features (rows and columns)
+## and copy accessions when found.
+
+load("e.rda") #MSnSet with peptides from the script code.R
+e <- readRDS("e.rds")
+e <- readRDS("e_mascot.rds")
+e <- readRDS("e_msgf.rds")
+e <- readRDS("e_mascot_fdr1pc.rds")
+
+## concatenate all  accessions - NEW 
+i <- grep("accession\\.", fvarLabels(e))    # e is a peptide-level MSnSet
+k <- apply(fData(e)[, i], 1, 
+           function(x) unique(na.omit(as.character(x))))
+fData(e)$nprots <- lengths(k)
+#fData(e)$accession <- sapply(k, paste, collapse = ";") # Laurent's suggestion
+fData(e)$accession <- sapply(k, paste) # But when not collapsed, we then easily make a list  
+l <- as.list(fData(e)$accession)        # the list is nedded for combineFeatures
+
+#save modified MSnSet
+saveRDS(e,"e.rds")
+
+eprot_m <- combineFeatures(e, groupBy = l, 
+                           fun = "sum",redundancy.handler = "multiple")
+
+eprot_u <- combineFeatures(e, groupBy = fData(e)$accession, 
+                           fun = "sum", redundancy.handler = "unique")
+
+## save results as RDS
+saveRDS(eprot,"eprot.rds")
+saveRDS(eprot0,"eprot0.rds")
+saveRDS(eprot,"eprot_msgf.rds")
+saveRDS(eprot,"eprot_mascot.rds")
+saveRDS(eprot,"eprot_mascot_fdr1pc.rds")
+saveRDS(eprot,"eprot_m.rds")
+saveRDS(eprot0,"eprot_u.rds")
+## read the original
+eprot <- readRDS("eprot.rds")
+eprot <- readRDS("eprot0.rds")
+eprot <- readRDS("eprot_msgf.rds")
+eprot <- readRDS("eprot_mascot.rds")
+eprot <- readRDS("eprot_mascot_fdr1pc.rds")
+eprot <- readRDS("eprot_m")
+eprot <- readRDS("eprot_u")
+
+
+
+
 
 
 ## statistical tests

@@ -10,12 +10,13 @@ rm(list = ls());
 if(!exists("foo", mode="function")) source("footnote.R")
 ## load MSnSets
 ## protein data
-eprot <- readRDS("eprot_mascot.rds")
+#eprot <- readRDS("eprot_mascot.rds")
 #eprot <- readRDS("eprot_mascot_fdr1pc.rds")
+eprot <- readRDS("eprot_m.rds")
 ## peptide data
 ## It needs to have Prot_Acc column (calculated in S03_code_prot.R)
-e <- readRDS("e_mascot.rds")
-#e <- readRDS("e_mascot_fdr1pc.rds")
+#e <- readRDS("e_mascot.rds")
+e <- readRDS("e_mascot_fdr1pc.rds")
 
 
 df <- exprs(eprot)
@@ -120,7 +121,7 @@ y <- x[ordvec,]
 head(y)
 # y is in the right order (reordered x) for plotting... lfc small to high
 #windows()
-barplot(y$lfc).
+barplot(y$lfc)
 
 #adding lfc to mdf
 mdf$lfc <- y[rownames(mdf), "lfc"]
@@ -169,7 +170,7 @@ head(m)
 
 f <- fData(e)
 f[,grepl("pepSeq",colnames(f))]
-
+f
 colnames(mdf)
 
 m2 <- m;
@@ -177,7 +178,8 @@ for(acc in rownames(m)) {
 for(cn in colnames(m[4:ncol(m)])) {
   re <- paste0("pepseq\\.", cn);
   chcol <- colnames(f)[grepl(re, colnames(f), ignore.case = T)]
-  ch_pep <- f[f$Prot_Acc == acc, c(chcol)]
+  #ch_pep <- f[f$Prot_Acc == acc, c(chcol)]
+  ch_pep <- f[f$accession == acc, c(chcol)]
   ch_pep2 <- !is.na(ch_pep)
   upc <- sum(ch_pep2);
   m2[acc, cn] <- upc;
@@ -295,7 +297,8 @@ makeFootnote(footnote)
 
 
 ## Visualize input from a collaborator (cherry-picked proteins)
-## 1-plot selected accession
+
+## PDLP1
 res <- which(rownames(m2) == "AT5G43980.1")
 #res <- c(150,200,220)  #test
 #abline(v=res)
@@ -303,14 +306,12 @@ segments(x0=res,y0=-4,x1=res,y1=0,lwd=1,lty="dotted", col="black")
 #arrows(x0=res,y0=-10,x1=res,y1=0,lwd=5,lty="dotted", col="grey")
 text(x=res, y=-5, labels="AT5G43980")
 
-## another one
-## 1-plot selected accession
+## RUBISCO
 res <- which(rownames(m2) == "ATCG00490.1")
 segments(x0=res,y0=-6,x1=res,y1=0,lwd=1,lty="dotted", col="black")
 text(x=res, y=-7, labels="ATCG00490")
 
-## and another one
-## 1-plot selected accession
+## VAMP721
 res <- which(rownames(m2) == "AT1G04750.1")
 segments(x0=res,y0=-6,x1=res,y1=0,lwd=1,lty="dotted", col="black")
 text(x=res, y=-7, labels="AT1G04750")
