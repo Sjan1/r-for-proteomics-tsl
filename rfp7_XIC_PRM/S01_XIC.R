@@ -15,7 +15,7 @@ par(mar=c(2,2,2,2))
 
 ## for the data on the disc
 ## directory with the data
-mzml <- "data/mzml"
+mzml <- "data/mzml_long_grad_PRM"
 
 ## INPUT: filenames without the extension
 filenames <- c(#"js190313_P6-pep10-11-12_cid",
@@ -51,7 +51,7 @@ for (i in filenames){
   ## Define the mz and retention time ranges
   #mz <- 968.9591    #phospho #mz <- 928.9807    #non phospho
   
-  ## INPUT: retention times
+  ## INPUT: retention times in seconds
   rts <- 6000
   rte <- 7000
   
@@ -84,13 +84,13 @@ for (i in filenames){
     ## INPUT: colors
     col <-  c("red","blue","black")  
     
-    ## add a name and recalculate TIC to %
+    ## add a name to the result (source filename) and recalculate TIC to %
     res$pc <- (res$tic-min(res$tic))/(max(res$tic)-min(res$tic))
     res$nm <- i
-    
-    ## save all XICs to a list
-    res <- list(res) 
-    resl <- c(resl,res)    # this hold result for one plot
+  
+    ## save all XIC results to a list
+    res <- list(res)       # results for one plot
+    resl <- c(resl,res)    # results for all plots
     
   }
   ## plot it -> not scaled
@@ -230,12 +230,27 @@ a <- c("a","b","c")
 b <- c(1,2,3)
 d <- c("d","e","f")
 e <- c(4,5,6)
-l1 <- list(a,b)
-l2 <- list(d,e)
+l1 <- data.frame(a,b)
+l2 <- data.frame(d,e)
 l1
 l2
-m <- c(l,l1)
-m
+l <- c(l1,l2)
+l <- list(l1,l2)
+l
+
+
+##---------------------------------------------
+## list maximum
+L1 <- list(a = c(3.4, 5.6, -2.1, -7.8), b = c(2.1, 6.7), c = c(-6.7, 0.001, 8.9))
+aa <-  c(4.4, 56.6, -21.1, -7.9)
+bb <-  c(1,2,3,4)
+aabb <- data.frame(aa,bb)
+aabb
+L2 <- c(L1,aabb)
+L2
+m <- lapply(L1, function(x) x[which.max(abs(x))])
+class(m)
+range(m)
 
 ##---------------------------------------------
 ## legend and main title
@@ -278,3 +293,6 @@ lines( d3$x, d3$y, lty = 4 )
 ##---------------------------------------------
 ## legend 
 # http://www.sthda.com/english/wiki/add-legends-to-plots-in-r-software-the-easiest-way
+
+
+
