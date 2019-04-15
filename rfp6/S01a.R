@@ -14,7 +14,7 @@ mzid <- "mascot"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
                                  mzid = mzid)
 ## APPLY FILTER if necessary
-exp <- exp %>% 
+exp <- exp %>%
   filter(cleavage == "tryp") %>%
   select(-category) %>%
   dropConstantVariables()
@@ -32,11 +32,11 @@ etab
 ## The MSnSets are returned as a list of MSnSets.
 msnl <- apply(etab, 1, function(.etab) {
   filenames <- exp %>%
-    filter(biorep == .etab[["biorep"]], 
+    filter(biorep == .etab[["biorep"]],
            phenotype == .etab[["phenotype"]],
            treatment == .etab[["treatment"]]) %>%
            select(name)
-  mzid_files <- file.path(mzid, paste(filenames[[1]], "mzid", 
+  mzid_files <- file.path(mzid, paste(filenames[[1]], "mzid",
                                       sep = "."))
   ## make MSnSet (choose peptide or PSMs - two functions in rtslprot)
     e <- rtslprot:::make_pep_MSnSet(mzid_files,
@@ -84,22 +84,22 @@ saveRDS(e,"e_mascot_fdr1pc.rds")
 
 e <- readRDS("e_mascot_fdr1pc.rds")
 
-## concatenate all  accessions - NEW 
+## concatenate all  accessions - NEW
 i <- grep("accession\\.", fvarLabels(e))    # e is a peptide-level MSnSet
-k <- apply(fData(e)[, i], 1, 
+k <- apply(fData(e)[, i], 1,
            function(x) unique(na.omit(as.character(x))))
 fData(e)$nprots <- lengths(k)
 #fData(e)$accession <- sapply(k, paste, collapse = ";") # Laurent's suggestion
-fData(e)$accession <- sapply(k, paste) # But when not collapsed, we then easily make a list  
+fData(e)$accession <- sapply(k, paste) # But when not collapsed, we then easily make a list
 l <- as.list(fData(e)$accession)        # the list is nedded for combineFeatures
 
 #save modified MSnSet
 saveRDS(e,"e.rds")
 
-eprot_m <- combineFeatures(e, groupBy = l, 
+eprot_m <- combineFeatures(e, groupBy = l,
                            fun = "sum",redundancy.handler = "multiple")
 
-eprot_u <- combineFeatures(e, groupBy = fData(e)$accession, 
+eprot_u <- combineFeatures(e, groupBy = fData(e)$accession,
                            fun = "sum", redundancy.handler = "unique")
 
 
@@ -117,7 +117,7 @@ stop("never mind the error, execution stops here")
 
 
 
-## A NEW FUNCTION TEST 
+## A NEW FUNCTION TEST
 ## WHY: examples of two different results from mzid vignette
 
 ## read msnid as data.table
@@ -135,7 +135,7 @@ head(fData(ts),20)
 fData(ts)$accession
 
 
-## THE SOLUTION 
+## THE SOLUTION
 ## 12th Apr 2019 from Lauent in email
 ## Test data, to be run in rfp6
 msnid <- MSnID()
@@ -151,7 +151,7 @@ mzid <- "mascot_fdr1pc"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
                                  mzid = mzid)
 ## APPLY FILTER if necessary
-exp <- exp %>% 
+exp <- exp %>%
   filter(cleavage == "tryp") %>%
   select(-category) %>%
   dropConstantVariables()
@@ -166,19 +166,23 @@ etab
 
 mzid_files <- apply(etab, 1, function(.etab) {
   filenames <- exp %>%
-    filter(biorep == .etab[["biorep"]], 
+    filter(biorep == .etab[["biorep"]],
            phenotype == .etab[["phenotype"]],
            treatment == .etab[["treatment"]]) %>%
     select(name)
-  mzid_files <- file.path(mzid,paste(filenames[[1]], "mzid", 
+  mzid_files <- file.path(mzid,paste(filenames[[1]], "mzid",
                                      sep = "."))
-## make a list of files
+  ## make a list of files
   return(mzid_files)
 })
+## add names
+names(mzid_files) <- apply(etab, 1,
+                           function(.etab) paste(.etab, collapse = "_"))
+
 ## then from 'etab' and 'exp' we get
 mzid_files
 
-##  Now we can compare the proteins we had problem earlier - 
+##  Now we can compare the proteins we had problem earlier -
 ##  combined from several mzids
 ##  samples P_I_3 (list #23) and P_I_1 (list #32)
 msnid <- MSnID()
@@ -203,12 +207,12 @@ as_MSnSet <- function(x, fcol = NULL) {
 ## Counts at the PSM level
 psm <- as_MSnSet(msnid)
 
-## Counts at the peptide level - not here that peptide is K.ASVGFK.A while 
-## pepSeq is ASVGFK in the data table 
+## Counts at the peptide level - not here that peptide is K.ASVGFK.A while
+## pepSeq is ASVGFK in the data table
 pep2 <- as_MSnSet(msnid, fcol = "peptide")
 pep1 <- as_MSnSet(msnid, fcol = "pepSeq")
 
-## Counts at the protein (accession) level 
+## Counts at the protein (accession) level
 prot <- as_MSnSet(msnid, fcol = "accession")
 
 dim(fData(psm))
@@ -232,10 +236,9 @@ rownames(fData(pep1)[fData(pep1)$accession=="04266",])
 rownames(fData(pep2)[fData(pep2)$accession=="04266",])
 rownames(fData(prot)[fData(prot)$accession=="04266",])
 
-## 
+##
 table(fData(pep)$accession=="20144")
 rownames(fData(psm)[fData(psm)$accession=="20144",])
 rownames(fData(pep1)[fData(pep1)$accession=="20144",])
 rownames(fData(pep2)[fData(pep2)$accession=="20144",])
 rownames(fData(prot)[fData(prot)$accession=="20144",])
-
