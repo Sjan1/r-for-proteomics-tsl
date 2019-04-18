@@ -113,7 +113,7 @@ saveRDS(eprot_u,"eprot.rds")
 eprot <- readRDS("eprot.rds")
 
 
-stop("never mind the error, execution stops here")
+stop("Never mind the error, execution stops here!")
 ##################################################
 
 
@@ -125,7 +125,7 @@ stop("never mind the error, execution stops here")
 td <- as(msnid,"data.table")
 colnames(td)
 td[,c(24,26)]
-td[td$accession=="04266",26]
+td[td$accession=="RFP",26]
 
 ## read msnid as MSnSet
 ts <- as(msnid,"MSnSet")
@@ -191,19 +191,6 @@ msnid <- MSnID()
 msnid <- read_mzIDs(msnid,mzid_files[["P_I_1"]])
 msnid
 
-## The new function
-#as_MSnSet <- function(x, fcol = NULL) {
-#  td <- as(x, "data.table")
-#  td$e <- 1
-#  ## Create a PSM-level MSnSet
-#  x <- readMSnSet2(td, ecol = which(colnames(td) == "e"))
-#  if (!is.null(fcol)) {
-#    ## If there's an fcol, combine at that level by summing PSM counts
-#    stopifnot(fcol %in% fvarLabels(x))
-#    x <- combineFeatures(x, fcol = fcol, fun = sum)
-#  }
-#  return(x)
-#}
 
 ## Counts at the PSM level
 psm <- rtslprot::as_MSnSet(msnid)
@@ -221,23 +208,45 @@ dim(fData(pep1))
 dim(fData(pep2))
 dim(fData(prot))
 
+length(unique(fData(psm)$pepSeq))
 length(unique(fData(pep1)$pepSeq))
 length(unique(fData(pep2)$pepSeq))
 length(unique(fData(pep2)$peptide))
-
 dim(fData(pep2)[,c("pepSeq","peptide")])
 
 
-
+## check the accesions == "20144"
 ## check the accesions == "04266"
 
 table(fData(pep1)$accession=="04266")
 rownames(fData(psm)[fData(psm)$accession=="04266",])
 unique(fData(psm)[fData(psm)$accession=="04266",c(23,25)])
-
 ## WHY THE TWO FOLLOWING LINES PRODUCE DIFFERENT RESULTS?
 unique(fData(psm)[fData(psm)$accession=="04266",25])
 rownames(fData(pep1)[fData(pep1)$accession=="04266",])
 rownames(fData(pep2)[fData(pep2)$accession=="04266",])
+## both peptides should be in present in "04266" 
+fData(pep1)[fData(pep1)$pepSeq=="FICTTGK",][c(25,23)]
+fData(pep1)[fData(pep1)$pepSeq=="YPDHMK",][c(25,23)]
 
-## check the accesions == "20144"
+
+## an idea...
+## peptides and accessions in MSnSet(psm)
+df <- fData(psm)
+df <- fData(psm)[,c(25,23)]
+dim(df)
+## remove duplicates (the same accession and sequence)
+df <- df%>%group_by(pepSeq,accession) %>% summarise(n=n())
+dim(df)
+## aggregate accessions for still duplicate sequences
+df <- aggregate(accession~pepSeq, df, paste, collapse=",")
+dim(df)
+## here is the list for the redundancy handler in final combineFearutes
+l <- as.list(df$accession)
+l
+prot <- combineFeatures(pep1,
+                        groupBy = l,
+                        fun="sum",
+                        redundancy.handler = "multiple")
+dim(fData(prot))
+View(fData(prot)[,c(23,25)])
