@@ -147,7 +147,6 @@ msnid
 ## We can use more files from experiment design table - mzid_files
 ## filtered and grouped mzid_files from the experimental design table
 ## using only the firsst part of the S01_code.R, without building MSnSet
-
 mzid <- "mascot_fdr1pc"
 exp <- readSampleExperimentTable("SampleExperimentTable.csv",
                                  mzid = mzid)
@@ -214,7 +213,6 @@ length(unique(fData(pep2)$pepSeq))
 length(unique(fData(pep2)$peptide))
 dim(fData(pep2)[,c("pepSeq","peptide")])
 
-
 ## check the accesions == "20144"
 ## check the accesions == "04266"
 
@@ -229,10 +227,10 @@ rownames(fData(pep2)[fData(pep2)$accession=="04266",])
 fData(pep1)[fData(pep1)$pepSeq=="FICTTGK",][c(25,23)]
 fData(pep1)[fData(pep1)$pepSeq=="YPDHMK",][c(25,23)]
 
-
 ## an idea...
 ## peptides and accessions in MSnSet(psm)
 df <- fData(psm)
+saveRDS(df,"df.rds")
 df <- fData(psm)[,c(25,23)]
 dim(df)
 ## remove duplicates (the same accession and sequence)
