@@ -95,11 +95,12 @@ msnl <- lapply(index, function(.x){
     gb <- pel[df$pepSeq]
     names(gb) <- featureNames(psm)
     gb2 <- lapply(gb, paste, collapse = ";")
+    fData(psm)$protein_groups <- unlist(gb2)
     
-    e <- combineFeatures(psm, groupBy = gb2,
-                         method = "sum")
+    e <- combineFeatures(psm, fcol = "protein_groups",
+                         method = "sum", cv = FALSE)
 
-    ## number of members per protein group
+    fData(e)$group_size <- lengths(strsplit(featureNames(e), ";"))    
     ## number of unique peptides
     ## ... using df
     ## and add as feature variables
