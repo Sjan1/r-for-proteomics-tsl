@@ -102,6 +102,7 @@ msnl <- lapply(index, function(.x){
     ## number of members per protein group
     ## number of unique peptides
     ## ... using df
+    ## and add as feature variables
 
     ## update samples names
     sampleNames(e) <- .x
