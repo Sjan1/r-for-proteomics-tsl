@@ -1,5 +1,6 @@
 rm(list = ls());
 source("S00-env.R")
+source("run_msnid.R")
 library("rtslprot")
 library("dplyr")
 library("MSnID")
@@ -75,6 +76,10 @@ names(index) <- names(mzid_files)
 index
 
 msnl <- lapply(index, function(.x){
+
+    res <- run_msnid(.x)
+    
+    
     msnid <- MSnID()
     msnid <- read_mzIDs(msnid, mzid_files[[.x]])
     
