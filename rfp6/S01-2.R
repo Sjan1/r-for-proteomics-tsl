@@ -94,16 +94,38 @@ msnl <- lapply(index, function(.x){
     pel <- lapply(pel, unique)
     gb <- pel[df$pepSeq]
     names(gb) <- featureNames(psm)
-    gb2 <- lapply(gb, paste, collapse = ";")
-    fData(psm)$protein_groups <- unlist(gb2)
     
-    e <- combineFeatures(psm, fcol = "protein_groups",
-                         method = "sum", cv = FALSE)
+    pe2 <- aggregate(pepSeq~accession, df, c)
+    pe2l <- as.list(pe2$pepSeq)
+    names(pe2l) <- pe2$accession
+    pep_count <- sapply(pe2l, function(x) length(unique(x)))
 
-    fData(e)$group_size <- lengths(strsplit(featureNames(e), ";"))    
-    ## number of unique peptides
-    ## ... using df
-    ## and add as feature variables
+    ## new re-ordered protein group
+    gb2 <- gb_count <- gb
+    for (i in seq_along(gb)) {
+        gb2[[i]] <- gb[[i]][order(pep_count[gb[[i]]], decreasing = TRUE)]
+        gb_count[[i]] <- paste(pep_count[gb2[[i]]], collapse = ";")
+    }
+
+    fData(psm)$protein_groups <- sapply(gb2, paste, collapse = ";")
+    fData(psm)$group_size <- lengths(gb2)
+    fData(psm)$pep_counts <- unlist(gb_count)
+    fData(psm)$master_prot <- sapply(gb2, "[[", 1)
+
+    for (k in unique(fData(psm)$master_prot)) {
+        i <- which(fData(psm)$master_prot == k)
+        j <- which.max(fData(psm)[i, "group_size"])
+        ii <- i[j]
+        fData(psm)[i, c("protein_groups",
+                        "group_size",
+                        "pep_counts")] <-
+            fData(psm)[ii, c("protein_groups",
+                             "group_size",
+                             "pep_counts")]
+    }
+    
+    e <- combineFeatures(psm, fcol = "master_prot",
+                         method = "sum", cv = FALSE)
 
     ## update samples names
     sampleNames(e) <- .x
@@ -131,7 +153,7 @@ pData(e) <- etab[index,]
 pData(e)
 
 ######################################
-## 8 - DEAL WITH NAs ON PEPIDE LEVEL
+## 8 - DEAL WITH heNAs ON PEPIDE LEVEL
 e <- impute(e, method = "zero")
 
 ######################################
