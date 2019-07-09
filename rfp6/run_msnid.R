@@ -1,4 +1,4 @@
-run_msnid <- function(f) {
+run_msnid <- function(f, fdr = 0.01) {
     if (file.exists(".Rcache"))
         unlink(".Rcache", recursive = TRUE)
     suppressMessages(msnid <- MSnID("."))
@@ -29,13 +29,14 @@ run_msnid <- function(f) {
 
     ## optimise filter
     filtObj <- optimize_filter(filtObj, msnid,
-                               fdr.max = 0.01, level = "accession",
+                               fdr.max = fdr, level = "accession",
                                method = "Nelder-Mead", n.iter = 500)
     print(evaluate_filter(msnid, filtObj))
 
     ## apply filter
     msnid <- apply_filter(msnid, filtObj)
     ## remove contaminants
-    msnid <- apply_filter(msnid, "!grepl('XXX', accession)")
-    as(msnid, "data.table")
+    msnid <- apply_filter(msnid, "!grepl('cont', accession)")
+    ## remove decoys
+    apply_filter(msnid, "!grepl('XXX', accession)")
 }

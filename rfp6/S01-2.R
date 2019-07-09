@@ -1,5 +1,5 @@
 rm(list = ls());
-source("S00-env.R")
+source("../rfp4/S00-env.R")
 source("run_msnid.R")
 library("rtslprot")
 library("dplyr")
@@ -76,87 +76,33 @@ names(index) <- names(mzid_files)
 index
 
 msnl <- lapply(index, function(.x){
-
-    res <- run_msnid(.x)
-    
-    
-    msnid <- MSnID()
-    msnid <- read_mzIDs(msnid, mzid_files[[.x]])
-    
-    #################################
-    ## HERE ADJUST FDRs
-    ## call another script 
-    #source("S02-2_FDR.R")
-    #################################
-    
+    .files <- mzid_files[[.x]]
+    msnid <- run_msnid(.files)
     psm <- rtslprot::as_MSnSet(msnid)
-    pep <- rtslprot::as_MSnSet(msnid, "pepSeq")
-    prot <- rtslprot::as_MSnSet(msnid, "accession")
-
-## TO ADD MISSING INFO WE HAVE TO GO BACK TO PSM MSnSet
-## Here, at the level of 'list of MSnSets',
-## we modify all the items (MSnSets of individual samples)
-
-    ## aggregate protein accessions
-    #df <- aggregate(pepSeq~accession, df, paste, collapse=",")
     df <- fData(psm)
-    #dim(df)
-    pe <- aggregate(accession~pepSeq, df, paste, collapse=",")
+    
+    ## TO ADD MISSING INFO WE HAVE TO GO BACK TO PSM MSnSet
+    ## Here, at the level of 'list of MSnSets',
+    ## we modify all the items (MSnSets of individual samples)
+    
+    ## aggregate protein accessions
+    pe <- aggregate(accession~pepSeq, df, c)
     ## here we make list of peptide sequences,
     ## where each can have multiple accesions
     pel <- as.list(pe$accession)
     names(pel) <- pe$pepSeq
+    pel <- lapply(pel, unique)
+    gb <- pel[df$pepSeq]
+    names(gb) <- featureNames(psm)
+    gb2 <- lapply(gb, paste, collapse = ";")
     
-    ## lets do the same for protein
-    ## aggregate peptide sequences 
-    df <- fData(psm)
-    pr <- aggregate(pepSeq~accession, df, paste, collapse=",")
-    ## here we make list of accession,
-    ## where each can have multiple peptide sequences
-    prl <- as.list(pr$pepSeq)
-    names(prl) <- pr$accession
-    
-    ## lists need to have unique peptides/accessions
-    ## protein list with unique peptides
-    uprl <- lapply(prl,function(x) strsplit(x,",")) 
-    uprl <- lapply(uprl,function(x) unique(unlist(x)))
-    uprlcnt <- lapply(uprl,function(x) length(x))
-    #uprlcnt
-    
-    ## protein list with unique peptides
-    upel <- lapply(pel,function(x) strsplit(x,",")) 
-    upel <- lapply(upel,function(x) unique(unlist(x)))
-    upelcnt <- lapply(upel,function(x) length(x))
-    #head(upelcnt)
-    
-    
-    ## the list to append to protein MSnSets
-    fvarLabels(prot)
-    fData(prot)$pepSeq_smpl <- uprl
-    #rownames(fData(prot))
-    
-    ## the list to append to peptide MSnSets
-    fvarLabels(pep)
-    fData(pep)$accession_smpl <- upel
-    #rownames(fData(prot))
-    ## reordering uprl list in the same order as prot MSnSet
-    uprl[rownames(fData(prot))]
-    fData(prot)$pepSeq_smpl <- uprl[rownames(fData(prot))]
-    #fData(prot)$upepSeq
-    
-    ## Now we could use the peptide-accession list for
-    ## the redundancy handler in combineFearutes
-    ## to obtain (hopefuly better)protein MSnSet
-    ## Aternativelly, could we just merge protein MSnSets?
-    
-    e <- combineFeatures(pep,
-                           groupBy = upel,
-                           fun="sum",
-                           redundancy.handler = "multiple")
-    ## This new proteins need to complete peptide sequence info,
-    ## we have them in uprl.
-    fData(e)$pepSeq_smpl <- uprl
-    
+    e <- combineFeatures(psm, groupBy = gb2,
+                         method = "sum")
+
+    ## number of members per protein group
+    ## number of unique peptides
+    ## ... using df
+
     ## update samples names
     sampleNames(e) <- .x
     e <- updateFvarLabels(e, sampleNames(e))
@@ -165,31 +111,6 @@ msnl <- lapply(index, function(.x){
 })
 ## list of MSnSets 'msnl' from all samples completed
 
-## check the result
-msnl
-names(msnl)
-sampleNames(msnl[[1]])
-head(exprs(msnl[[1]]))
-head(fData(msnl[[1]]))
-for(x in msnl){print(length(fvarLabels(x)))}
-length(fvarLabels(msnl[[1]]))
-length(fvarLabels(msnl[[2]]))
-## why some feature data are missing one column?
-## which one is missing?
-fvarLabels(msnl[[1]])
-fvarLabels(msnl[[2]])
-## to get rid of .SampleName
-one <- fvarLabels(msnl[[1]])
-two <- fvarLabels(msnl[[2]])
-one <- gsub("\\..+","", one)
-two <- gsub("\\..+","", two)
-one
-two
-## any difference?
-setdiff(one,two)
-setdiff(two,one)
-## WHY THE NUMBERS OF FEATURE-DATA COLUMNS DIFFER? 
-#View(fData(msnl[[1]])[,c(26,24,34,25)])
 
 #######################################
 ## 7 - COMBINE LIST OF MSnSets INTO ONE
