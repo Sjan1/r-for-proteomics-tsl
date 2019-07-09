@@ -9,7 +9,6 @@ rfp6/.*
 */mascot*/*.*
 */MASCOT*/*.*
 */raw/*.*
-*/MSGF*/*.*
 .Rhistory
 .RData
 **/.*
