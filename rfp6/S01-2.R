@@ -171,10 +171,45 @@ e <- readRDS("e_mascot_fdr1pc.rds")
 i <- grep(".?accession.?", fvarLabels(e))
 i
 View(head(fData(e)[,i],100))
-i <- grep(".?pepSeq.?", fvarLabels(e))
-i
-View(head(fData(e)[,i],100))
-#fData(e)[,i][1,4]
+y <- grep(".?master.?", fvarLabels(e))
+y
+View(head(fData(e)[,y],100))
+g <- grep(".?protein_groups.?", fvarLabels(e))
+g
+View(head(fData(e)[,g],100))
+s <- grep(".?pepSeq.?", fvarLabels(e))
+s
+View(head(fData(e)[,s],100))
+
+View(fData(e)[1:500,c(24,66,108,42,84,126,39,81,123,26,68,110)])
+test <- fData(e)[,c(24,66,108,42,84,126,39,81,123,26,68,110)]
+test <- fData(e)[,c(24,66,108,150,42,84,126,168,39,81,123,165,26,68,110,152)]
+View(head(test))
+## accesion and master should not be the same
+identical(fData(e)[,i[1]],fData(e)[,y[1]])
+ni <- which(fData(e)[,i[1]] != fData(e)[,y[1]])
+## rownames and masters should be the same
+ac <- fData(e)[,c(i,y,g)]
+head(ac)
+table(rownames(ac)==ac[,4])
+table(rownames(ac)==ac[,5])
+table(rownames(ac)==ac[,6])
+table(rownames(ac)==ac[,7])
+head(ac[,7])
+## rownames and first accession in protein groups shoudl be the same 
+l <- strsplit(ac[,7],";")
+sl <- sapply(l, "[[", 1)
+table(rownames(ac)==sl)
+
+l <- strsplit(ac[,8],";")
+sl <- sapply(l, "[[", 1)
+table(rownames(ac)==sl)
+
+l <- strsplit(ac[,9],";")
+sl <- sapply(l, "[[", 1)
+table(rownames(ac)==sl)
+
+
 
 #######################################
 ## 10 - Global unique accession/peptide lists for combined MSnSet
