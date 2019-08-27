@@ -43,3 +43,100 @@ To do:
 - compare msgf vs mascot
 - subset peptide MSnSet to extract one protein (ideally like Similarity view in Scaffold), table of all the peptides that identifies a protein in all the samples
 - we could make function for that from rfp6/S03_code_prot.R
+
+
+---
+
+## Thoughts just after Laurent's visit in July 2019 
+
+While we still remember the details of our the latest version, there are my comments:
+-1- Conceptually, we drive our pipeline to obtain differential expression values for proteins. This is first thing of course, but there are other goal. I hope it will not be too difficult to get peptide fold changes within proteins to check if all assigned peptides show the same fold change and pattern in different samples. In fact, was this the picture you were showing that it is coming?
+
+-2- To assess our latest version I need comparable psm MSnSet. But our function do not retain it. I learned that R can return only one object. Since we are already building list of protein MSnSets, it does not seem practical to mix it with another list psm MSnSets. That means we have to run it twice. The easiest seems copying the code below and remove the combineFeature, where we collapse it to protein MSnSet. But feels neither consize nor elegant. What would be a better way?
+This part will always be needed. 
+When we are done with numbers, we will visualize selected fold changes, based on which we take accession of interest and plot and interrogate the corresponding peptides manually to check how well the fragments are assigned.
+We this all the time with phosphopeptides.
+
+-3- Phosphopeptides, currently I can get them from peptide or psm MSnSet. This is another reason to make this object. But what we woudl have to change in order to count them in spectral counting?
+
+-4- Try to append unique list peptides to every protein.
+
+-5- Combine feature has a weakness that it does not retain the best peptide hit. We should retain the best spectrum for every charge state for every protein. Then we should be able to find how this spectrum was in all the samples and get its intensity. (Count, TMT, value, or XIC)
+
+-6- The problem of common peptides in protein groups would be better to expand in a separate table of accessions vs peptides. Then unique peptides should be labeled, possibly score of PSM match coudl be added.
+
+-7- Table of protein description will be needed. Typical situation will be: a protein has fold change difference between samples, but it is a member of a protein group. We need to show description of all proteins from this groups. We do not have this currently in Scaffold!!
+
+ 
+ -8- Peptide-centric view:
+ Peptides asigned to protein in every sample 
+ 
+        smpl1  smpl2   smpl3
+ pep1   x       x       x
+ pep2   x       x       -
+ pep3   -       -       x
+ 
+ It could be score, expr value, spectral count.
+ 
+Note: Check the lists made by aggregate...
+
+-9-
+All what we have done is just a fixture for what is missing in the function 'as_MSnSet(msnid,fcol="accession)' Shouldn't we add it to it?  
+
+
+
+30th July, train to/from Cambridge
+
+- Is there any difference in Master protein and accession_smpl.index
+- Is 'master protein' the same for every sample or is it different?
+- Ultimate control: if exprs values are replaced by the actual peptide sequences - will the numbers match?
+-- How to append several columnes to a dataframe?
+-- How to quickly compare two columns in a dataframe?
+- Accession => all peptides for all or only selected samples => how many unique peptides, charge states, modifications, total SPC, list of peptides, distribution among samples. This will help to set up filters. All this needs to go to feature data and will be used to filter MSnSet to obtain subsets, e.g. all proteins of selected pair that have at least two unique peptides.
+- feature data after combining features should contain master peptide with maximum ion score. All the other should be accessible simply on demand.
+- Fold changes function, output: pictures (Venn diagram, S-shaped bar plot, MA plot), list of proteins
+- Final WF should be modular: exp-table, FDR, QC, FC,...
+- What to move to the library? E.g. FDR, but some FDR visualization is useful and missing from the current function. Also, sometimes it needs to be modified. A good compromise is to move to the library the most typical calculation for tryptic peptides, and change when necessary manually when required.
+Another bit that would be really useful to move to a function or a library is protein grouping, it is quite ugly. If we could have the workflow made from logical blocks and move the messy code inside to the library would improve readability.
+- peptide centric MSnSet: combined peptides where in the feature data we leave the best hits
+- combine feature data to retain modifications and or charge states
+
+### 5th August 2019
+## WHAT TO DO NEXT MONDAY
+
+- accesion ~ peptide list (where to get it from)
+- which peptides are asigned exclusively to a protein => presumably the best result
+- from accession~peptide list pick master proteins
+- append to fData of master-protein MSnSet
+- remove accessions (randomly selected from protein group) - can be done anytime later)
+- count sequences and compare to exprs numbers
+- sequence coverage plots
+- LFC (log fold changes)
+
+
+### 8th August 2019
+## NOTES
+
+- Master protein could also be selected based on the maximum number od low score spectra For that reason PTM that is not filn tered by FDR should be retained
+- What is worth saving? We produce list of MSnSets that we combine later. We can produce peptide MSnSets as well. Protein MSnSets have to be are fixed. The point here is that I would like to have individual MSnSets, Combined, before and after FRD adjustment, but also peptide MSnSet and also PSM MSnset, again individual and combined across samples. In feature data should always be the best of the combined data, be it protein or peptide as well as group members (e.g. accession) meantioned. All of it shoudl be linked with raw data to quicky get to the spetra associates. 
+More I think of it, MSnSet seems to me limited in the way that it forces us to drop part of aggregated data, peptide~protein. Ideally, I would like to retain both parts of protein~peptide table, only label the best spectra.
+
+
+
+27th August 2019
+
+Are the proteins identified by both unique and common peptides shown as separate groups based on their unique peptides? Or one master is selected based on spectal count and they all live in one large group? I believe latter is the case and I think we should keep them separatelly. All protein matches that have unique peptides should be on separate rows in combined MSnSet, for the reason they can be quantified by those unique peptides. That means that will have to repeat the common accessions in the new groups.
+
+E.g. Int the The example below Acc1 and Acc2 should be separated into two groups, for they can be quantified (by TMT or spectral count) using only the uniqe peptides PEPTIDER and APEPTIDEK.
+
+Accession       Peptide     Spectral_count          Unique
+Acc1            PEPTIDER    5                       TRUE  
+Acc2            APEPTIDEK   1                       TRUE
+Acc1            AAAAK       1                       FALSE
+Acc2            AAAAK       1                       FALSE
+Acc3            AAAAK       1                       FALSE
+
+When we slit the group, we should list the unique peptides for every sample.
+We should list all the peptides as well.
+We should be able to find which peptides are modified and how.
+
