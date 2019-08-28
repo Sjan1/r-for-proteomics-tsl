@@ -116,27 +116,64 @@ Another bit that would be really useful to move to a function or a library is pr
 
 ### 8th August 2019
 ## NOTES
+#### ProteinProphet
+  - When proteins lack unique peptides at given FDR level, master protein could be selected based on low scoring spectra. For that reason PSM that is not filtered by FDR should be retained. It looks like inviting of false positives, but we are dropping the threshold to decide protein inference only, not to increase PSM number. This approach relies on high mass accuracy of parent scan and is used only when protein is already identified by other peptides. It is a variationo of older Peptide Mass Fingerprint method, when only precursors are used to detect protein. MF The same approach is used by ProteinPropher algorithm.  
 
-- Master protein could also be selected based on the maximum number od low score spectra For that reason PTM that is not filn tered by FDR should be retained
-- What is worth saving? We produce list of MSnSets that we combine later. We can produce peptide MSnSets as well. Protein MSnSets have to be are fixed. The point here is that I would like to have individual MSnSets, Combined, before and after FRD adjustment, but also peptide MSnSet and also PSM MSnset, again individual and combined across samples. In feature data should always be the best of the combined data, be it protein or peptide as well as group members (e.g. accession) meantioned. All of it shoudl be linked with raw data to quicky get to the spetra associates. 
-More I think of it, MSnSet seems to me limited in the way that it forces us to drop part of aggregated data, peptide~protein. Ideally, I would like to retain both parts of protein~peptide table, only label the best spectra.
+#### What is worth saving?
+  -  We produce list of MSnSets that we combine later. We can produce peptide MSnSets as well. Protein MSnSets have to be fixed - missing information of protein groups and PSMs that identified proteins. 
+  Ideally, I would like to have:
+  - individual MSnSets of all samples
+  - combined MSnSet
+  - all before and after FRD adjustment
+  - the same applies to peptide MSnSet and also PSM MSnset, individual and combined across samples.
+  In feature data should always be the best of the combined data, be it protein or peptide as well as protein group members. All of it shoudl be linked with raw data to be able to extract spetra from raw data. 
+
+More I think of it, MSnSet seems to me limited in the way that when we combine features we loose connection with data that produced it. We do not see PSMs that made the protein hits. When we aggregate peptide~protein, ideally, we shoujd retain all of it. When combining, we should put in feature data the best spectra of those passing the threshold. We should also keep what peptides made the hit. We should see thise rejected by FRD as well. 
 
 
 
 27th August 2019
 
-Are the proteins identified by both unique and common peptides shown as separate groups based on their unique peptides? Or one master is selected based on spectal count and they all live in one large group? I believe latter is the case and I think we should keep them separatelly. All protein matches that have unique peptides should be on separate rows in combined MSnSet, for the reason they can be quantified by those unique peptides. That means that will have to repeat the common accessions in the new groups.
+Are the proteins identified by both unique and common peptides shown as separate groups based on their unique peptides? Or is one master selected based on spectral count and they all live in one large group? I believe latter is the case and I think we should keep them separately. All protein matches that have unique peptides should have their own rows in combined MSnSet, for the reason they can be quantified by those unique peptides. That means we will have to repeat the common accessions in those related subgroups. It would be good to keep the information of the super groups somehow. 
 
-E.g. Int the The example below Acc1 and Acc2 should be separated into two groups, for they can be quantified (by TMT or spectral count) using only the uniqe peptides PEPTIDER and APEPTIDEK.
+E.g. In the example below there is a super-group with three accessions, where Acc1 and Acc2 should be separated into two sub-groups. They can be quantified (by TMT or spectral count) using only the unique peptides PEPTIDER and APEPTIDEK.
 
-Accession       Peptide     Spectral_count          Unique
-Acc1            PEPTIDER    5                       TRUE  
-Acc2            APEPTIDEK   1                       TRUE
-Acc1            AAAAK       1                       FALSE
-Acc2            AAAAK       1                       FALSE
-Acc3            AAAAK       1                       FALSE
+SAMPLE1:
+========
+Accession   Peptide     Spectral_count 		  Unique
+===================================================
+Acc1            PEPTIDER  	    5 	        TRUE  
+Acc2            APEPTIDEK   	  1           TRUE
+Acc1            AAAAK           1           FALSE
+Acc2            AAAAK           1           FALSE
+Acc3            AAAAK           1           FALSE
 
-When we slit the group, we should list the unique peptides for every sample.
+What happens when we have more samples?
+
+SAMPLE2:
+========
+Accession   Peptide     Spectral_count 		  Unique
+===================================================
+Acc1            PEPTIDER  	    1 	        TRUE  
+Acc2            APEPTIDEK   	  5           TRUE
+Acc1            AAAAK           1           FALSE
+Acc2            AAAAK           1           FALSE
+Acc3            AAAAK           1           FALSE
+
+In this case, master protein is Acc2. Which is fine. After we combine samples, the total spectal counts should be:
+
+Accession     SMPL1     SMPL2
+=============================
+Acc1          6         2
+Acc2          2         6
+
+But in situation, when SMAPLE1 have exactly same spectral counts as SAMPLE2, we loose Acc2 in the the result, for it will not be master protein. 
+The fixture is to make master proteins based on unique peptides within group.
+
+Additionally, we should list the unique peptides for every sample, for every group.
 We should list all the peptides as well.
-We should be able to find which peptides are modified and how.
+Later, we should be able to find which peptides are modified and how. I hope this will be possible somehow. Now with spectral counting we use sequences only, but spectral counts of e.g. phosphopeptides in different samples are of great interest.
+
+Btw, PeptideProphet goes even further, using older technology, Peptide Mass Fingerprint to decide protein ambiguity. It uses peptides below FDR thresold to help decide protein inference problem. (not to increase number of hits) I believe this is right thing to do. When we know a protein exists, it it is reasonable to assume there will be peptides with correct mass and poor tandem spectrum. High mass accuracy is required here! 
+
 
