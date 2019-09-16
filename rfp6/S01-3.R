@@ -99,26 +99,29 @@ msnl <- lapply(index, function(.x){
     pe2l <- as.list(pe2$pepSeq)
     names(pe2l) <- pe2$accession
     pep_count <- sapply(pe2l, function(x) length(unique(x)))
+   
     ## new for unique peptides
     pe2lu <- sapply(pe2l, function(x) unique(x))
     pe2ludf <- pe2lu[df$accession]
-    ## check a protein example - should give the same result from pe2lu list nad df
-    unique(df[,c(24,32)][which(df$accession=="04266"),])
-    pe2lu[which(names(pe2lu)=="04266")]
-    
+    ## a check - should give the same result from pe2lu list and df
+    # unique(df[,c(24,32)][which(df$accession=="04266"),])
+    # pe2lu[which(names(pe2lu)=="04266")]
+    # pe2ludf[which(names(pe2ludf)=="04266")]
     
     ## new re-ordered protein group
+    ## to find with highest spectral count = master protein
     gb2 <- gb_count <- gb
     for (i in seq_along(gb)) {
         gb2[[i]] <- gb[[i]][order(pep_count[gb[[i]]], decreasing = TRUE)]
         gb_count[[i]] <- paste(pep_count[gb2[[i]]], collapse = ";")
     }
-
+    ## put the groups into feature data of PSM MSnSet
     fData(psm)$protein_groups <- sapply(gb2, paste, collapse = ";")
     fData(psm)$group_size <- lengths(gb2)
     fData(psm)$pep_counts <- unlist(gb_count)
     fData(psm)$master_prot <- sapply(gb2, "[[", 1)
-    #fData(psm)$pepSeq <- pe2l$pepSeq
+    #unique peptides list
+    fData(psm)$pepSeqUnq <- sapply(pe2ludf, paste, collapse = ";")
     
     for (k in unique(fData(psm)$master_prot)) {
         i <- which(fData(psm)$master_prot == k)
@@ -133,10 +136,10 @@ msnl <- lapply(index, function(.x){
     }
     
 
-    
+    ## comine features based on master proteins    
         e <- combineFeatures(psm, fcol = "master_prot",
                          method = "sum", cv = FALSE)
-    browser()
+#browser()
     ## update samples names
     sampleNames(e) <- .x
     e <- updateFvarLabels(e, sampleNames(e))
@@ -176,30 +179,157 @@ e <- readRDS("e.Rds")
 saveRDS(e,"e_mascot_fdr1pc.rds")
 e <- readRDS("e_mascot_fdr1pc.rds")
 
-
+########################################
 ## check it
-i <- grep(".?accession.?", fvarLabels(e))
-i
+a <- grep(".?accession.?", fvarLabels(e))
+a
 View(head(fData(e)[,i],100))
-y <- grep(".?master.?", fvarLabels(e))
-y
+m <- grep(".?master.?", fvarLabels(e))
+m
 View(head(fData(e)[,y],100))
-g <- grep(".?protein_groups.?", fvarLabels(e))
-g
+pg <- grep(".?protein_groups.?", fvarLabels(e))
+pg
 View(head(fData(e)[,g],100))
 s <- grep(".?pepSeq.?", fvarLabels(e))
 s
-View(head(fData(e)[,s],100))
+su <- grep(".?pepSeqUnq.?", fvarLabels(e))
+su
+gs <- grep("group_size\\.?",fvarLabels(e))
+gs
+pc <- grep("pep_counts\\.?",fvarLabels(e))
+pc
+pgg <- grep("protein_group_global.?",fvarLabels(e))
+pgg
+gsg <- grep("group_size_global\\.?",fvarLabels(e))
+gsg
+
+fData(e)[,c(m,a,pg,s,su,gs,pc,pgg,gsg)]
+View(head(fData(e)[,c(m,pg,su,gs,pc,pgg,gsg)],100))
+
+## Check 1
+## featureNames should be master proteins.
+## Are master proteins can be either the same or NAs
+## for all the samples. Are they?
+View(fData(e)[,m])
+c1 <- featureNames(e) == fData(e)[,m[1]]
+c2 <- featureNames(e) == fData(e)[,m[2]]
+c3 <- featureNames(e) == fData(e)[,m[3]]
+#c
+#c[is.na(c)] <- TRUE
+#c
+#any(isFALSE(c))
+#any(isTRUE(c))
+#c <- c(c,FALSE)
+#table(c)
+#table(!is.na(c))
+
+## using table
+table(c1, useNA="always")
+table(c2, useNA="always")
+table(c3, useNA="always")
+## using dplyr
+group_by(as.data.frame(c1),c1)%>%summarise(count=n())
+group_by(as.data.frame(c2),c2)%>%summarise(count=n())
+group_by(as.data.frame(c3),c3)%>%summarise(count=n())
+## tally can be used instead of summarise(count=n())
+
+## Check 2
+
+
+
+## to view a protein group - select a master protein and show all
+featureNames(e)[featureNames(e) == "AT2G39730.1"]
+featureNames(e)[featureNames(e) == "35a12"]
+featureNames(e)[featureNames(e) == "AT5G64570.1"]
+
+## find an accession in rownames (should be master protein) and filter feature data
+##DF.new -> DF %>% filter(row.names(DF) %in% c("12a","13a"))
+View(fData(e)[,c(m,a,pg,s,su,gs,pc,pgg,gsg)] %>%
+       filter(row.names(fData(e)) %in% featureNames(e)[featureNames(e) == "35a12"]))
+
+## seaching for an accession in global group in one item  
+pgg[1]
+fData(e)[1:2,pgg[1]]
+l <- fData(e)[1:3,pgg[1]]
+class(l)
+l
+dim(l)
+l <- unlist(strsplit(l,";"))
+grep("77",l)
+l[2]
+
+
+k <- sapply(fData(e)[, pgg[1]], paste, collapse=";")
+k[2]
+class(k[1])
+ka <- t(apply(k, 1, function(x) unique(na.omit(as.character(x)))))
+
+apply(fData(e)[1, pgg[1]], 1,
+           function(x) unique(unlist(strsplit(na.omit(as.character(x)),";"))))
+
+## find all GFP proteins
+find_string <- "GFP" #"35a12"
+test <- fData(e)[,c(m,su,gs,pc,pg,pgg[1:2])][grep(find_string,fData(e)[,pgg[1]]),]
+dim(test)
+test
+View(test)
+
+## test of GFP proteins
+l3 <- lapply(as.list(test[3,grep("pepSeqUnq",colnames(test),value = FALSE)[1:3]]),function(x) strsplit(unique(x),";"))
+l2 <- lapply(as.list(test[2,grep("pepSeqUnq",colnames(test),value = FALSE)[1:3]]),function(x) strsplit(unique(x),";"))
+l1 <- lapply(as.list(test[1,grep("pepSeqUnq",colnames(test),value = FALSE)[1:3]]),function(x) strsplit(unique(x),";"))
+
+l3
+l2
+l1
+
+l11 <- unlist(l1[[1]])
+l21 <- unlist(l2[[1]])
+l23 <- unlist(l2[[3]])
+l32 <- unlist(l3[[2]])
+
+l11
+l32
+l213 <- unique(c(l21,l23))
+
+#unique(c(l11,l21,l23,l32))
+l11
+l32
+setdiff(l11,l32)
+setdiff(l32,l11)    # nothing unique in 32... it is subset of 11
+
+setdiff(l11,l213)
+setdiff(l213,l11)
+
+setdiff(l11,c(l32,l213))
+
+
+setdiff(l213,l32)
+setdiff(l32,l213)  # nothing unique in 32... it is subset of 213
+
+## sample peptide, FEGDTLVNR that should be unique, it is?
+
+x <- grep(".?pepSeq.?", colnames(df))
+df[1:10,26]
+df$pepSeq[1:10]
+df$pepSeq=="FEGDTLVNR"
+table(df$pepSeq=="FEGDTLVNR")
+df$accession[df$pepSeq=="FEGDTLVNR"]          
+          
+    
+
+
+
 
 View(fData(e)[1:500,c(24,66,108,42,84,126,39,81,123,26,68,110)])
 test <- fData(e)[,c(24,66,108,42,84,126,39,81,123,26,68,110)]
 test <- fData(e)[,c(24,66,108,150,42,84,126,168,39,81,123,165,26,68,110,152)]
 View(head(test))
 ## accesion and master should not be the same
-identical(fData(e)[,i[1]],fData(e)[,y[1]])
-ni <- which(fData(e)[,i[1]] != fData(e)[,y[1]])
+identical(fData(e)[,a[1]],fData(e)[,m[1]])
+ni <- which(fData(e)[,a[1]] != fData(e)[,m[1]])
 ## rownames and masters should be the same
-ac <- fData(e)[,c(i,y,g)]
+ac <- fData(e)[,c(a,m,g)]
 head(ac)
 table(rownames(ac)==ac[,4])
 table(rownames(ac)==ac[,5])
@@ -253,13 +383,40 @@ l <- as.list(fData(e)$pepSeq_all)        # the list is nedded for combineFeature
 l 
 fData(e)$pepSeq_all <- l
 
-## check it
-i <- grep(".?accession.?", fvarLabels(e))
+## global protein groups
+## concatenate all  accessions
+i <- grep("protein_groups\\.?", fvarLabels(e))    # e is a peptide-level MSnSet
 i
-View(head(fData(e)[,i],100))
-i <- grep(".?pepSeq.?", fvarLabels(e))
-i
-View(head(fData(e)[,i],100))
+k <- apply(fData(e)[, i], 1,
+           function(x) unique(unlist(strsplit(na.omit(as.character(x)),";"))))
+head(k)
+fData(e)$group_size_global <- lengths(k)
+  head(fData(e)$group_size_global)
+fData(e)$protein_group_global <- sapply(k, paste, collapse = ";") # Laurent's suggestion
+  head(fData(e)$protein_group_global)
+
+fData(e)$protein_group_global_list <- sapply(k, paste, collapse=NULL) # But when not collapsed, we then easily make a list
+  head(fData(e)$protein_group_global_list)
+l <- as.list(fData(e)$protein_group_global_list)        # the list is nedded for combineFeatures
+  head(l)
+fData(e)$protein_group_global_list <- l
+  head(fData(e)$protein_group_global_list)
+
+  
+  
+  
+  ## accession list
+  head(k)
+  kl <- lapply(k,function(x) strsplit(x,",")) 
+  head(kl)
+  klu <- lapply(kl,function(x) unique(unlist(x)))
+  head(klu)
+  
+  ## append the lists to peptide and protein MSnSets the list
+  
+  
+  
+  
 
 ## PROBLEMS
 ## It should not be needed to combine features again.
@@ -274,9 +431,16 @@ saveRDS(e,"e.rds")
 
 ######################################################
 ######################################################
+######################################################
 stop("Never mind the error, execution stops here!")###
 ######################################################
 ######################################################
+######################################################
+
+
+
+
+
 
 
 
