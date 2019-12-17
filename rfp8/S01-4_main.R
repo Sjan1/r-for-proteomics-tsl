@@ -53,6 +53,7 @@ source("../rfp6/run_msnid.R")
 ## (iv) experimental factors
 
 ## mzid <- "mascot_fdr1pc"
+## needs simlink to ../rfp6/msgf
 mzid <- "msgf"
 ## mzid <- "msgf2"
 exp <- readSampleExperimentTable("../rfp6/SampleExperimentTable.csv",
