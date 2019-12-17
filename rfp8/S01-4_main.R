@@ -197,9 +197,23 @@ res <- MSnSet(exprs = res)
 fData(res)$pgroups <- sapply(pgroups, paste, collapse = ";")
 pData(res) <- etab[index, ]
 
+for (i in 1:max(pgroup)) {
+    plot_proteins_in_group(prots_by_peps, pgroup, i)
+    print(get_proteins_in_group(prots_by_peps, pgroup, i))
+    scan(n = 1)
+}
 
-## for (i in 1:max(pgroup)) {
-##     plot_proteins_in_group(prots_by_peps, pgroup, i)
-##     print(get_proteins_in_group(prots_by_peps, pgroup, i))
-##     scan(n = 1)
-## }
+## looking for one protein in particular
+k <- which(sapply(pgroups, function(x) "AT1G55060.1" %in% x))
+exprs(res[k, ])
+get_proteins_in_group(prots_by_peps, pgroup, k)
+plot_proteins_in_group(prots_by_peps, pgroup, k)
+
+fData(res)$lfc <- log2(rowMeans(exprs(res)[, 1:4]+1) / rowMeans(exprs(res)[, 5:7]+1))
+fData(res)$meanInt <- rowMeans(exprs(res))
+with(fData(res), plot(meanInt, lfc))
+abline(h = 0)
+
+ms2df(res) %>%
+    arrange(desc(lfc)) %>%
+    DT::datatable()
