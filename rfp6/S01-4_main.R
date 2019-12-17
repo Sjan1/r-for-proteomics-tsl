@@ -62,7 +62,8 @@ etab
 mzid_files
 #x <- mzid_files["P_I_1"]
 #x
-y <- mzid_files[c("P_H_2","P_H_3","P_H_4","P_H_5","C_H_2","C_H_3","C_H_4")]
+#y <- mzid_files[c("P_H_2","P_H_3","P_H_4","P_H_5","C_H_2","C_H_3","C_H_4")]
+y <- mzid_files[c("P_I_1","P_I_4","P_I_5" )]
 y
 mzid_files <- y
 ## and update mzid_files with it
@@ -98,8 +99,9 @@ msnl <- lapply(index, function(.x){
     pe2 <- aggregate(pepSeq~accession, df, c)
     pe2l <- as.list(pe2$pepSeq)
     names(pe2l) <- pe2$accession
-    pep_count <- sapply(pe2l, function(x) length(unique(x)))
-   
+    pep_count <- sapply(pe2l, function(x) length(unique(x)))  ## returns number of unique peptides (to be used in protein groups)
+    #pep_count <- sapply(pe2l, function(x) length(x))         ## returns total spectral count (to be used in protein groups)
+    
     ## new for unique peptides
     pe2lu <- sapply(pe2l, function(x) unique(x))
     pe2ludf <- pe2lu[df$accession]
@@ -177,9 +179,9 @@ e <- impute(e, method = "zero")
 ## c(\"acc\",\"acc\")
 
 # ## concatenate all  accessions --- THIS is useless, accessions, PepSeq. and peptide. 
-## are both "first from a lot". 
+## are both "first from a lot" and we should get rid of these confusing data.
 ## To get all accessions we have to use protein groups,
-## for peptides we need pepSeqUnq.
+## for peptides, if we are after sequence coverage, we need pepSeqUnq.
 
 
 ## concatenate all unique peptides in master proteins in all samples
@@ -195,7 +197,7 @@ k <- sapply(k, function(x) unique(x))
 fData(e)$pepSeqUnq_counts <- lengths(k)
 fData(e)$pepSeqUnq_all <- sapply(k, paste, collapse = ";")
 
-## if this is neede in a form of a list for combineFeatures...
+## if this is needed in a form of a list for combineFeatures...
 #fData(e)$accession <- sapply(k, paste, collapse = ";") # Laurent's suggestion
 l <- as.list(sapply(k, paste0, collapse=NULL)) # But when not collapsed, we then easily make a list
 # fData(e)$pepSeqUnq_all_list <- l        # the list is nedded for combineFeatures
@@ -263,13 +265,13 @@ saveRDS(e,"e.rds")
 ## open when needed
 e <- readRDS("e.Rds")
 ## save as
-saveRDS(e,"e_mascot_fdr1pc.rds")
-e <- readRDS("e_mascot_fdr1pc.rds")
+#saveRDS(e,"e_mascot_fdr1pc.rds")
+#e <- readRDS("e_mascot_fdr1pc.rds")
 
 
 
 
-## CHECKS OF RESULTS INTEGRITY
+## CHECKS OF RESULTS' INTEGRITY
 ## Check I ############################
 ## featureNames should be master proteins.
 ## Master proteins can be either the same or NAs
@@ -310,6 +312,8 @@ featureNames(e)[featureNames(e) == "AT5G64570.1"]
 ##DF.new -> DF %>% filter(row.names(DF) %in% c("12a","13a"))
 View(fData(e)[,c(m,a,pg,s,su,gs,pc,pgg,gsg)] %>%
        filter(row.names(fData(e)) %in% featureNames(e)[featureNames(e) == "35a12"]))
+View(fData(e)[,c(m,a,pg,s,su,gs,pc,pgg,gsg)] %>%
+       filter(row.names(fData(e)) %in% featureNames(e)[featureNames(e) == "AT5G64570.1"]))
 
 ## seaching for an accession in global group in one item  
 pgg[1]
@@ -321,21 +325,24 @@ l <- unlist(strsplit(l,";"))
 grep("77",l)
 l[2]
 
-
+## this causes problems...
 k <- sapply(fData(e)[, pgg[1]], paste, collapse=";")
-k[2]
+k
+k[1]
 class(k[1])
 ka <- t(apply(k, 1, function(x) unique(na.omit(as.character(x)))))
 ka
 apply(fData(e)[1, pgg[1]], 1,
            function(x) unique(unlist(strsplit(na.omit(as.character(x)),";"))))
 
-## find all GFP proteins
+## The best test
+## This is the problem of close homologue proteins!!!
+## find all GFP proteins in protein_groups_global
 find_string <- "35a12"
-test <- fData(e)[,c(m,su,gs,pc,pg,pgg[1:2])][grep(find_string,fData(e)[,pgg[1]]),]
+test <- fData(e)[,c(m,su,gs,pc,pg,pgg)][grep(find_string,fData(e)[,pgg]),]
 #test <- fData(e)[,c(m,su,gs,pc,pg,pgg[1:2])][grep(find_string,fData(e)[,a]),]
 dim(test)
-test
+test[1]
 View(test)
 
 ## test of GFP proteins
@@ -371,9 +378,9 @@ setdiff(l11,c(l32,l213))
 setdiff(l213,l32)
 setdiff(l32,l213)  # nothing unique in 32... it is subset of 213
 
-## sample peptide, FEGDTLVNR that should be unique, it is?
-
+## sample peptide, FEGDTLVNR that should be unique, shouldn't it?
 x <- grep(".?pepSeq.?", colnames(df))
+x
 df[1:10,26]
 df$pepSeq[1:10]
 df$pepSeq=="FEGDTLVNR"
@@ -439,15 +446,31 @@ exprs(e)[1,"C_H_4"]
 ## too bad!!!
 
 
-## Check V ############################
+## Check V #########################
+## expression values total
+exprs(e)["35a12",]
+df <- exprs(e)
+colnames(df)
+#rename
+newnames <- gsub("_","",strsplit(sampleNames(e),".\\d"),)
+newnames
+colnames(df) <- newnames
+colnames(df)
+sum(df[,colnames(df)=="PH"])
+sum(df[,colnames(df)=="CH"])
+## the totals are the same as from mzid-table adjusted to FDRs
+
+## Check VI ############################
 ## protein groups
 length(unlist(strsplit(fData(e)[1,"protein_group_global"],";")))
 ## OK
 
-## Check VI ###########################
+## Check VII ###########################
 de <- grep("isDecoy.\\.?",fvarLabels(e))
 de
 table(fData(e)[,de])
+
+
 
 
 
