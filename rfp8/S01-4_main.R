@@ -84,8 +84,9 @@ mzid_files <- apply(etab, 1, function(.etab) {
            phenotype == .etab[["phenotype"]],
            treatment == .etab[["treatment"]]) %>%
     select(name)
-n  mzid_files <- file.path(mzid,paste(filenames[[1]], "mzid",
+  mzid_files <- file.path(mzid,paste(filenames[[1]], "mzid",
                                      sep = "."))
+  
 ## make a list of files
   return(mzid_files)
 })
