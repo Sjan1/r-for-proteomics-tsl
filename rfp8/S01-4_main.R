@@ -194,10 +194,10 @@ for (i in 1:length(pgroups)) {
         res[i, j] <- sum(exprs(.mset)[fData(.mset)$accession %in% .pg ,])/length(.pg)
     }
 }
-
-res <- MSnSet(exprs = res)
-fData(res)$pgroups <- sapply(pgroups, paste, collapse = ";")
-pData(res) <- etab[index, ]
+fd <- data.frame("pgroups"=sapply(pgroups, paste, collapse = ";"))
+res <- MSnSet(exprs = res, fData = fd, pData = etab[index, ])
+#fData(res)$pgroups <- sapply(pgroups, paste, collapse = ";")
+#pData(res) <- etab[index, ]
 
 for (i in 1:max(pgroup)) {
     plot_proteins_in_group(prots_by_peps, pgroup, i)
@@ -206,7 +206,7 @@ for (i in 1:max(pgroup)) {
 }
 
 ## looking for one protein in particular
-k <- which(sapply(pgroups, function(x) "AT1G55060.1" %in% x))
+k <- which(sapply(pgroups, function(x) "AT5G43980.1" %in% x))
 exprs(res[k, ])
 get_proteins_in_group(prots_by_peps, pgroup, k)
 plot_proteins_in_group(prots_by_peps, pgroup, k)
@@ -219,3 +219,17 @@ abline(h = 0)
 ms2df(res) %>%
     arrange(desc(lfc)) %>%
     DT::datatable()
+
+
+
+
+#############
+## The End ##
+#############
+
+## SAVE IT
+saveRDS(res,"res.rds")
+saveRDS(msnl,"msnl.rds")
+saveRDS(pgroups,"pgroups.rds")
+## open when needed
+res <- readRDS("res.Rds")
