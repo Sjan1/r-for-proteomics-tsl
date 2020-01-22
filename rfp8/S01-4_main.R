@@ -114,7 +114,7 @@ index
 msnl <- lapply(index, function(.x){
     .files <- mzid_files[[.x]]
     msnid <- run_msnid(.files)
-    psm <- rtslprot::as_MSnSet(msnid)
+      psm <- rtslprot::as_MSnSet(msnid)
     ## create protein by peptide matrix
     prot_by_pep <- matrix(NA,
            nrow = length(unique(fData(psm)$accession)),
@@ -205,8 +205,9 @@ for (i in 1:max(pgroup)) {
     scan(n = 1)
 }
 
+
 ## looking for one protein in particular
-k <- which(sapply(pgroups, function(x) "AT5G43980.1" %in% x))
+k <- which(sapply(pgroups, function(x) "AT1G12900.1" %in% x))
 exprs(res[k, ])
 get_proteins_in_group(prots_by_peps, pgroup, k)
 plot_proteins_in_group(prots_by_peps, pgroup, k)
@@ -227,9 +228,34 @@ ms2df(res) %>%
 ## The End ##
 #############
 
-## SAVE IT
+## SAVE WHAT WE MIGHT NEED
 saveRDS(res,"res.rds")
 saveRDS(msnl,"msnl.rds")
+saveRDS(pgroup,"pgroup.rds")
 saveRDS(pgroups,"pgroups.rds")
+saveRDS(prots_by_peps,"prots_by_peps.rds")
 ## open when needed
 res <- readRDS("res.Rds")
+msnl <- readRDS("msnl.rds")
+pgroup <- readRDS("pgroup.Rds")
+pgroups <- readRDS("pgroups.Rds")
+prots_by_peps <- readRDS("prots_by_peps.Rds")
+
+
+## TAKING IT FUTHER
+
+## 22nd Jan 2020
+## capturing pgroups index for the individual accessions
+kr <- NULL
+ir <- NULL
+for (i in all_prots){
+  ir <- c(ir,i)
+  k <- which(sapply(pgroups, function(x) i %in% x))
+  kr <- c(kr,k)
+  acc_gr <- data.frame("accession"=ir,"group"=kr)
+  #m[i] <- grepl(i,eg) 
+}
+head(acc_gr,11)
+pgroups[1:5]
+
+        
