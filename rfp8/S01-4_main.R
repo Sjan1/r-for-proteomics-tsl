@@ -258,17 +258,16 @@ for (g in 1:length(pgroups[1:50])){
   GroupSamplePep[[g]] <- tmp
 }  
 names(GroupSamplePep) <- names(pgroups[1:50])
-#GroupSamplePep[[2]]
 
+## Plot scatter plots for each pgroup
 for (g in 1:length(pgroups[1:50])){
-  
   GroupSamplePep[[g]][1:4]
   x <- unlist(GroupSamplePep[[g]][1:4])
   y <- unlist(GroupSamplePep[[g]][5:7])
   x <- as.data.frame(table(x))
   y <- as.data.frame(table(y))
-  #if (isEmpty(x)) {x=as.data.frame(table(0))}
-  #if (isEmpty(y)) {y=as.data.frame(table(is.na=TRUE))}
+  if (isEmpty(x[1])) {x <- data.frame(PepSeq=factor(),Freq.PH=integer())}
+  if (isEmpty(y[1])) {y <- data.frame(PepSeq=factor(),Freq.CH=integer())}
   colnames(x) <- c("pepSeq","Freq.PH")
   colnames(y) <- c("pepSeq","Freq.CH")
   df.pept <- merge(x,y, by="pepSeq",all=TRUE)
