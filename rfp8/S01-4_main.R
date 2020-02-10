@@ -175,7 +175,7 @@ d <- proxy::dist(prots_by_peps, method = "Jaccard")
 cl <- hclust(d)
 plot(cl)
 ## group as soon as one shared peptide
-pgroup <- cutree(cl, h = 0.5)
+pgroup <- cutree(cl, h = 0.99)
 abline(h = 0.5, col = "red")
 names(pgroup) <- names(d)
 
@@ -207,7 +207,7 @@ for (i in 1:max(pgroup)) {
 
 
 ## looking for one protein in particular
-k <- which(sapply(pgroups, function(x) "AT1G12900.1" %in% x))
+k <- which(sapply(pgroups, function(x) "AT5G14740.2" %in% x))
 exprs(res[k, ])
 get_proteins_in_group(prots_by_peps, pgroup, k)
 plot_proteins_in_group(prots_by_peps, pgroup, k)
@@ -242,20 +242,42 @@ pgroups <- readRDS("pgroups.Rds")
 prots_by_peps <- readRDS("prots_by_peps.Rds")
 
 
-## TAKING IT FUTHER
+## PEPTIDE SCATTER PLOTS WITHIN PGROUPS
+GroupSamplePep <- list()
+for (g in 1:length(pgroups[1:50])){
+  #for (p in 1:length(all_peps)){
+  for (m in 1:length(msnl)){
+    .pg <- pgroups[[g]]
+    #.peps <- all_peps[p]
+    .mset <- msnl[[m]]
+    
+    #print(c(g,"-",m))
+    tmp[[m]] <- fData(.mset)$pepSeq[fData(.mset)$accession %in% .pg]
+  }
+  names(tmp) <- names(index)  
+  GroupSamplePep[[g]] <- tmp
+}  
+names(GroupSamplePep) <- names(pgroups[1:50])
+#GroupSamplePep[[2]]
 
-## 22nd Jan 2020
-## capturing pgroups index for the individual accessions
-kr <- NULL
-ir <- NULL
-for (i in all_prots){
-  ir <- c(ir,i)
-  k <- which(sapply(pgroups, function(x) i %in% x))
-  kr <- c(kr,k)
-  acc_gr <- data.frame("accession"=ir,"group"=kr)
-  #m[i] <- grepl(i,eg) 
+for (g in 1:length(pgroups[1:50])){
+  
+  GroupSamplePep[[g]][1:4]
+  x <- unlist(GroupSamplePep[[g]][1:4])
+  y <- unlist(GroupSamplePep[[g]][5:7])
+  x <- as.data.frame(table(x))
+  y <- as.data.frame(table(y))
+  #if (isEmpty(x)) {x=as.data.frame(table(0))}
+  #if (isEmpty(y)) {y=as.data.frame(table(is.na=TRUE))}
+  colnames(x) <- c("pepSeq","Freq.PH")
+  colnames(y) <- c("pepSeq","Freq.CH")
+  df.pept <- merge(x,y, by="pepSeq",all=TRUE)
+  df.pept[is.na(df.pept)] <- 0
+  
+  plot(x = df.pept$Freq.PH, y = df.pept$Freq.CH, pch = 16, cex = 1,
+       col = ifelse(df.pept$Freq.PH == 0 | df.pept$Freq.CH == 0, "red", "blue"))
+  abline(a=0, b=1, lty = 5)
+  writeLines(c("#########",paste("## ",g," ##"),"#########"))
+  scan(n=1)
 }
-head(acc_gr,11)
-pgroups[1:5]
-
         
