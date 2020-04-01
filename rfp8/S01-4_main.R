@@ -15,14 +15,15 @@ plot_proteins_in_group <- function(x, group, i,
     x[x == 0] <- NA
     nc <- ncol(x)
     nr <- nrow(x)
-    par(mar = c(4, 7, 1, 1))
+    par(mar = c(10, 7, 1, 1))
     graphics::image(t(x),
                     xaxt = "n",
                     yaxt = "n", ...)
     xticks <- seq(0, 1, length.out = ncol(x))
     axis(1, xticks,
          labels = colnames(x),
-         cex.axis = x.cex.axis)
+         cex.axis = x.cex.axis,
+         las=2)
     yticks <- seq(0, 1, length.out = nrow(x))
     axis(2, yticks,
          labels = rownames(x),
@@ -203,6 +204,7 @@ for (i in 1:max(pgroup)) {
     plot_proteins_in_group(prots_by_peps, pgroup, i)
     print(get_proteins_in_group(prots_by_peps, pgroup, i))
     scan(n = 1)
+writeLines(c("=============",paste(".....",i,".....")))
 }
 
 
@@ -243,24 +245,25 @@ prots_by_peps <- readRDS("prots_by_peps.Rds")
 
 
 ## PEPTIDE SCATTER PLOTS WITHIN PGROUPS
+tmp <- list()
 GroupSamplePep <- list()
-for (g in 1:length(pgroups[1:50])){
+for (g in 1:length(pgroups)){
   #for (p in 1:length(all_peps)){
   for (m in 1:length(msnl)){
     .pg <- pgroups[[g]]
     #.peps <- all_peps[p]
     .mset <- msnl[[m]]
-    
+  
     #print(c(g,"-",m))
     tmp[[m]] <- fData(.mset)$pepSeq[fData(.mset)$accession %in% .pg]
   }
   names(tmp) <- names(index)  
   GroupSamplePep[[g]] <- tmp
 }  
-names(GroupSamplePep) <- names(pgroups[1:50])
+names(GroupSamplePep) <- names(pgroups)
 
 ## Plot scatter plots for each pgroup
-for (g in 1:length(pgroups[1:50])){
+for (g in 1:length(pgroups)){
   GroupSamplePep[[g]][1:4]
   x <- unlist(GroupSamplePep[[g]][1:4])
   y <- unlist(GroupSamplePep[[g]][5:7])
@@ -272,11 +275,13 @@ for (g in 1:length(pgroups[1:50])){
   colnames(y) <- c("pepSeq","Freq.CH")
   df.pept <- merge(x,y, by="pepSeq",all=TRUE)
   df.pept[is.na(df.pept)] <- 0
-  
+ 
   plot(x = df.pept$Freq.PH, y = df.pept$Freq.CH, pch = 16, cex = 1,
        col = ifelse(df.pept$Freq.PH == 0 | df.pept$Freq.CH == 0, "red", "blue"))
   abline(a=0, b=1, lty = 5)
-  writeLines(c("#########",paste("## ",g," ##"),"#########"))
+  writeLines(c(".............",paste("|||||",g,"|||||")))
   scan(n=1)
 }
+
+
         
