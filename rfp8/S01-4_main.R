@@ -279,9 +279,14 @@ for (g in 1:length(pgroups)){
   plot(x = df.pept$Freq.PH, y = df.pept$Freq.CH, pch = 16, cex = 1,
        col = ifelse(df.pept$Freq.PH == 0 | df.pept$Freq.CH == 0, "red", "blue"))
   abline(a=0, b=1, lty = 5)
+  text(x = df.pept$Freq.PH, y = df.pept$Freq.CH,labels=df.pept$pepSeq, cex=0.65, pos=3, col="brown")
   writeLines(c(".............",paste("|||||",g,"|||||")))
   scan(n=1)
-}
+
+  #require(ggplot2
+  #ggplot(df.pept, aes(x,y)) + geom_point() + geom_text(aes(label=pepSeq))
+  #scan()  
+  }
 
 
         
