@@ -201,15 +201,16 @@ res <- MSnSet(exprs = res, fData = fd, pData = etab[index, ])
 #pData(res) <- etab[index, ]
 
 for (i in 1:max(pgroup)) {
-    plot_proteins_in_group(prots_by_peps, pgroup, i)
+  writeLines(c(".............",paste("|||||",i,"|||||")))
+      plot_proteins_in_group(prots_by_peps, pgroup, i)
     print(get_proteins_in_group(prots_by_peps, pgroup, i))
-    scan(n = 1)
-writeLines(c("=============",paste(".....",i,".....")))
+    #scan(n = 1)
+scan(n=1)
 }
 
 
 ## looking for one protein in particular
-k <- which(sapply(pgroups, function(x) "AT5G14740.2" %in% x))
+k <- which(sapply(pgroups, function(x) "AT3G01500.1" %in% x))
 exprs(res[k, ])
 get_proteins_in_group(prots_by_peps, pgroup, k)
 plot_proteins_in_group(prots_by_peps, pgroup, k)
