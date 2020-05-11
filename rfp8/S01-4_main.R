@@ -18,7 +18,7 @@ plot_proteins_in_group <- function(x, group, i,
     par(mar = c(10, 7, 1, 1))
     graphics::image(t(x),
                     xaxt = "n",
-                    yaxt = "n", ...)
+                    yaxt = "n",...)
     xticks <- seq(0, 1, length.out = ncol(x))
     axis(1, xticks,
          labels = colnames(x),
@@ -205,6 +205,10 @@ for (i in 1:max(pgroup)) {
       plot_proteins_in_group(prots_by_peps, pgroup, i)
     print(get_proteins_in_group(prots_by_peps, pgroup, i))
     #scan(n = 1)
+    title(main = paste("pgroup: ", i),
+                    cex.main = 1,
+                    font.main= 2,
+                    col.main= "navyblue")
 scan(n=1)
 }
 
@@ -277,10 +281,16 @@ for (g in 1:length(pgroups)){
   df.pept <- merge(x,y, by="pepSeq",all=TRUE)
   df.pept[is.na(df.pept)] <- 0
  
-  plot(x = df.pept$Freq.PH, y = df.pept$Freq.CH, pch = 16, cex = 1,
+  plot(x = df.pept$Freq.PH, y = df.pept$Freq.CH, pch = 16, cex = 1, 
+       main = "Peptide scatterplot for selected samples", 
+       sub = paste("pgroup= ",g),
+       col.main="black", col.lab="blue", col.sub="red",
        col = ifelse(df.pept$Freq.PH == 0 | df.pept$Freq.CH == 0, "red", "blue"))
-  abline(a=0, b=1, lty = 5)
-  text(x = df.pept$Freq.PH, y = df.pept$Freq.CH,labels=df.pept$pepSeq, cex=0.65, pos=3, col="brown")
+      abline(a=0, b=1, lty = 5)
+  text(x = df.pept$Freq.PH,
+       y = df.pept$Freq.CH,
+       labels=df.pept$pepSeq, cex=0.65, pos=3, col="brown")
+  
   writeLines(c(".............",paste("|||||",g,"|||||")))
   scan(n=1)
 
